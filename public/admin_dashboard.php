@@ -1,37 +1,34 @@
 <?php require_once("../includes/session.php"); ?>
-<?php require_once("../includes/db_connection.php"); ?>
-
-
+<?php require_once("../includes/functions.php"); ?>
+<?php confirm_admin_logged_in(); ?>
 <?php $layout_context = "admin"; ?>
 <?php include("../includes/layouts/header.php"); ?>
-   
+
 <div class="hlinks">
-   <a href="index.php"><span class="text">Log Out</span></a>
+   <a href="admin_logout.php"><span class="text">Sign Out</span></a>
 </div>
 </div>
 
 <div id="main">
   <div id="navigation">
-	<ul class = "subjects">
-		<a href="admin_dashboard?subject1">Manage Admin</a>
-	</ul>
-		
-	<ul class = "subjects">
-		<a href="admin_dashboard?subject2">Manage User</a>
-	</ul>
+    &nbsp;
+  </div>
 
-	<ul class = "subjects">
-		<a href="admin_dashboard?subject3">Manage Movie</a>
-	</ul>
-	
-	<ul class = "subjects">
-		<a href="admin_dashboard?subject4">Manage Actor</a>
-	</ul>
+  <div id="page">
+    <h2>Admin Menu</h2>
+    <p>Welcome to the admin area, <?php echo htmlentities($_SESSION["admin_name"]); ?>. 	<br> </br> </p>
 
-</div>
-     
-<div id="page">
+      <a href="manage_admins.php">Manage Administrators </a>
+      <br> </br>    <br> </br>
+      <a href="manage_users.php">Manage Users</a>
+      <br> </br>    <br> </br>
+      <a href="manage_movies.php">Manage Movies</a>
+      <br> </br>    <br> </br>
+      <a href="manage_actors.php">Manage Actors</a>
+      <br> </br>    <br> </br>
+
 
   </div>
 </div>
+
  <?php include("../includes/layouts/footer.php"); ?>

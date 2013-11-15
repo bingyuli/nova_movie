@@ -13,19 +13,13 @@
 		}
 	}
 
+	function mysql_prep($string) {
+		global $connection;		
+		$escaped_string = mysqli_real_escape_string($connection, $string);
+		return $escaped_string;
+	}
 
-	function find_all_admins() {
-		global $connection;
-		
-		$query  = "SELECT * ";
-		$query .= "FROM admins ";
-		$query .= "ORDER BY username ASC";
-		$admin_set = mysqli_query($connection, $query);
-		confirm_query($admin_set);
-		return $admin_set;
-	}		
 
-//added by ling: 2013-11-13
 	
 function form_errors($errors=array()) {
 	$output = "";
@@ -90,6 +84,63 @@ function password_check($password, $existing_password) {
 	}
 }
 	
-	
+	function find_admin_by_email($admin_email) {
+		global $connection;
+		
+		$safe_admin_email = mysqli_real_escape_string($connection, $admin_email);
+		
+		$query  = "SELECT * ";
+		$query .= "FROM administrator ";
+		$query .= "WHERE email = '{$safe_admin_email}' ";
+		$query .= "LIMIT 1";
+		$admin_set = mysqli_query($connection, $query);
+		confirm_query($admin_set);
+		if($admin = mysqli_fetch_assoc($admin_set)) {
+			return $admin;
+		} else {
+			return null;
+		}
+	}
+
+
+	function admin_attempt_login($admin_email, $password) {
+		$admin = find_admin_by_email($admin_email);
+		if ($admin) {
+			// found admin, now check password
+			if (password_check($password, $admin["password"])) {
+				// password matches
+				return $admin;
+			} else {
+				// password does not match
+				return false;
+			}
+		} else {
+			// admin not found
+			return false;
+		}
+	}
+
+
+	function confirm_admin_logged_in() {
+		if (!admin_logged_in()) {
+			redirect_to("admin_login.php");
+		}
+	}
+
+
+	function admin_logged_in() {
+		return isset($_SESSION['admin_id']);
+	}
+
+
+	function find_all_admins() {
+		global $connection;
+		
+		$query  = "SELECT * ";
+		$query .= "FROM administrator ";
+		$admin_set = mysqli_query($connection, $query);
+		confirm_query($admin_set);
+		return $admin_set;
+	}		
 	
 ?>
