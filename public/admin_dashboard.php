@@ -17,16 +17,16 @@
   <div id="page">
     <h2>Admin Menu</h2>
     <p>Welcome to the admin area, <?php echo htmlentities($_SESSION["admin_name"]); ?>. 	<br> </br> </p>
-
-      <a href="manage_admins.php">Manage Administrators </a>
-      <br> </br>    <br> </br>
-      <a href="manage_users.php">Manage Users</a>
-      <br> </br>    <br> </br>
-      <a href="manage_movies.php">Manage Movies</a>
-      <br> </br>    <br> </br>
-      <a href="manage_actors.php">Manage Actors</a>
-      <br> </br>    <br> </br>
-
+      <ul>
+      <li><a href="manage_admins.php">Manage Administrators </a></li>
+      <br> </br>   
+      <li><a href="manage_users.php">Manage Users</a></li>
+      <br> </br>   
+      <li><a href="manage_movies.php">Manage Movies</a></li>
+      <br> </br>   
+      <li><a href="manage_actors.php">Manage Actors</a></li>
+      <br> </br>    
+      </ul>
 
   </div>
 </div>

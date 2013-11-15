@@ -24,18 +24,19 @@
 
     <table>
       <tr>
-        <th style="text-align: left; width: 200px;">Username</th>
-        <th colspan="2" style="text-align: left;">Actions</th>
+        <th style="text-align: left; width: 150px;">Username</th>
+        <th colspan="2" style="text-align: left;width: 200px;">Email</th>
       </tr>
     <?php while($admin = mysqli_fetch_assoc($admin_set)) { ?>
       <tr>
         <td><?php echo htmlentities($admin["name"]); ?></td>
+        <td><?php echo htmlentities($admin["email"]); ?></td>
         <td><a href="edit_admin.php?id=<?php echo urlencode($admin["id"]); ?>">Edit</a></td>
         <td><a href="delete_admin.php?id=<?php echo urlencode($admin["id"]); ?>" onclick="return confirm('Are you sure?');">Delete</a></td>
       </tr>
     <?php } ?>
     </table>
-    <br />
+    <br></br>
     <a href="new_admin.php">Add new admin</a>
   </div>
 </div>

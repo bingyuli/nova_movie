@@ -40,9 +40,7 @@ if (isset($_POST['submit'])) {
   // This is probably a GET request
   
 } // end: if (isset($_POST['submit']))
-
 ?>
-
 
 <?php $layout_context = "admin"; ?>
 <?php include("../includes/layouts/header.php"); ?>
@@ -73,13 +71,9 @@ if (isset($_POST['submit'])) {
        <input type="password" name="password" value="" />
     </p>
 		
-	<input type ="submit" name="submit" value="Continue" class="blue" >
-
-     	     
+	<input type ="submit" name="submit" value="Continue" class="blue" />  	     
   </form>   
 
-  <br></br>
-  <a href="index.php">Cancel</a>
   </div>
 </div>
- <?php include("../includes/layouts/footer.php"); ?>
+<?php include("../includes/layouts/footer.php"); ?>
