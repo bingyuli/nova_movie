@@ -140,6 +140,16 @@ function password_check($password, $existing_password) {
 		confirm_query($admin_set);
 		return $admin_set;
 	}
+	
+	function find_all_actors() {
+		global $connection;
+		
+		$query  = "SELECT * ";
+		$query .= "FROM actor ";
+		$actor_set = mysqli_query($connection, $query);
+		confirm_query($actor_set);
+		return $actor_set;
+	}
 
 	function find_admin_by_id($admin_id) {
 		global $connection;		
@@ -156,5 +166,22 @@ function password_check($password, $existing_password) {
 		} else {
 			return null;
 		}
-	}					
+	}	
+	
+	function find_actor_by_id($actor_id) {
+		global $connection;		
+		$safe_actor_id = mysqli_real_escape_string($connection, $actor_id);
+		
+		$query  = "SELECT * ";
+		$query .= "FROM actor ";
+		$query .= "WHERE id = {$safe_actor_id} ";
+		$query .= "LIMIT 1";
+		$actor_set = mysqli_query($connection, $query);
+		confirm_query($actor_set);
+		if($actor = mysqli_fetch_assoc($actor_set)) {
+			return $actor;
+		} else {
+			return null;
+		}
+	}				
 ?>
