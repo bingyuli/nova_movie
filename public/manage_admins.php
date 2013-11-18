@@ -7,6 +7,8 @@
 ?>
 <?php $layout_context = "admin"; ?>
 <?php include("../includes/layouts/header.php"); ?>
+<?php 
+  $current_id = htmlentities($_SESSION["admin_id"]); ?>
 
 <div class="hlinks">
    <a href="admin_dashboard.php"><span class="text">Back</span></a>
@@ -31,8 +33,18 @@
       <tr>
         <td><?php echo htmlentities($admin["name"]); ?></td>
         <td><?php echo htmlentities($admin["email"]); ?></td>
+
+		<?php
+         if ($admin["id"] == $current_id) {
+        ?>
         <td><a href="edit_admin.php?id=<?php echo urlencode($admin["id"]); ?>">Edit</a></td>
+        <?php } ?>
+
+        <?php
+         if ($admin["id"] != $current_id) {
+        ?>
         <td><a href="delete_admin.php?id=<?php echo urlencode($admin["id"]); ?>" onclick="return confirm('Are you sure?');">Delete</a></td>
+        <?php } ?>
       </tr>
     <?php } ?>
     </table>
