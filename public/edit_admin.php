@@ -71,18 +71,18 @@ if (isset($_POST['submit'])) {
     <?php echo message(); ?>
     <?php echo form_errors($errors); ?>
     
-    <h2>Edit Admin: <?php echo htmlentities($admin["name"]); ?></h2>
+    <h2>Edit Admin<?php echo htmlentities($admin["name"]); ?></h2>
     <form action="edit_admin.php?id=<?php echo urlencode($admin["id"]); ?>" method="post">
 
-      <p>Admin Name: <br></br>
+      <p>Admin Name<br></br>
         <input type="text" name="admin_name" value="<?php echo htmlentities($admin["name"]); ?>" />
       </p>
 
-      <p>Email:<br></br>
+      <p>Email<br></br>
         <input type="text" name="admin_email" value="<?php echo htmlentities($admin["email"]); ?>" />
       </p>
 
-	  <p>Password:<br></br>
+	  <p>Password<br></br>
         <input type="password" name="password" value="" />
       </p>
       <input type="submit" name="submit" value="Edit Admin" class="blue" />
