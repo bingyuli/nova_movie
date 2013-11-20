@@ -1,0 +1,192 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\fnil\fcharset128 HiraKakuProN-W3;}
+{\colortbl;\red255\green255\blue255;\red255\green0\blue0;\red67\green67\blue67;}
+\vieww12240\viewh14820\viewkind1
+\deftab720
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\f0\fs22 \cf0 11/5/ 2013  
+\f1 \'81\'7c
+\f0  Qi\
+\
+Created folder of 
+\i\b Project_code
+\i0\b0 , and inside it, there is folder 
+\i\b nova_movie
+\i0\b0 , all php and other files about web will be put there.\
+\
+In folder nova_movie, created folder of 
+\i\b public
+\i0\b0 \cf2 . \cf0 In folder public we will put most php files there. Right now done of 
+\i\b index.php
+\i0\b0 , \cf2 still need to work on\cf0  
+\i\b new_user.php, user_login.php, admin_login.php
+\i0\b0 \
+\
+In includes folder will have some functions, header and footer files\
+\
+Also created folder of 
+\i\b stylesheets
+\i0\b0 \cf2 , \cf0 inside there is 
+\i\b public.css. 
+\i0\b0 \cf2  \cf0 \
+===============================================================\
+\
+\
+11/6/2013 - Qi\
+\
+Created folder of\cf3  
+\i\b \cf0 includes
+\i0\b0 \cf2 , \cf0  inside there is a folder called 
+\i\b layouts
+\i0\b0 \cf2 , \cf0 inside it have\cf2  
+\i\b \cf0 header.php
+\i0\b0 \cf2  \cf0 and 
+\i\b footer.php
+\i0\b0 \
+\cf2 \
+\cf0 <?php include("../includes/layouts/header.php"); ?>\
+(-- when use it, if has nothing to add in body, div id= header, need add </div> first)\
+\
+<?php include("../includes/layouts/footer.php"); ?>\
+(-- it also close database connection)\
+\
+created one file 
+\i\b db_connection.php
+\i0\b0  in includes, \
+<?php require_once("../includes/db_connection.php"); ?>\
+\cf2 \
+\cf0 Edit some code of 
+\i\b new_user.php
+\i0\b0   and 
+\i\b new_user_infor.php 
+\i0\b0 \cf2 ( not done yet)\cf0 \
+===============================================================\
+\
+\
+11/7/2013 - Qi\
+\
+created one file 
+\i\b session.php
+\i0\b0  in includes  ( it have two functions message() and errors())\
+<?php require_once("../includes/session.php"); ?>\
+\
+created one file 
+\i\b functions.php
+\i0\b0  in includes  (\cf2 not done yet, just leave 3 functions there as  example, we will put most functions about query here.\cf0 )\
+<?php require_once("../includes/functions.php"); ?>\
+\
+\
+\
+Edited some code of 
+\i\b admin_login.php
+\i0\b0   and 
+\i\b admin_dashboard.php 
+\i0\b0 \cf2 ( not done yet)\cf0 \
+Changed some code of 
+\i\b public.css
+\i0\b0 \
+\cf2 \
+\cf0 Put all updated files in new folder 
+\i\b nova_movie_1107_Qi
+\i0\b0 \
+===============================================================\
+
+\i\b \
+\
+
+\i0\b0 11/11/2013-Ling\
+\
+modified 
+\i\b user_login.php
+\i0\b0 \
+modified 
+\i\b user_dashboard.php
+\i0\b0 \
+\
+Put all updated files in new folder 
+\i\b nova_movie_1111_Ling
+\i0\b0 \
+===============================================================\
+\
+11/13/2013-Ling\
+\
+1. modified\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\b \cf0 user_login.php 
+\b0  (done)
+\b \
+user_logout.php 
+\b0 (done)
+\b \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\i \cf0 user_dashboard.php\
+\
+
+\i0\b0 2. add functions in 
+\b functions.php  :
+\b0 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\b \cf0 user_attempt_login()  
+\b0  (done)
+\b \
+find_user_by_email()  
+\b0  (done)
+\b \
+password_check()  
+\b0  (done)
+\b \
+form_errors()  
+\b0  (done)
+\b \
+\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\b0 \cf0 3. create
+\b  validation functions.php  
+\b0  (done)\
+\
+4. modified 
+\b public.css
+\b0 \
+add a class
+\b  input.blue
+\b0 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\b \cf0 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\b0 \cf0 Put all updated files in new folder 
+\i\b nova_movie_1113_Ling
+\i0\b0 \
+\cf2 now we can login with email and password to go to user_dashboard.php\
+\cf0 ===============================================================\
+\
+\
+11/19/2013-Ling\
+1 modified:\
+
+\b user_dashboard.php  
+\b0 \
+\
+2 add functions in 
+\b functions.php  :\
+find_selected()\
+find_genre_by_type()\
+find_all_genre()\
+find_movies_by_genre_type()\
+find_movies_by_actor()\
+movie_navigation()
+\b0 \
+\
+\
+push to github \
+ ===============================================================\
+\
+\
+\
+}
