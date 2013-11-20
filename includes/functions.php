@@ -301,6 +301,16 @@
 		confirm_query($actor_set);
 		return $actor_set;
 	}
+	
+	function find_all_users() {
+		global $connection;
+		
+		$query  = "SELECT * ";
+		$query .= "FROM user ";
+		$user_set = mysqli_query($connection, $query);
+		confirm_query($user_set);
+		return $user_set;
+	}
 
 	function find_admin_by_id($admin_id) {
 		global $connection;		
@@ -334,5 +344,23 @@
 		} else {
 			return null;
 		}
-	}				
+	}			
+	
+	
+	function find_user_by_id($user_id) {
+		global $connection;		
+		$safe_user_id = mysqli_real_escape_string($connection, $user_id);
+		
+		$query  = "SELECT * ";
+		$query .= "FROM user ";
+		$query .= "WHERE id = {$safe_user_id} ";
+		$query .= "LIMIT 1";
+		$user_set = mysqli_query($connection, $query);
+		confirm_query($user_set);
+		if($user = mysqli_fetch_assoc($user_set)) {
+			return $user;
+		} else {
+			return null;
+		}
+	}	
 ?>
