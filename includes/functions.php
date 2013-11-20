@@ -184,4 +184,9 @@ function password_check($password, $existing_password) {
 			return null;
 		}
 	}				
+	
+	function echoT () {
+		return "testing";
+	}
+	
 ?>
