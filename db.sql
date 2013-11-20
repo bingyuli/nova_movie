@@ -29,7 +29,7 @@ CREATE TABLE movie(
   -- since genre is a multi-value attr, we have a table for it.
   count int Default 0,
   duration smallint not NULL,
-  deleted bit default 0, -- newly added, indicates if this movie has been removed from system 
+  deleted bit default 0,  -- newly added, indicates if this movie has been removed from system 
   PRIMARY KEY (id)
 );
 
@@ -187,91 +187,4 @@ insert into administrator (name,email,password) values ('admin1','ad1@g','123');
 insert into administrator (name,email,password) values ('admin2','ad2@g','123');
 
 insert into administrator (name,email,password) values ('qicao','qicao@gmail','666');
-
--- insertion for watched table
-insert into watched (user_id, movie_id) values('1', '1');
-insert into watched (user_id, movie_id) values('2', '3');
-insert into watched (user_id, movie_id) values('2', '4');
-insert into watched (user_id, movie_id) values('3', '5');
-insert into watched (user_id, movie_id) values('4', '6');
-insert into watched (user_id, movie_id) values('4', '7');
-insert into watched (user_id, movie_id) values('4', '2');
-insert into watched (user_id, movie_id) values('5', '3');
-
--- insertion for interested table
-insert into watched (user_id, movie_id) values('1', '1');
-insert into watched (user_id, movie_id) values('1', '2');
-insert into watched (user_id, movie_id) values('2', '3');
-insert into watched (user_id, movie_id) values('2', '4');
-insert into watched (user_id, movie_id) values('2', '5');
-insert into watched (user_id, movie_id) values('3', '7');
-insert into watched (user_id, movie_id) values('3', '2');
-insert into watched (user_id, movie_id) values('3', '3');
-insert into watched (user_id, movie_id) values('3', '4');
-insert into watched (user_id, movie_id) values('3', '5');
-insert into watched (user_id, movie_id) values('4', '1');
-insert into watched (user_id, movie_id) values('4', '7');
-insert into watched (user_id, movie_id) values('4', '2');
-insert into watched (user_id, movie_id) values('5', '3');
-
--- insertion for comment table
-insert into comment(user_id, movie_id, comment) values('1', '7', 'This is the comment');
-insert into comment(user_id, movie_id, comment) values('2', '6', 'This is the comment');
-insert into comment(user_id, movie_id, comment) values('3', '5', 'This is the comment');
-insert into comment(user_id, movie_id, comment) values('4', '4', 'This is the comment');
-insert into comment(user_id, movie_id, comment) values('5', '3', 'This is the comment');
-
--- insertion for review table
-insert into review(user_id, movie_id, star) values ('1', '2', '3');
-insert into review(user_id, movie_id, star) values ('2', '3', '4');
-insert into review(user_id, movie_id, star) values ('3', '4', '5');
-insert into review(user_id, movie_id, star) values ('4', '5', '1');
-insert into review(user_id, movie_id, star) values ('5', '6', '2');
-
--- insertion for cast table
-insert into cast(movie_id, actor_id) values ('1', '1');
-insert into cast(movie_id, actor_id) values ('1', '2');
-insert into cast(movie_id, actor_id) values ('1', '3');
-
-insert into cast(movie_id, actor_id) values ('2', '4');
-insert into cast(movie_id, actor_id) values ('2', '5');
-insert into cast(movie_id, actor_id) values ('2', '6');
-
-insert into cast(movie_id, actor_id) values ('3', '14');
-
-insert into cast(movie_id, actor_id) values ('4', '13');
-
-insert into cast(movie_id, actor_id) values ('5', '11');
-insert into cast(movie_id, actor_id) values ('5', '12');
-
-insert into cast(movie_id, actor_id) values ('6', '9');
-insert into cast(movie_id, actor_id) values ('6', '10');
-
-insert into cast(movie_id, actor_id) values ('7', '7');
-insert into cast(movie_id, actor_id) values ('7', '8');
-
--- insertion for genre table
-insert into genre(movie_id, type) values ('1' , 'Action');
-insert into genre(movie_id, type) values ('1' , 'Adventure');
-insert into genre(movie_id, type) values ('1' , 'Fantasy');
-
-insert into genre(movie_id, type) values ('2' , 'Drama');
-insert into genre(movie_id, type) values ('2' , 'Sci-Fi');
-insert into genre(movie_id, type) values ('2' , 'Thriller');
-
-insert into genre(movie_id, type) values ('3' , 'Horror');
-insert into genre(movie_id, type) values ('3' , 'Drama');
-
-insert into genre(movie_id, type) values ('4' , 'Comedy');
-
-insert into genre(movie_id, type) values ('5' , 'Crime');
-insert into genre(movie_id, type) values ('5' , 'Drama');
-insert into genre(movie_id, type) values ('5' , 'Thriller');
-
-insert into genre(movie_id, type) values ('6' , 'Drama');
-insert into genre(movie_id, type) values ('6' , 'Romance');
-
-insert into genre(movie_id, type) values ('7' , 'Drama');
-insert into genre(movie_id, type) values ('7' , 'Romance');
-insert into genre(movie_id, type) values ('7' , 'Comedy');
 
