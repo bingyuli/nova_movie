@@ -73,7 +73,7 @@
 
 			<p>
 			<input type ="submit" name="submit" value="Continue" class="blue" >
-			 
+			</p>
 				       
 			</form>   
 

@@ -72,11 +72,11 @@ if (isset($_POST['submit'])) {
     <h2>Edit actor: <?php echo htmlentities($actor["name"]); ?></h2>
     <form action="edit_actor.php?id=<?php echo urlencode($actor["id"]); ?>" method="post">
 
-      <p>Actor Name: <br></br>
+      <p>Actor Name <br></br>
         <input type="text" name="actor_name" value="<?php echo htmlentities($actor["name"]); ?>" />
       </p>
 
-      <p>Gender:
+      <p>Gender
         <input type="radio" name="gender" value = "male" 
 		 <?php
 	         if ($actor["gender"] =="male") {
