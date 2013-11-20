@@ -75,7 +75,7 @@
 
 	<?php } // nothing selected
 		else { ?>
-   <li><a href="edit_user.php">Edit your profile</a></li>
+   <li><a href="user_edit_profile.php?id=<?php echo urlencode($_SESSION["user_id"]); ?>">Edit your profile</a></li>
    <li><a href="search_movie.php">Search Movie</a></li>
 	<?php
 		//we can add some default content will be showed in the user dashboard!!!!!
