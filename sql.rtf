@@ -1,7 +1,7 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
 {\fonttbl\f0\fswiss\fcharset0 ArialMT;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;\red1\green142\blue42;}
-\vieww12240\viewh14820\viewkind1
+\vieww15840\viewh14820\viewkind1
 \deftab720
 \pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 
@@ -223,12 +223,12 @@ insert into movie (name,year,director,picture,rating,introduction,language,studi
 \pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf0 \
 insert into actor (name,gender) values ('Chris Hemsworth','male'); -- thor\
-insert into actor (name,gender) values ('Natalie Portman',\'92female'); -- thor\
-insert into actor (name,gender) values ('Tom Hiddleston',\'92male'); -- thor\
+insert into actor (name,gender) values ('Natalie Portman','female'); -- thor\
+insert into actor (name,gender) values ('Tom Hiddleston','male'); -- thor\
 \
-insert into actor (name,gender) values (\'91Sandra Bullock\'92',\'92female'); -- gravity\
-insert into actor (name,gender) values ('George Clooney',\'92male'); -- gravity\
-insert into actor (name,gender) values ('Ed Harris',\'92male'); -- gravity\
+insert into actor (name,gender) values ('Sandra Bullock','female'); -- gravity\
+insert into actor (name,gender) values ('George Clooney','male'); -- gravity\
+insert into actor (name,gender) values ('Ed Harris','male'); -- gravity\
 \
 insert into actor (name,gender) values ('Bruce Willis','male'); -- moonrise\
 insert into actor (name,gender) values ('Edward Norton','male'); -- moonrise\
@@ -365,4 +365,50 @@ order by movie.name asc;\
 \
 update user set\
 name='ling', email='ling', password='1234'\
-where id='5';}
+where id='5';\
+\
+\
+\
+select * from movie\
+where name like '%the%';\
+\
+select * from movie M\
+where M.name like '%%'\
+AND M.year like '%%'\
+AND M.director like '%%';\
+\
+\
+\
+select * from movie M\
+where M.id IN\
+(select genre.movie_id\
+from genre\
+where genre.type like '%%');\
+\
+\
+\
+\cf2 select * from movie M\
+where M.id IN \
+(SELECT cast.movie_id \
+From cast JOIN actor\
+ON cast.actor_id = actor.id\
+WHERE actor.name like '%%');\cf0 \
+\
+\
+\
+select * from movie M\
+where M.name like '%%'\
+AND M.year like '%%'\
+AND M.director like '%%'\
+AND M.id IN \
+(SELECT cast.movie_id \
+From cast JOIN actor\
+ON cast.actor_id = actor.id\
+WHERE actor.name like '%%')\
+AND M.id IN\
+(select genre.movie_id\
+from genre\
+where genre.type like '%%');\
+\
+\
+}
