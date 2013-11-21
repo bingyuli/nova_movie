@@ -2,7 +2,7 @@
 
 <?php require_once("../includes/functions.php"); ?>
 <?php require_once("../includes/validation_functions.php"); ?>
-<?php
+<?php	
 	define("DB_SERVER", "localhost");
 	define("DB_USER", "nova_team");
 	define("DB_PASS", "sjsuteam3");
@@ -17,14 +17,27 @@
 			" (" . mysqli_connect_errno() . ")"
     );
   }
-  //$id = $_POST['movieID'];
-  $id = 1;
-  $query = "select name,year,director,rating,introduction from movie"; // where id =  .$id;  
+  
+  // check passed in arguments
+  $query = "select movie.id,name,year,director,rating,introduction from movie"; 
+  $result;
+  if (!empty($_GET['mode']) && $_GET['mode'] == 'all') {
+	  // return all movies
+	  $query = "select id,name,year,director,rating,introduction from movie"; 
+	  $result = mysqli_query($connection, $query);	
+  }else {
+    // get interested or watched list
+    //$table = $_GET['mode'];
+	$table = 'watched';
+	$id = 1; // need to be replaced to a session variable
+	$query = $query. "," .$table." where movie.id = movie_id and ".$table. ".user_id=" .$id; 
+  }
   $result = mysqli_query($connection, $query);	
-
   $arr = array();
   while (($movie = mysqli_fetch_assoc($result)) != null) {
     array_push($arr, $movie);
   };
   echo json_encode($arr);
+  
+  
 ?>
