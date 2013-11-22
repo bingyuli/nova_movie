@@ -1,7 +1,6 @@
 <?php
 //nova_movie functions:	
-	
-	
+		
 	
 	function redirect_to($new_location) {
 	  header("Location: " . $new_location);
@@ -287,6 +286,7 @@
 		
 		$query  = "SELECT * ";
 		$query .= "FROM administrator ";
+		$query .= " ORDER BY name ";
 		$admin_set = mysqli_query($connection, $query);
 		confirm_query($admin_set);
 		return $admin_set;
@@ -297,6 +297,7 @@
 		
 		$query  = "SELECT * ";
 		$query .= "FROM actor ";
+		$query .= " ORDER BY name ";
 		$actor_set = mysqli_query($connection, $query);
 		confirm_query($actor_set);
 		return $actor_set;
@@ -307,11 +308,22 @@
 		
 		$query  = "SELECT * ";
 		$query .= "FROM user ";
+		$query .= " ORDER BY name ";
 		$user_set = mysqli_query($connection, $query);
 		confirm_query($user_set);
 		return $user_set;
 	}
-
+	
+	function find_all_movies() {
+		global $connection;		
+		$query  = "SELECT * ";
+		$query .= "FROM movie ";
+		$query .= " ORDER BY name ";
+		$movie_set = mysqli_query($connection, $query);
+		confirm_query($movie_set);
+		return $movie_set;
+	}
+	
 	function find_admin_by_id($admin_id) {
 		global $connection;		
 		$safe_admin_id = mysqli_real_escape_string($connection, $admin_id);
@@ -359,6 +371,23 @@
 		confirm_query($user_set);
 		if($user = mysqli_fetch_assoc($user_set)) {
 			return $user;
+		} else {
+			return null;
+		}
+	}	
+	
+	function find_movie_by_id($movie_id) {
+		global $connection;		
+		$safe_movie_id = mysqli_real_escape_string($connection, $movie_id);
+		
+		$query  = "SELECT * ";
+		$query .= "FROM movie ";
+		$query .= "WHERE id = {$safe_movie_id} ";
+		$query .= "LIMIT 1";
+		$movie_set = mysqli_query($connection, $query);
+		confirm_query($movie_set);
+		if($movie = mysqli_fetch_assoc($movie_set)) {
+			return $movie;
 		} else {
 			return null;
 		}

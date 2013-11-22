@@ -33,12 +33,20 @@ if (isset($_POST['submit'])) {
     $start_date =mysql_prep($_POST["start_date"]);
     $expr_date =mysql_prep($_POST["expr_date"]);
 
+    $today = date("Y-m-d");
+    if($expr_date < $today){
+	$expired = 1;
+	}else {
+	$expired = 0;
+	}
+
     $query  = "UPDATE user SET ";
     $query .= "name = '{$user_name}', ";
     $query .= "email = '{$user_email}', ";
     $query .= "password = '{$password}', ";
     $query .= "start_date = '{$start_date}', ";
-    $query .= "expr_date = '{$expr_date}' ";
+    $query .= "expr_date = '{$expr_date}', ";
+    $query .= "expired = {$expired} ";
     $query .= "WHERE id = {$id} ";
     $query .= "LIMIT 1";
     $result = mysqli_query($connection, $query);

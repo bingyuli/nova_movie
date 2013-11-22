@@ -21,11 +21,18 @@ if (isset($_POST['submit'])) {
     $password = $_POST["password"];
     $start_date =mysql_prep($_POST["start_date"]);
     $expr_date =mysql_prep($_POST["expr_date"]);
-    
+
+    $today = date("Y-m-d");
+    if($expr_date < $today){
+	$expired = 1;
+	}else {
+	$expired = 0;
+	}
+   
     $query  = "INSERT INTO user (";
-    $query .= " name, email, password,start_date,expr_date ";
+    $query .= " name, email, password,start_date,expr_date, expired ";
     $query .= ") VALUES (";
-    $query .= "  '{$user_name}', '{$user_email}', '{$password}', '{$start_date}', '{$expr_date}' ";
+    $query .= "  '{$user_name}', '{$user_email}', '{$password}', '{$start_date}', '{$expr_date}', {$expired} ";
     $query .= ")";
     $result = mysqli_query($connection, $query);
 
@@ -59,7 +66,7 @@ if (isset($_POST['submit'])) {
     <?php echo message(); ?>
     <?php echo form_errors($errors); ?>
     
-    <h2><br></br>Add New User</h2>
+    <h2>Add New User</h2>
     <form action="add_new_user.php" method="post">	     
       <p>User name<br></br>
         <input type="text" name="user_name" value="" />

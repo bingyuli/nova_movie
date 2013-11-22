@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
     <?php echo message(); ?>
     <?php echo form_errors($errors); ?>
     
-    <h2><br></br>Create New Admin</h2>
+    <h2>Create New Admin</h2>
     <form action="new_admin.php" method="post">	     
       <p>Admin name<br></br>
         <input type="text" name="admin_name" value="" />
