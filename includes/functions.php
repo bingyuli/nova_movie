@@ -149,7 +149,7 @@
 		global $connection;
 		$safe_genre_type = mysqli_real_escape_string($connection, $genre_type);
 		
-		$query  = "SELECT movie.name, movie.id ";
+		$query  = "SELECT * ";
 		$query .= "FROM movie JOIN genre ";
 		$query .= "ON movie.id = genre.movie_id ";
 		$query .= "WHERE genre.type = '{$safe_genre_type}' ";
@@ -165,7 +165,7 @@
 	 global $connection;
 	 $safe_actor_id = mysqli_real_escape_string($connection, $actor_id);
 	 
-	 $query  = "SELECT movie.name, movie.id ";
+	 $query  = "SELECT * ";
 	 $query .= "FROM movie JOIN cast ";
 	 $query .= "ON movie.id = cast.movie_id ";
 	 $query .= "WHERE cast.actor_id = {$safe_actor_id} ";
@@ -230,6 +230,43 @@
 	}
 
 
+	function basic_movieinfo_in_table($movie_set){
+		$output1 = "<table border=\"1\"> ";
+		$output1 .= "<tr>";
+		$output1 .= "<th>Title</th>";
+		$output1 .= "<th>Year</th>";
+		$output1 .= "<th>Director</th>";
+		$output1 .= "<th>Rating</th>";
+		$output1 .= "</tr>";
+		
+		while($movie= mysqli_fetch_assoc($movie_set)) {
+			$output1 .= "<tr>";
+			$output1 .=  "<td>";
+			$safe_movie_id = urlencode($movie["id"]);
+			$output1 .=  "<a href=\"movie.php?movie={$safe_movie_id}\">";
+			$output1 .=  htmlentities($movie["name"]);
+			$output1 .=  "</a>";
+			$output1 .=  "</td>";
+			$output1 .=  "<td>";
+			$output1 .=  $movie["year"];
+			$output1 .= "</td>";
+			$output1 .= "<td>";
+			$output1 .=  $movie["director"];
+			$output1 .=  "</td>";
+			$output1.=  "<td>";
+			$output1.=  $movie["rating"];
+			$output1 .=  "</td>";
+			$output1 .=  "</tr>";
+		}
+		$output1 .=   "</table>"; 
+		return $output1;
+	}
+		
+		
+	
+	
+	
+	
 // functions for admin
 	
 	
