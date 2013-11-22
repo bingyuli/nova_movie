@@ -356,8 +356,9 @@
 		} else {
 			return null;
 		}
-	}			
-	
+
+	}				
+			
 	
 	function find_user_by_id($user_id) {
 		global $connection;		

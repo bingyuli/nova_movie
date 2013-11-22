@@ -30,7 +30,7 @@
  </div>
      
  <div id="page">
-	<h2>User Dashbord</h2>
+	<h2>User Dashboard</h2>
 	<p>Welcome to the Nova Movie, <?php echo htmlentities($_SESSION["user_name"]); ?>.</p>
 	
 	<?php echo message();?>
@@ -75,8 +75,11 @@
 
 	<?php } // nothing selected
 		else { ?>
-   <li><a href="edit_user.php">Edit your profile</a></li>
-   <li><a href="search_movie.php">Search Movie</a></li>
+	<li><a href="user_edit_profile.php?id=<?php echo urlencode($_SESSION["user_id"]); ?>">Edit your profile</a></li>
+	<li><a href="user_search_movie.php">Search Movie</a></li>
+	<li><a href="interest_movie.php">Movie in you Interest List</a></li>
+	<li><a href="wathed_movie.php">Movie you have watched</a></li>
+	<li><a href="recently_release_movie.php">Movie recently released</a></li>
 	<?php
 		//we can add some default content will be showed in the user dashboard!!!!!
 	//like some pictures or the most recently release movie 
