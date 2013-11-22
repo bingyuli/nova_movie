@@ -18,12 +18,14 @@ if (isset($_POST['submit'])) {
 		$user_name = mysql_prep($_POST["username"]);
 		$user_email = mysql_prep($_POST["useremail"]);
 		$user_password = $_POST["password"];
-		
+		$start_date =mysql_prep(date("Y-m-d"));
+		$next_month = mktime(0,0,0,date("m")+1,date("d"),date("Y"));
+		$expr_date = date("Y-m-d", $next_month);
 		
 		$query  = "INSERT INTO user (";
-		$query .= " name, email, password";
+		$query .= " name, email, password,start_date,expr_date ";
 		$query .= ") VALUES (";
-		$query .= "  '{$user_name}', '{$user_email}','{$user_password}'";
+		$query .= "  '{$user_name}', '{$user_email}','{$user_password}','{$start_date}', '{$expr_date}' ";
 		$query .= ")";
 		$result = mysqli_query($connection, $query);
 		
@@ -72,8 +74,9 @@ if (isset($_POST['submit'])) {
 	<?php echo message(); ?>
 	<?php echo form_errors($errors); ?>
 
-    <h1><br></br>Ready to start your free month? </h1>
-    <h2><br></br>Create your account:</h2>
+    
+    <h2>Ready to start your free month?<br></br> 
+	Create your account:</h2>
     <form action="new_user.php" method="post">
 
 		<p><br></br>Your First Name and Last Name <br></br>
@@ -84,9 +87,10 @@ if (isset($_POST['submit'])) {
 		<input type="text" name="useremail" value="" />
 		</p>
 
-		<p>Choose a password (4-20 characters)<br></br>
+		<p>Choose a password (4-20 characters) <br></br>
 		<input type="password" name="password" value="" />
 		</p>
+
 
 		<p> 
 		 <input type ="submit" name="submit" value="Register" class="blue" />
