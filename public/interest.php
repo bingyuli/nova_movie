@@ -3,12 +3,12 @@
   
   // check for user log-in
   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-    //$userId = $_SESSION['userID'];
+    //$userId = $_SESSION['user_id'];
   } else {
 	$url = 'http://localhost/nova_movie/public/user_login.php';	
     //header("Location: $url");
   }
-  //echo $_SESSION['userID'];
+  //echo $_SESSION['user_id'];
     
   //$userId
   
@@ -28,16 +28,7 @@
   }
   $userId = 1;
   $query = "select name,year from movie,interested where movie_id = movie.id and user_id=" .$userId;
-  
-  /*
-  $query  = "SELECT movie.name AS movie_name, movie.id AS movie_id ";
-		$query .= "FROM watched JOIN movie ";
-		$query .= "ON watched.movie_id = movie.id ";
-		$query .= "WHERE watched.user_id = {$safe_user_id} ";
-		//$query .= "WHERE user_id = {$id} ";
-		$query .= "ORDER BY watched.id DESC ";
-		$query .= "LIMIT 3";
-		*/
+  $query .= " ORDER BY interested.id DESC";  
 		
   $result = mysqli_query($connection, $query);	
   $arr = array();
