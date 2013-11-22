@@ -365,4 +365,29 @@
 		}
 	}	
 
+	function find_watched_movie($user_id) { 		
+	// will return movie.id  and movie.name in tuples
+		global $connection;		   
+		$safe_user_id = mysqli_real_escape_string($connection, $user_id);
+		//$id = 2;
+		$query  = "SELECT movie.name, movie.id ";
+		$query .= "FROM watched JOIN movie ";
+		$query .= "ON watched.movie_id = movie.id ";
+		$query .= "WHERE watched.user_id = {$safe_user_id} ";
+		//$query .= "WHERE user_id = {$id} ";
+		$query .= "ORDER BY watched.id DESC ";
+		$query .= "LIMIT 3";
+		//$query .= "LIMIT 0, 3";
+		//echo $query;
+		// echo "<br />";
+		$watched_set = mysqli_query($connection, $query);
+		confirm_query($watched_set);
+		return $watched_set;
+		/*if($watched = mysqli_fetch_assoc($watched_set)) {
+			return $watched;
+		} else {
+			return null;
+		}	*/ 
+	}	
+		
 ?>

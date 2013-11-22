@@ -188,3 +188,24 @@ insert into administrator (name,email,password) values ('admin2','ad2@g','123');
 
 insert into administrator (name,email,password) values ('qicao','qicao@gmail','666');
 
+-- insertion for watched table
+
+insert into watched (user_id, movie_id) values ('3', '2');
+insert into watched (user_id, movie_id) values ('2', '7');
+insert into watched (user_id, movie_id) values ('3', '6');
+insert into watched (user_id, movie_id) values ('3', '3');
+insert into watched (user_id, movie_id) values ('4', '5');
+insert into watched (user_id, movie_id) values ('3', '1');
+insert into watched (user_id, movie_id) values ('2', '3');
+insert into watched (user_id, movie_id) values ('1', '4');
+
+-- insertion for interested table
+
+insert into interested (user_id, movie_id) values ('1', '7');
+insert into interested (user_id, movie_id) values ('3', '4');
+insert into interested (user_id, movie_id) values ('2', '1');
+insert into interested (user_id, movie_id) values ('4', '2');
+insert into interested (user_id, movie_id) values ('1', '3');
+insert into interested (user_id, movie_id) values ('2', '6');
+insert into interested (user_id, movie_id) values ('2', '5');
+
