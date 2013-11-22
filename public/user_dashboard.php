@@ -9,7 +9,7 @@
 <div class="hlinks">
    <a href="user_logout.php"><span class="text">Log Out</span></a>
 </div>
-<?php find_selected(); //would find selected genre, actor
+<?php find_selected(); //would find selected genre, actor 
 	//$current_genre=null;
 	//$current_actor=null;
 	?>
@@ -39,18 +39,13 @@
 		if ($current_genre) { ?>
 	<h3>Movies in this genre:</h3>
 	<ul>
+
 	<?php 
 		$movie_set= find_movies_by_genre_type($current_genre["type"]);
-		while($movie= mysqli_fetch_assoc($movie_set)) {
-			echo "<li>";
-			$safe_movie_id = urlencode($movie["id"]);
-			echo "<a href=\"movie.php?movie={$safe_movie_id}\">";
-			echo htmlentities($movie["name"]);
-			echo "</a>";
-			echo "</li>";
-		}
+		echo basic_movieinfo_in_table($movie_set);
 		?>
-	</ul>
+
+    </ul>
 	<br />
 	</div>
 
@@ -60,15 +55,9 @@
 	<ul>
 	<?php 
 		$movie_set= find_movies_by_actor($current_actor["id"]);
-		while($movie= mysqli_fetch_assoc($movie_set)) {
-			echo "<li>";
-			$safe_movie_id = urlencode($movie["id"]);
-			echo "<a href=\"movie.php?movie={$safe_movie_id}\">";
-			echo htmlentities($movie["name"]);
-			echo "</a>";
-			echo "</li>";
-		}
-		?>
+		echo basic_movieinfo_in_table($movie_set);
+	?>
+   
 	</ul>
 	<br />
 	</div>
@@ -85,9 +74,6 @@
 	//like some pictures or the most recently release movie 
 	 }?>
 	
-
-
-
 
 </div>
 
