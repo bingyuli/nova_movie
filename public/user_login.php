@@ -25,11 +25,7 @@
 				$expr_date =mysql_prep($found_user["expr_date"]);
 				$today = date("Y-m-d");    // 得到当前日期
 				
-				if ($found_user["expired"]==1){ //user already expired
-					$_SESSION["message"] = "Your status is already expired.";
-				}
-
-				elseif($expr_date < $today){
+				if($expr_date < $today){
 					// set user expired
 					$_SESSION["message"] = "Your status is already expired.";	
 					$query  = "UPDATE user SET ";
@@ -37,14 +33,14 @@
 					$query .= "WHERE id ={$found_user["id"]}; ";
 					$result = mysqli_query($connection, $query);
 				}	
-				else {
-					
-					// Mark user as logged in
-					$_SESSION["user_id"] = $found_user["id"];
-					$_SESSION["user_name"] = $found_user["name"];
-					$_SESSION["user_email"] = $found_user["email"];
-					redirect_to("user_dashboard.php");
-				}
+				
+				// Mark user as logged in
+				$_SESSION["user_id"] = $found_user["id"];
+				$_SESSION["user_name"] = $found_user["name"];
+				$_SESSION["user_email"] = $found_user["email"];
+				$_SESSION["loggedin"] = true;
+				redirect_to("user_dashboard.php");
+				
 				
 			} else {
 				// Failure

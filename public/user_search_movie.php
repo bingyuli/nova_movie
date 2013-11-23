@@ -95,14 +95,8 @@ if (isset($_POST['submit'])) {
 	<?php if ($movie_set) { ?>
 	<h3>Movies found: </h3>
     <?php 
-		while($movie= mysqli_fetch_assoc($movie_set)) {
-			echo "<li>";
-			$safe_movie_id = urlencode($movie["id"]);
-			echo "<a href=\"movie.php?movie={$safe_movie_id}\">";
-			echo htmlentities($movie["name"]);
-			echo "</a>";
-			echo "</li>";
-		}
+		echo basic_movieinfo_in_table($movie_set);
+		
 	?>
 	<?php }else {
 		echo "<h3> You can search movies now. </h3>";
