@@ -28,7 +28,7 @@
      
 	// load and show movie information
     $.get("fetchMovie.php",{movieId:movieId}, function( data ) {
-	  $('#mov').append("<img src='../public/image/Thor-The-Dark-World.jpg' alt='Smiley face'>");
+	  $('#mov').append("<img src='../public/image/" + data.picture +"'>");
 	  $('#mov').append("<h2>"+ data.name +"</h2>");
 	  $('#mov').append("<h3>Year: "+ data.year +"</h3>");
 	  $('#mov').append("<h3>Director: "+ data.director +"</h3>");

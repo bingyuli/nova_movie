@@ -15,7 +15,7 @@
   }
   
   $id = $_GET['movieId'];
-  $query = "select id,name,year,director,rating,introduction,count from movie where id =".$id; 
+  $query = "select id,name,year,director,rating,introduction,count,picture from movie where id =".$id; 
   $result = mysqli_query($connection, $query);	
   echo json_encode(mysqli_fetch_assoc($result));
   
