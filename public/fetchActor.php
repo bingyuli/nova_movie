@@ -14,8 +14,7 @@
     );
   }
   
-  //$id = $_GET['id'];
-  $id = 1;
+  $id = $_GET['movieId'];
   $query = "select name,gender from actor,cast where actor_id=actor.id and movie_id=" .$id;
   $result = mysqli_query($connection, $query);	
   $arr = array();
