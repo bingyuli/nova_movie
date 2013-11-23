@@ -121,13 +121,20 @@ div.message {
 
 
 input    {
-width:260px;
+width:220px;
 display:block;
 border: 1px solid #999;
 height: 30px;
 font-size: 15px;
 }
 
+input.small    {
+width:80px;
+display:block;
+border: 1px solid #999;
+height: 30px;
+font-size: 15px;
+}
 
 input.blue {
    background-color: #135aac;  

@@ -364,12 +364,30 @@
 		$actor_set = mysqli_query($connection, $query);
 		confirm_query($actor_set);
 		if($actor = mysqli_fetch_assoc($actor_set)) {
+
 			return $actor;
 		} else {
 			return null;
 		}
 
 	}				
+			
+	function find_actor_by_name($name) {
+		global $connection;				
+		$query  = "SELECT id ";
+		$query .= "FROM actor ";
+		$query .= "WHERE name = '{$name}' ";
+		$query .= "LIMIT 1";
+		$actor_id = mysqli_query($connection, $query);
+		confirm_query($actor_id);
+		if($actor = mysqli_fetch_assoc($actor_id)) {
+			return $actor;
+		} else {
+			return null;
+		}
+
+	}		
+			
 			
 	
 	function find_user_by_id($user_id) {
@@ -430,5 +448,16 @@
 			return null;
 		}	*/ 
 	}	
+	
+	function find_movie_by_name($name){ 
+	 // will return movie.id
+	 global $connection;
+	 $query  = "SELECT id ";
+	 $query .= "FROM movie ";
+	 $query .= "WHERE name = '{$name}' ";
+	 $movie_id = mysqli_query($connection, $query);
+	 confirm_query($movie_id);
+	 return $movie_id;
+	 }	
 		
 ?>
