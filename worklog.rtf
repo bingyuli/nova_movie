@@ -240,4 +240,62 @@ push to github \
 \
  ===============================================================\
 \
-}
+11/22/2013-Ling\
+1 modified:\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\ql\qnatural\pardirnatural
+
+\b \cf0 user_dashboard.php  \
+
+\b0 //1.  could chek user expired or not\
+if expired, just provide an option to make a payment\
+2. if not choose any genren from browse, could show basic backgroud pictures\
+3. remove actors from navigation\
+
+\b \
+user_make_payment.php \
+// could update user's "
+\b0 expr_date", and change "expire" value to 0, then go back to user_dashboard.php
+\b \
+\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+\cf0 user_search_movie.php \
+ //
+\b0 now we can search movie by name, year, director, actor, genre\
+//search result would be show in tables.\
+//change the parameter for _GET to "movieId"\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\ql\qnatural\pardirnatural
+\cf0 \
+
+\b log_in.php \
+
+\b0 // could check expired or not, and update the "expired" value.\
+// _Session[loggedin] = true\
+\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\b \cf0 user_edit_profile.php \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 //show start date and expire date info, but could not be edit.
+\b  \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\b0 \cf0 \
+2 add functions in 
+\b functions.php  :\
+
+\b0 \
+\pard\tx560\pardeftab560\ql\qnatural\pardirnatural
+
+\b \cf0 user_dashboard_default_pics()\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\b0 \cf0 //show pictures
+\f2 \
+\pard\tx560\pardeftab560\ql\qnatural\pardirnatural
+
+\f0 \cf0 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+\cf0 \
+push to github \
+ ===============================================================}

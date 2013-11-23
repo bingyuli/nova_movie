@@ -69,22 +69,28 @@ if (isset($_POST['submit'])) {
     <?php echo message(); ?>
     <?php echo form_errors($errors); ?>
     
-    <h2>Edit User: <?php echo htmlentities($user["name"]); ?></h2>
+    <h2>Edit Your Profile: <?php echo htmlentities($user["name"]); ?></h2>
     <form action="user_edit_profile.php?id=<?php echo urlencode($_SESSION["user_id"]); ?>" method="post">
 
-      <p>User Name<br></br>
-        <input type="text" name="user_name" value="<?php echo htmlentities($user["name"]); ?>" />
-      </p>
+		<p>User Name<br></br>
+		<input type="text" name="user_name" value="<?php echo htmlentities($user["name"]); ?>" />
+		</p>
 
-      <p>Email<br></br>
-        <input type="text" name="user_email" value="<?php echo htmlentities($user["email"]); ?>" />
-      </p>
+		<p>Email<br></br>
+		<input type="text" name="user_email" value="<?php echo htmlentities($user["email"]); ?>" />
+		</p>
 
-	  <p>Password<br></br>
-        <input type="password" name="password" value="" />
-      </p>
+		<p>Password<br></br>
+		<input type="password" name="password" value="" />
+		</p>
+		<p>Start Date<br></br>
+		<?php echo htmlentities($user["start_date"]); ?>
+		</p>
+		<p>Expried Date<br></br>
+		<?php echo htmlentities($user["expr_date"]); ?>
+		</p>
 
-      <input type="submit" name="submit" value="Edit User" class="blue" />
+		<input type="submit" name="submit" value="Edit User" class="blue" />
     </form>
     <br />
   </div>

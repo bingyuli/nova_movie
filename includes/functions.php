@@ -95,22 +95,15 @@
 		}
 	}
 
-	function find_selected() {  //find selected genre, actor
+	function find_selected_genre() {  //find selected genre
 		global $current_genre;
-		global $current_actor;
-		//could add more global variable
-		
+
 		if (isset($_GET["genre"])){
 			$current_genre = find_genre_by_type ($_GET["genre"]);
-			$current_actor = null;
 		}
-		else if (isset($_GET["actor"])){
-			$current_actor = find_actor_by_id ($_GET["actor"]);
-			$current_genre = null;
-		}
+		
 		else {
 			$current_genre = null;
-			$current_actor = null;
 		}
 	}
 
@@ -176,7 +169,7 @@
 	 
 	
 	
-	function movie_navigation($genre_array, $actor_array) {
+	function movie_navigation($genre_array) {
 		
 		// show genres:
 		$output = "<ul class=\"subjects\">";
@@ -199,71 +192,53 @@
 			$output .= "</li>"; // end of the genre li
 		}
 		$output .= "</ul>";
-		
-		//show actors:
-		$output .= "<ul class=\"subjects\">";
-		$output .= "Actors:";
-		$output .= "</ul>";
-		
-		$output .= "<ul class=\"pages\">";
-		$actor_set = find_all_actors();
-		while($actor = mysqli_fetch_assoc($actor_set)) {
-			$output .= "<li";
-			if ($actor_array && $actor["id"] == $actor_array["id"]) {
-				$output .= " class=\"selected\"";
-			}
-			$output .= ">";
-			$output .= "<a href=\"user_dashboard.php?actor=";
-			$output .= urlencode($actor["id"]);
-			$output .= "\">";
-			$output .= htmlentities($actor["name"]);
-			$output .= "</a>";
-			$output .= "</li>"; // end of the genre li	
-		}
-		$output .= "</ul>";
-		
 		mysqli_free_result($genre_set);
-		mysqli_free_result($actor_set);
-		
 		return $output;
 	}
 
 
-	function basic_movieinfo_in_table($movie_set){
-		$output1 = "<table border=\"1\"> ";
-		$output1 .= "<tr>";
-		$output1 .= "<th>Title</th>";
-		$output1 .= "<th>Year</th>";
-		$output1 .= "<th>Director</th>";
-		$output1 .= "<th>Rating</th>";
-		$output1 .= "</tr>";
+	function basic_movieinfo_in_table($movie_set){  //$movie_set is a virtual table returned by SQL query
+		$output = "<table border=\"1\"> ";
+		$output .= "<tr>";
+		$output .= "<th>Title</th>";
+		$output .= "<th>Year</th>";
+		$output .= "<th>Director</th>";
+		$output .= "<th>Rating</th>";
+		$output .= "</tr>";
 		
 		while($movie= mysqli_fetch_assoc($movie_set)) {
-			$output1 .= "<tr>";
-			$output1 .=  "<td>";
+			$output .= "<tr>";
+			$output .=  "<td>";
 			$safe_movie_id = urlencode($movie["id"]);
-			$output1 .=  "<a href=\"movie.php?movie={$safe_movie_id}\">";
-			$output1 .=  htmlentities($movie["name"]);
-			$output1 .=  "</a>";
-			$output1 .=  "</td>";
-			$output1 .=  "<td>";
-			$output1 .=  $movie["year"];
-			$output1 .= "</td>";
-			$output1 .= "<td>";
-			$output1 .=  $movie["director"];
-			$output1 .=  "</td>";
-			$output1.=  "<td>";
-			$output1.=  $movie["rating"];
-			$output1 .=  "</td>";
-			$output1 .=  "</tr>";
+			$output .=  "<a href=\"movie.php?movieId={$safe_movie_id}\">";
+			$output .=  htmlentities($movie["name"]);
+			$output .=  "</a>";
+			$output .=  "</td>";
+			$output .=  "<td>";
+			$output .=  $movie["year"];
+			$output .= "</td>";
+			$output .= "<td>";
+			$output .=  $movie["director"];
+			$output .=  "</td>";
+			$output .=  "<td>";
+			$output .=  $movie["rating"];
+			$output .=  "</td>";
+			$output .=  "</tr>";
 		}
-		$output1 .=   "</table>"; 
-		return $output1;
+		$output .=   "</table>"; 
+		return $output;
 	}
 		
+	function user_dashboard_default_pics() {
 		
+	    $output ="<img src=\"http://pic1a.nipic.com/2008-09-11/2008911114038528_2.jpg\" 
+		alt=\"Family\" width=\"150\" height=\"150\"> ";
+		$output .="<img src=\"image/background.jpg\" 
+		alt=\"Family\" width=\"200\" height=\"150\"> ";
+		return $output;
 	
-	
+	}
+
 	
 	
 // functions for admin
