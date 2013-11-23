@@ -13,60 +13,129 @@
 
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
+  // load all movie information when the page is ready
+  var $_GET = {};
+  var movieId;
+  $( document ).ready(function() {
+     if (document.location.toString().indexOf('?') != -1) {
+		var query = document.location.toString().replace(/^.*?\?/,'').split('&');
+		  for(var i=0,l=query.length;i<l;i++) {
+			var aux = unescape(query[i]).split('=');
+			$_GET[aux[0]] = aux[1];
+		  }
+	  }
+	  movieId = $_GET['movieId'];
+     
+	// load and show movie information
+    $.get("fetchMovie.php",{movieId:movieId}, function( data ) {
+	  $('#mov').append("<img src='../public/image/" + data.picture +"'>");
+	  $('#mov').append("<h2>"+ data.name +"</h2>");
+	  $('#mov').append("<h3>Year: "+ data.year +"</h3>");
+	  $('#mov').append("<h3>Director: "+ data.director +"</h3>");
+	  $('#mov').append("<h3>Rating: "+ data.rating +"</h3>");
+	  $('#mov').append("<h3>Introduction: "+ data.introduction +"</h3>");
+	  $('#mov').append("<h3>Played Times: "+ data.count +"</h3>");
+	},"json");
 
-  // show all movies
-  function showAllMovie () {
-	$.get( "fetchMovie.php", { name: "John" }, function( d ) {
-	  var html = '';
-	  for(var i = 0; i < d.length; i++)
-            html += "<tr><td id="+ d[i].id +" onClick='addToIn(this)'><font color='red'>Save</font></td><td>" 
-			+ d[i].name + '</td><td>' + d[i].year + '</td><td>' + d[i].director + '</td><td>' + d[i].rating + '</td><td>' 
-			+ d[i].introduction + "</td><td id="+ d[i].id +" onClick='addToIn(this)'>Watch this</td></tr>";
-	$('#movieTable tr').first().after(html);
-    },"json");
+	// load and show actors
+    $.get("fetchActor.php", {movieId:movieId}, function(data) {
+	  var html = "<h3>Acotr: ";
+	  for (var i = 0; i < data.length; i++) {
+	    html += data[i].name +", ";
+	  }
+	  $('#actor').append(html+"</h3>");
+	},"json");
 
-  }
+	// load and show review
+	$.get("fetchReview.php", {movieId:movieId,mode:'fetch'}, function(data) {
+	  var html = "<h3>Review: ";
+	  for (var i = 0; i < data.length; i++) {
+	    html += data[i].star +" ";
+	  }
+	  $('#review').append(html+"</h3>");
+	},"json");
+	
+	// load and show comments
+	$.get("fetchComment.php", {movieId:movieId,mode:'fetch'}, function(data) {
+	  var html = "<h3>Comment: </h3>";
+	  for (var i = 0; i < data.length; i++) {
+	    html += "<p>"+ data[i].comment +"</p>";
+	  }
+	  $('#comment').append(html);
+	},"json");
+  });
   
-  // add to interested or watched table
+  // watch movie
+  // add movie to wathched list, updating movie count
+  function watchMovie() {
+    $.get( "watchMovie.php", {movieId: movieId}, function( data ) {
+	  $('#message').append("<h3><font color='red'>You Just Watched this movie</h3>");
+	});
+  } 
+   
+  
+  // add to interest list
   function addToIn() {
-    //..alert(movie.id);
-	$.get( "fetchMovie.php", { movieId: 1,aol: 2 }, function( data ) {
-	  alert(data)
+	$.get( "addTointerest.php", {movieId: movieId, mode:'add'}, function( data ) {
+	  $('#message').append("<h3><font color='red'>You have addad this movie to your interest list</h3>");
+	});
+  }
+    
+  // remove from interest list
+  function deleteFromIn() {
+	$.get( "addTointerest.php", {movieId: movieId, mode:'remove'}, function( data ) {
+	  $('#message').append("<h3><font color='red'>You have removed this movie from your interest list</h3>");
 	});
   }
   
-  // show current user's interested or watched movie list
-  function showInterested(movie) {
-    //..alert(movie.id);
-	$.get( "fetchMovie.php", { movieId: movie.id }, function( data ) {
-	  alert(movie.id)
+  // rate movie
+  function rate() {
+    var rating = document.getElementById('userRating').value;
+	
+    $.get( "fetchReview.php", {movieId: movieId, mode:'rate',star:rating}, function( data ) {
+	  $('#message').append("<h3><font color='red'>Thank you for rating</h3>");
 	});
-  }
-  
+  }	
+	
+  // add comment	
+  function addComment() {
+    var comment = document.getElementById('userComment').value;
+	
+    $.get( "fetchComment.php", {movieId: movieId, mode:'comment',comm:comment}, function( data ) {
+	  $('#message').append("<h3><font color='red'>Thank you for your comment</h3>");
+	});
+  }	
+	
+
 </script>
 
 <?php include("../includes/layouts/header.php"); ?>
 <div class="hlinks">
    <a href="manage_actors.php"><span class="text">Back</span></a>
 </div>
-<div>
-  <p>movie ID <br></br>
-	   <input type="button" onclick="showAllMovie()" value="show all movies"/>
-	   <input type="button" onclick="addToIn()" value="show interested movies"/>
-  </p>
-  
-</div>
-<body>
-  <table border="1" id = "movieTable">
-	<tr>
-	<td>SaveToInterest</td>
-	<th>Title</th>
-	<th>Year</th>
-	<th>Director</th>
-	<th>Rating</th>
-	<th>Introduction</th>
-	<td></td>
-	</tr>
-  </table> 
 
+<body>
+  <input type="button" onclick="watchMovie()" value="Watch"/>
+  <input type="button" onclick="addToIn()" value="Add To Interest List"/>
+  <input type="button" onclick="deleteFromIn()" value="Remove from Interest List"/>
+
+  
+  <form>
+    Rating: <input type="text" id="userRating"><br>
+	<input type="button" onclick='rate()' value="Submit Rating">
+  </form> 
+  
+  <form>
+    Comment: <input type="text" id="userComment"><br>
+	<input type="button" onclick='addComment()' value="Submit Comment">
+  </form> 
+  <div id="message"></div>
+
+  <div id='mov'>
+  </div>
+  <div id='actor'></div>
+  <div id='review'></div>
+  <div id='comment'></div>
+  
+  
 </body>

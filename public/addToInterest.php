@@ -22,9 +22,11 @@
   } 
   
   $id = $_GET['movieId'];
-  $query = "insert into watched(user_id,movie_id) values(" .$userId.', '.$id. ")";
-  $result = mysqli_query($connection, $query);	
-  
-  $query = "update movie set count=count+1 where id=".$id;
+  $mode = $_GET['mode'];
+  if ($mode == "remove") {
+    $query = "delete from interested where user_id=".$userId." and movie_id=".$id;
+  }else if ($mode == "add") {
+    $query = "insert into interested(user_id,movie_id) values(" .$userId.', '.$id. ")";
+  }
   $result = mysqli_query($connection, $query);
 ?>

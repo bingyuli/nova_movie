@@ -14,14 +14,26 @@
     );
   }
   
-  //$id = $_GET['id'];
-  $id = 1;
-  $query = "select name,comment from comment,user where user_id=user.id and movie_id=" .$id;
-  $result = mysqli_query($connection, $query);	
-  $arr = array();
-  while (($comment = mysqli_fetch_assoc($result)) != null) {
-    array_push($arr, $comment);
-  };
+  //$userId = 1; 
+  $userId;
+  if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    $userId =  $_SESSION['userID'];
+  } 
   
-  echo json_encode($arr);
+  $id = $_GET['movieId'];
+  $mode = $_GET['mode'];
+  if ($mode == 'fetch') {  
+    $query = "select comment from comment where movie_id=" .$id;
+    $result = mysqli_query($connection, $query);	
+    $arr = array();
+    while (($star = mysqli_fetch_assoc($result)) != null) {
+      array_push($arr, $star);
+    }
+	echo json_encode($arr);
+  }else if ($mode = 'comm') {
+    $comment = $_GET['comm'];
+    $query = "insert into comment(user_id,movie_id,comment) values(".$id.','.$userId.",'".$comment."')";
+    $result = mysqli_query($connection, $query);
+	echo $query;
+  }
 ?>
