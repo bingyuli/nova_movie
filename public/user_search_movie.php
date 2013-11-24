@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 		<p>Director Name <br></br>
 		<input type="text" name="director_name" value="<?php echo htmlentities($director_name); ?>" />
 		</p>
-		<input type="submit" name="submit" value="Start Search"/>
+		<input type="submit" name="submit" value="Start Search" class ="blue"/>
 
 		</form>
 		<br />

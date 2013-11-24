@@ -459,5 +459,55 @@
 	 confirm_query($movie_id);
 	 return $movie_id;
 	 }	
-		
+	
+	function find_actor_by_movieid($movie_id){
+	// will return actor names by movie_id
+	global $connection;
+	$query  = "SELECT DISTINCT name ";
+	$query .= "FROM actor, cast ";
+	$query .= " WHERE movie_id = '{$movie_id}' ";
+	$query .= " AND actor_id = actor.id ";
+	$actor_set = mysqli_query($connection, $query);
+    confirm_query($actor_set);
+	return $actor_set;
+	}
+	
+	function find_genre_by_movieid($movie_id){
+	// will return genre type by movie_id
+	global $connection;
+	$query  = "SELECT DISTINCT type ";
+	$query .= "FROM genre ";
+	$query .= " WHERE movie_id = '{$movie_id}' ";
+	$genre_set = mysqli_query($connection, $query);
+
+    confirm_query($genre_set);
+	return $genre_set;
+	}
+	
+	function find_comment_by_movieid($movie_id){
+	// will return the user name and comment by movie_id
+	global $connection;
+	$query  = "SELECT comment.id, name, comment  ";
+	$query .= "FROM user, comment ";
+	$query .= " WHERE movie_id = '{$movie_id}' ";
+	$query .= " AND user.id = user_id ";
+	$comment_set = mysqli_query($connection, $query);
+
+    confirm_query($comment_set);
+	return $comment_set;
+	}
+	
+	function find_review_by_movieid($movie_id){
+	// will return the user name and review by movie_id
+	global $connection;
+	$query  = "SELECT review.id, name, star  ";
+	$query .= "FROM user, review ";
+	$query .= " WHERE movie_id = '{$movie_id}' ";
+	$query .= " AND user.id = user_id ";
+	$review_set = mysqli_query($connection, $query);
+
+    confirm_query($review_set);
+	return $review_set;
+	}
+			
 ?>

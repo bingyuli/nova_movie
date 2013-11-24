@@ -77,7 +77,7 @@
   // add to interest list
   function addToIn() {
 	$.get( "addTointerest.php", {movieId: movieId, mode:'add'}, function( data ) {
-	  $('#message').append("<h3><font color='red'>You have addad this movie to your interest list</h3>");
+	  $('#message').append("<h3><font color='red'>You have added this movie to your interest list</h3>");
 	});
   }
     
@@ -111,24 +111,16 @@
 
 <?php include("../includes/layouts/header.php"); ?>
 <div class="hlinks">
-   <a href="manage_actors.php"><span class="text">Back</span></a>
+   <a href="user_dashboard.php"><span class="text">Back</span></a>
+</div>
 </div>
 
-<body>
-  <input type="button" onclick="watchMovie()" value="Watch"/>
-  <input type="button" onclick="addToIn()" value="Add To Interest List"/>
-  <input type="button" onclick="deleteFromIn()" value="Remove from Interest List"/>
+<div id="main">
+  <div id="navigation">
+	  &nbsp;
+  </div>
 
-  
-  <form>
-    Rating: <input type="text" id="userRating"><br>
-	<input type="button" onclick='rate()' value="Submit Rating">
-  </form> 
-  
-  <form>
-    Comment: <input type="text" id="userComment"><br>
-	<input type="button" onclick='addComment()' value="Submit Comment">
-  </form> 
+
   <div id="message"></div>
 
   <div id='mov'>
@@ -136,6 +128,28 @@
   <div id='actor'></div>
   <div id='review'></div>
   <div id='comment'></div>
+ 
+  <table> 
+  <tr>    
+   <td style ="width: 250px;">
+  <input type="button" onclick="watchMovie()" value="Watch" class ="blue"/></td>
+  <td style ="width: 250px;">
+  <input type="button" onclick="addToIn()" value="Add To Interest List" class ="blue"/></td>
+   <td style ="width: 250px;">
+  <input type="button" onclick="deleteFromIn()" value="Remove from Interest List" class ="blue"/></td>
+
+   </tr>    
+   </table> 
+  <form>
+    Rating: <input type="text" id="userRating"><br>
+	<input type="button" onclick='rate()' value="Submit Rating" class ="blue">
+  </form> 
   
+  <form>
+    Comment: <input type="text" id="userComment"><br>
+	<input type="button" onclick='addComment()' value="Submit Comment" class ="blue">
+  </form> 
+
   
-</body>
+</div>
+<?php include("../includes/layouts/footer.php"); ?>

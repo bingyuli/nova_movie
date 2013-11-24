@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
      
      <table> 
      <tr>
-      <td style ="width:250px;"><p>Movie name<br></br>
+      <td style ="width: 250px;"><p>Movie name<br></br>
         <input type="text" name="movie_name" value="" />
       </p></td>
 
@@ -122,8 +122,8 @@ if (isset($_POST['submit'])) {
         <input type="text" name="director" value="" />
       </p></td>
 
-      <td style ="width: 250px;"><p>Actors<br></br>
-        <input type="text" name="actors" value="" />
+      <td style ="width: 350px;"><p>Actors<br></br>
+        <input type="text" name="actors" value="" class ="wide"/>
       </p></td>
 
 
@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
       </p></td>
   
 	  <td style ="width: 250px;"><p>Picture<br></br>
-      <input type="text" name="picture" value="This is picture location." />
+      <input type="text" name="picture" value="This is picture location." class ="wide" />
       </p></td>
 
 	  <td >

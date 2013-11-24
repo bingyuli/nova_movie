@@ -48,7 +48,7 @@ a:hover { color: #1A446C; }
 
 
 #main { 
-	height: 560px; width: 100%; 
+	height: 590px; width: 100%; 
 	margin: 0; padding: 0; 
 
 }
@@ -128,6 +128,15 @@ height: 30px;
 font-size: 15px;
 }
 
+input.wide    {
+width:320px;
+display:block;
+border: 1px solid #999;
+height: 30px;
+font-size: 15px;
+}
+
+
 input.small    {
 width:80px;
 display:block;
@@ -152,10 +161,10 @@ input.blue {
 }
 
 textarea {
-  	width:560px;
+  	width:480px;
 	display:block;
 	border: 1px solid #999;
-	height: 100px;
+	height: 80px;
 	font-size: 15px;
 }
 
@@ -170,6 +179,8 @@ button.blue {
 	padding: 10px 16px;
 	min-width: 160px;
 }
+
+
 
 td
 {
