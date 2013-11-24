@@ -137,7 +137,7 @@
 	}
 	
 	function find_movies_by_genre_type($genre_type){ 
-		// will return movie.id  and movie.name in tuples
+		 //include genre information in the result
 		global $connection;
 		$safe_genre_type = mysqli_real_escape_string($connection, $genre_type);
 		
@@ -151,6 +151,22 @@
 		return $movie_set;
 	}
 	
+	function find_movies_with_basic_by_genre_type($genre_type){ 
+		//use nested query, so no genre information in result, just movie info
+		//use this function will solve the problem of comflicting ids in the results of "find_movies_by_genre_tyep()" 
+		global $connection;
+		$safe_genre_type = mysqli_real_escape_string($connection, $genre_type);
+		
+		$query  = "SELECT * ";
+		$query .= "FROM movie ";
+		$query .= "where id in (select movie_id ";
+		$query .= "FROM genre ";
+		$query .= "WHERE type = '{$safe_genre_type}') ";
+		$query .= "ORDER BY movie.name ASC ";
+		$movie_set = mysqli_query($connection, $query);
+		confirm_query($movie_set);
+		return $movie_set;
+	}
 	
 	function find_movies_by_actor($actor_id){ 
 	 // will return movie.id  and movie.name in tuples
@@ -167,7 +183,35 @@
 	 return $movie_set;
 	 }
 	 
+	function find_interested_movies_by_user($user_id){
+		//use nested query,just return movie info
+		global $connection;
+		$safe_user_id = mysqli_real_escape_string($connection, $user_id);
+		
+		$query  = "SELECT * ";
+		$query .= "FROM movie ";
+		$query .= "where id in (select movie_id ";
+		$query .= "FROM interested ";
+		$query .= "WHERE user_id = {$safe_user_id}) ";
+		$query .= "ORDER BY movie.name ASC ";
+		$movie_set = mysqli_query($connection, $query);
+		confirm_query($movie_set);
+		return $movie_set;
+	}
 	
+	function find_recently_released_movie(){
+		//return movie info of recently released movies
+		global $connection;
+		$query1 ="select MAX(id) as max from movie";
+		$result1 = mysqli_query($connection, $query1); 
+		$row = mysqli_fetch_assoc($result1);
+		
+		$query2 ="select id, name, year, picture, ave_star, introduction from movie where id>".$row['max']."-5 and year>'2012'";
+		$result2 = mysqli_query($connection, $query2);
+		confirm_query($result2);
+		return $result2;
+	}
+		
 	
 	function movie_navigation($genre_array) {
 		
@@ -229,6 +273,90 @@
 		return $output;
 	}
 		
+	
+	function basic_movieinfo_with_pic($movie_set){  
+		//$movie_set is a virtual table just contain movie info returned by SQL query 
+		//this function will show all basic info of movie and actors, genre 
+		global $connection;
+		$output = "<table> ";
+		
+		while($movie= mysqli_fetch_assoc($movie_set)) {
+			$output .= "<tr>";
+			$output .= "<td width=\"110px\"><img src='".$movie['picture']."' width=\"120px\" height=\"160px\"/></td>";
+			$output .= "<td width=\"500px\">";
+			$output .= "<ul>";
+			$safe_movie_id = urlencode($movie["id"]);
+			$output .=  "<h3><a href=\"movie.php?movieId={$safe_movie_id}\">";
+			$output .=  htmlentities($movie["name"]);
+			$output .=  "</a></h3>";
+			$output .= "<li><strong>Average Star:&nbsp</strong> ".$movie['ave_star']."</li></br>";
+			$output .= "<li><strong>Year:&nbsp</strong> ".$movie['year']."</li></br>";
+			$output .= "<li><strong>Director:&nbsp</strong> ".$movie['director']."</li></br>";
+			$output .= "<li><strong>Rating:&nbsp</strong> ".$movie['rating']."</li></br>";
+			
+			$output .= "<li><strong>Actor:&nbsp</strong>";  //show actor
+			$query3 = "select name from actor where id in (select actor_id from cast where movie_id = {$safe_movie_id})";
+			$result3 = mysqli_query($connection, $query3);
+			confirm_query($result3);
+			$num = mysqli_num_rows($result3);
+			while ($actor = mysqli_fetch_assoc($result3))
+			{		
+				$output .= "".$actor['name']."";
+				if ( $num-1 >0 )
+				{
+					$output .= ",&nbsp";
+					$num--;
+				}
+				
+			}
+			$output .= "</li></br>";
+			
+			$output .="<li><strong>Genre:&nbsp</strong>"; //show Genre
+			$query4 = "select type from genre where movie_id = {$safe_movie_id}";
+			$result4= mysqli_query($connection, $query4);
+			$num = mysqli_num_rows($result4);
+			while ( $genre = mysqli_fetch_assoc($result4))
+			{
+				$output .="".$genre['type']."";
+				if ( $num-1 >0 )
+				{
+					$output .= ",&nbsp";
+					$num--;
+				}
+			}
+			$output .= "</li></br>";
+	
+			$output .=  "</ul>";
+			$output .=  "</td>";
+			$output .=  "</tr>";
+		}
+		$output .=   "</table>"; 
+		return $output;
+	}
+	
+	function movie_name_with_pic($movie_set){
+		//just show movie name (as a link) and movie picture
+		global $connection;
+		$output = "<table> ";
+		$output .= "<tr>";
+		while($movie= mysqli_fetch_assoc($movie_set)) {
+			
+			$output .= "<td width=\"150px\ height=\"200px\" > <img src='".$movie['picture']."' width=\"120px\" height=\"160px\" /> ";
+			//$output .= "<ul>";
+			$safe_movie_id = urlencode($movie["id"]);
+			$output .=  "<a href=\"movie.php?movieId={$safe_movie_id}\">";
+			$output .=  htmlentities($movie['name']);
+			//$output .= " \"/> ";
+			$output .=  "</a></td>";
+		}
+		$output .=   "</tr></table>"; 
+		
+		//while($movie= mysqli_fetch_assoc($movie_set)) {
+			
+		return $output;
+	}
+		
+	
 	function user_dashboard_default_pics() {
 		
 	    $output ="<img src=\"http://pic1a.nipic.com/2008-09-11/2008911114038528_2.jpg\" 
