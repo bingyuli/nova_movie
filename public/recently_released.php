@@ -51,7 +51,7 @@
 				while ($actor = mysqli_fetch_assoc($result3))
 				{		
 					echo "".$actor['name']."";
-					while ( $num-1 >0 )
+					if ( $num-1 >0 )
 						{
 							echo ",&nbsp";
 							$num--;
@@ -67,7 +67,7 @@
 				while ( $genre = mysqli_fetch_assoc($result4))
 				{
 					echo "".$genre['type']."";
-					while ( $num-1 >0 )
+					if ( $num-1 >0 )
 						{
 							echo ",&nbsp";
 							$num--;
