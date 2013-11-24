@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 </div>
 </div>
 
-<div id="main">
+<div id="main" class="wrapper">
   <div id="navigation">
 
 		<h2>Search Movie: </h2>
@@ -90,12 +90,12 @@ if (isset($_POST['submit'])) {
 
   </div>
 
-<div style="float: left; height: 100%;padding-left: 15em; vertical-align: top; font-size: 16px; line-height: 15px;">
+<div style="float: left; height: 100%;padding-left: 15em; vertical-align: top; font-size: 16px; line-height: 15px;" class="wrapper">
     <?php echo message(); ?>
 	<?php if ($movie_set) { ?>
-	<h3>Movies found: </h3>
+	<h3>Movies found:  </h3>
     <?php 
-		echo basic_movieinfo_in_table($movie_set);
+		echo basic_movieinfo_with_pic($movie_set);
 		
 	?>
 	<?php }else {

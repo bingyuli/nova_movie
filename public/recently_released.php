@@ -1,5 +1,6 @@
 <?php require_once("../includes/session.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
+<?php require_once("../includes/db_connection.php"); ?>
 <?php require_once("../includes/validation_functions.php"); ?>
 <?php include("../includes/layouts/header.php"); ?>
 
@@ -9,14 +10,17 @@
 	<div class="wrapper">
 		
       <div id="navigation">
-        &nbsp;
+		<br />
+		<a href="user_dashboard.php">&laquo; User Dashboard Home</a><br />
+        &nbsp
+
       </div>
       <div id="page">
 	  
 		<h1>Recently Released Movie</h1>
 		<table align="left" cellpadding="1">
 			<?php
-			$connection = mysqli_connect("localhost:3306","root", "rock", "nova_movie");
+				global $connection;
 			
 			if (mysqli_connect_errno())
 				{
@@ -36,7 +40,7 @@
 				echo	"<td width=\"110px\"><img src='".$movie['picture']."' width=\"110px\" height=\"150px\"/></td>";
 				echo	"<td width=\"500px\">";
 				echo		"<ul>";
-				echo		"<h3>".$movie['name']."</h5>";
+				echo		"<h3><a href=\"movie.php?movieId={$movie['id']}\"> ".$movie['name']."</a></h3>";
 				echo		"<li><strong>Average Star:&nbsp</strong> ".$movie['ave_star']."</li>";
 				echo		"<li><strong>Actor:&nbsp</strong>";
 

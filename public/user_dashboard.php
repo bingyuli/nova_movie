@@ -18,6 +18,7 @@
 </div>
 
 <div id="main">
+
   <div id="navigation">
 	<br />
 	<a href="user_dashboard.php">&laquo; User Dashboard Home</a><br />
@@ -26,11 +27,14 @@
 	<?php //if user not expired
 		if ($found_user["expired"]==0){ 
 			echo movie_navigation($current_genre); ?>
+	
 			<li><a href="user_search_movie.php">Search Movie</a></li>
 			<li><a href="interest_movie.php">Movie in you Interest List</a></li>
 			<li><a href="wathed_movie.php">Movie you have watched</a></li>
-			<li><a href="recently_release_movie.php">Movie recently released</a></li>
-			</ul>
+			<li><a href="recently_released.php">Movie recently released</a></li>
+			
+
+
 	<?php }
 		else {
 			$_SESSION["message"]="Your status is expired, do you want to make a payment? ";
@@ -40,7 +44,7 @@
 
  </div>
      
- <div id="page">
+ <div id="page" class="wrapper">
 	<h2>User Dashboard</h2>
 	<p>Welcome to the Nova Movie, <?php echo htmlentities($_SESSION["user_name"]); ?>.</p>
 	
@@ -58,26 +62,36 @@
 	<ul>
 
 	<?php 
-		$movie_set= find_movies_by_genre_type($current_genre["type"]);
-		echo basic_movieinfo_in_table($movie_set);
+		$movie_set= find_movies_with_basic_by_genre_type($current_genre["type"]);
+		echo basic_movieinfo_with_pic($movie_set);
 		?>
 
     </ul>
 	<br />
-	</div>
-
-
+ </div>     
 
 	<?php } // nothing selected
-		else { 
-			echo user_dashboard_default_pics();
-				
-			//we can add some default content will be showed in the user dashboard!!!!!
-	//like some pictures or the most recently release movie 
-	 }?>
+		else { ?>
+		<h3>Movies recently released:</h3>	
+		<ul>
+		<?php	
+			$recently_released_movie_set = find_recently_released_movie(); 
+			echo movie_name_with_pic($recently_released_movie_set);
+			?>
+
+		</ul>	
+
+		<h3>Movies you are interested:</h3>	
+		<ul>
+		<?php	
+			$interested_movie_set = find_interested_movies_by_user($_SESSION["user_id"]); 
+			echo movie_name_with_pic($interested_movie_set);
+	    ?>
+        </ul>
+<br></br>
+
+ </div>   
+	<?php  }  ?>
 	
 
-</div>
-
-</div>
  <?php include("../includes/layouts/footer.php"); ?>
