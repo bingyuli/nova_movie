@@ -105,8 +105,12 @@ if (isset($_POST['submit'])) {
       <p>Expire Date<br></br>
         <input type="text" name="expr_date" value="<?php echo htmlentities($user["expr_date"]); ?>" />
       </p>
+     <input type="submit" name="submit" value="Edit User" class="blue" /><br></br>
 
-      <input type="submit" name="submit" value="Edit User" class="blue" />
+	<a href="watched_movie.php?id=<?php echo urlencode($user["id"]); ?>">Watched Movies </a>   <br > <br />
+	<a href="interested_movie.php?id=<?php echo urlencode($user["id"]); ?>">Interested Movies </a>   <br > <br />
+
+ 
     </form>
     <br />
   </div>
