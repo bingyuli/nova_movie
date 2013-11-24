@@ -30,7 +30,7 @@
 	
 			<li><a href="user_search_movie.php">Search Movie</a></li>
 			<li><a href="interest_movie.php">Movie in you Interest List</a></li>
-			<li><a href="wathed_movie.php">Movie you have watched</a></li>
+			<li><a href="watched_movie.php">Movie you have watched</a></li>
 			<li><a href="recently_released.php">Movie recently released</a></li>
 			
 

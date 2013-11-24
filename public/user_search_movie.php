@@ -9,7 +9,7 @@ $movie_year = "";
 $actor_name = "";
 $movie_genre = "";
 $director_name = ""; 
-$movie_set=null;
+$movie_set_empty=false;
 	
 if (isset($_POST['submit'])) {
 	// get value from post
@@ -47,7 +47,12 @@ if (isset($_POST['submit'])) {
 	$query .= "FROM genre ";	
 	$query .= "WHERE genre.type LIKE '%{$movie_genre}%'); ";	
 	$movie_set = mysqli_query($connection, $query);
-	confirm_query($movie_set);
+		if (mysqli_num_rows($movie_set) == 0) {
+			$_SESSION["message"] = "Sorry, we could not find matched movie for you. ";
+		}
+		else {
+			$movie_set_empty=true;
+		}
 	}
 
 } // end: if (isset($_POST['submit']))
@@ -92,7 +97,7 @@ if (isset($_POST['submit'])) {
 
 <div style="float: left; height: 100%;padding-left: 15em; vertical-align: top; font-size: 16px; line-height: 15px;" class="wrapper">
     <?php echo message(); ?>
-	<?php if ($movie_set) { ?>
+	<?php if ($movie_set_empty==true) { ?>
 	<h3>Movies found:  </h3>
     <?php 
 		echo basic_movieinfo_with_pic($movie_set);
