@@ -90,6 +90,11 @@ if (isset($_POST['submit'])) {
 
     //insert to table of genre
 	$max = sizeof($genrelist);
+	$query5  = "DELETE FROM genre ";
+	$query5 .= "Where movie_id = {$id}";				
+	$result5 = mysqli_query($connection, $query5);
+	
+	
 	for ($i=0; $i<$max; $i++) {
 		$query2  = "INSERT INTO genre (";
 		$query2 .= " movie_id, type ";
@@ -102,6 +107,10 @@ if (isset($_POST['submit'])) {
     //insert to table of cast
     //first check if the actor is new actor or not? (if new, must add to actor table first)
 	$max = sizeof($actorlist);
+	$query4  = "DELETE FROM cast ";
+	$query4 .= "Where movie_id = {$id}";				
+	$result4 = mysqli_query($connection, $query4);
+	
 	for ($i=0; $i<$max; $i++) {
 	$actor= find_actor_by_name($actorlist[$i]);
 	$actor_id = $actor["id"];
