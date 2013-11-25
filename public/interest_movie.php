@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script >
 /*
@@ -10,9 +14,11 @@ $( document ).ready(function() {
 	  //alert(data[0])
 	  
 	  var html = '';
-	  for(var i = 0; i < data.length; i++)
-	    html += "<tr><td>" +  data[i].name + "</td><td>"  +  data[i].year  + "</td><tr>";
 		
+	  for(var i = 0; i < data.length; i++)
+	    html += "<tr><td><a href=movie.php?movieId=" + data[i].movie_id + ">" 
+		+ data[i].name + "</a></td><td>"  +  data[i].year  + "</td></tr>";
+	  
 	$('#movieTable tr').first().after(html);  
 	},"json");
 	
@@ -20,7 +26,14 @@ $( document ).ready(function() {
 
 </script>
 
-<?php include("../includes/layouts/header.php"); ?>
+<!--
+<div>	
+	<a href= "movie.php?movieId=<?php //echo data[i].movie_id; ?>" > <?php //echo data[i].name; ?></a>	
+</div>
+-->
+
+<?php require_once("../includes/layouts/header.php"); ?>
+<?php require_once("../includes/functions.php"); ?>
 
 <div class="hlinks">
    <a href="user_dashboard.php"><span class="text">Back</span></a>
@@ -32,12 +45,11 @@ $( document ).ready(function() {
 </div>
 
 <div id="page">
-    <h2>  </h2>
-	<h3> Interested List of <?php $userId; ?></h3>			
+	<h3> Interested List of <?php echo htmlentities($_SESSION["user_name"]); ?></h3>			
 	<br>
   <table border="1" id = "movieTable">
 	<tr>
-	<th>Title</th>
+	<th>Title</th> 
 	<th>Year</th>
 	</tr>
 </table>

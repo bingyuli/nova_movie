@@ -1,57 +1,51 @@
-<?php require_once("../includes/session.php"); ?>
-<?php require_once("../includes/db_connection.php"); ?>
+<?php
+  session_start();
+?>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script >
+/*
+ $( document ).ready(function() {
+$( "p" ).text( "The DOM is now loaded and can be manipulated." );
+});
+*/
+$( document ).ready(function() {
+  $.get( "watched.php", function( data ) {
+	  //alert(data[0])
+	  
+	  var html = '';
+	  for(var i = 0; i < data.length; i++)
+	    html += "<tr><td><a href=movie.php?movieId=" + data[i].movie_id + ">" 
+		+ data[i].name + "</a></td><td>"  +  data[i].year  + "</td></tr>";
+		
+	$('#movieTable tr').first().after(html);  
+	},"json");
+	
+});
+
+</script>
+
+<?php require_once("../includes/layouts/header.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
-<?php require_once("../includes/validation_functions.php"); ?>
-<?php confirm_admin_logged_in(); ?>
-<?php
-  $user = find_user_by_id($_GET["id"]);  
-  if (!$user) {
-    // user ID was missing or invalid or 
-    // user couldn't be found in database
-    redirect_to("manage_users.php");
-  }
-?>
-<?php
-  $watched_set = find_watched_by_userid($_GET["id"]);  
-  if (!$watched_set) {
-    // watched was missing or invalid or 
-    // watched couldn't be found in database
-    redirect_to("manage_users.php");
-  }
-?>
-<?php $layout_context = "admin"; ?>
-<?php include("../includes/layouts/header.php"); ?>
+
 <div class="hlinks">
-   <a href="edit_user.php?id=<?php echo urlencode($user["id"]); ?>"><span class="text">Back</span></a>
-   <a href="admin_dashboard.php"><span class="text">Admin Dashboard</span></a>
-</div>
+   <a href="user_dashboard.php"><span class="text">Back</span></a>
 </div>
 
 <div id="main">
-  <div id="navigation">
-    &nbsp;
-  </div>
-
-  <div id="page">
-    <?php echo message(); ?>
-    
-    <h2>User Name: <?php echo htmlentities($user["name"]); ?></h2>
-
-	<table>
-    <tr>
-	    <th style="text-align: left; ">Watched Movie List</th>
-    </tr>
-
-	
-	<?php while($watched = mysqli_fetch_assoc($watched_set)) { ?>
-	<tr><td>
-	     <?php echo htmlentities($watched["name"]); ?> 
-	
-	</td></tr>
-	<?php } ?>
-	
-	</table>
-
-  </div>
+<div id="navigation">
+	  &nbsp;
 </div>
+
+<div id="page">
+	<h3> Watched List of <?php echo htmlentities($_SESSION["user_name"]); ?></h3>			
+	<br>
+  <table border="1" id = "movieTable">
+	<tr>
+	<th>Title</a></th> 
+	<th>Year</th>
+	</tr>
+</table>
+</div>
+
 <?php include("../includes/layouts/footer.php"); ?>
