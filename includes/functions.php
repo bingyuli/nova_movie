@@ -183,33 +183,59 @@
 	 return $movie_set;
 	 }
 	 
-	function find_interested_movies_by_user($user_id){
-		//use nested query,just return movie info
+
+	
+	function find_recent_interested_movies_by_user($user_id,$limit_num=50){
+		//use nested query,
+		//return part of movie info and interested.id, just return recently interested movies in the list
+		//$limit_num is the limit number of the top rows in the result
 		global $connection;
 		$safe_user_id = mysqli_real_escape_string($connection, $user_id);
 		
-		$query  = "SELECT * ";
-		$query .= "FROM movie ";
-		$query .= "where id in (select movie_id ";
+		$query  = "SELECT M.id,M.name,M.year,M.picture,M.ave_star,M.director, M.rating, I.id AS interested_id ";
+		$query .= "FROM movie M, interested I ";
+		$query .= "where M.id in (select I.movie_id ";
 		$query .= "FROM interested ";
-		$query .= "WHERE user_id = {$safe_user_id}) ";
-		$query .= "ORDER BY movie.name ASC ";
+		$query .= "WHERE I.user_id = {$safe_user_id}) ";
+		$query .= "ORDER BY interested_id DESC ";
+		$query .= "Limit {$limit_num}; ";
 		$movie_set = mysqli_query($connection, $query);
 		confirm_query($movie_set);
 		return $movie_set;
 	}
 	
-	function find_recently_released_movie(){
-		//return movie info of recently released movies
+	
+
+	
+	function find_recent_watched_movies_by_user($user_id, $limit_num=50){
+		//use nested query,
+		//return part of movie info and watched.id, just return recently watched movies in the list
+		//$limit_num is the limit number of the top rows in the result
 		global $connection;
-		$query1 ="select MAX(id) as max from movie";
-		$result1 = mysqli_query($connection, $query1); 
-		$row = mysqli_fetch_assoc($result1);
+		$safe_user_id = mysqli_real_escape_string($connection, $user_id);
 		
-		$query2 ="select id, name, year, picture, ave_star, introduction from movie where id>".$row['max']."-5 and year>'2012'";
-		$result2 = mysqli_query($connection, $query2);
-		confirm_query($result2);
-		return $result2;
+		$query  = "SELECT M.id,M.name,M.year,M.picture,M.ave_star,M.director, M.rating, W.id AS watched_id ";
+		$query .= "FROM movie M, watched W ";
+		$query .= "where M.id in (select W.movie_id ";
+		$query .= "FROM watched ";
+		$query .= "WHERE W.user_id = {$safe_user_id}) ";
+		$query .= "ORDER BY watched_id DESC ";
+		$query .= "Limit {$limit_num}; ";
+		$movie_set = mysqli_query($connection, $query);
+		confirm_query($movie_set);
+		return $movie_set;
+	}
+	
+	function find_recently_released_movie($limit_num=50){
+		//return movie info of recently released movies
+		//$limit_num is the limit number of the top rows in the result
+		global $connection;
+		$query ="select id, name, year, picture, ave_star, director,rating from movie ";
+		$query .="Order by id desc ";
+		$query .= "Limit {$limit_num}; ";
+		$result = mysqli_query($connection, $query);
+		confirm_query($result);
+		return $result;
 	}
 		
 	
@@ -275,7 +301,7 @@
 		
 	
 	function basic_movieinfo_with_pic($movie_set){  
-		//$movie_set is a virtual table just contain movie info returned by SQL query 
+		//$movie_set is a virtual table just contain movie info returned by SQL query, contain movie id, name.....
 		//this function will show all basic info of movie and actors, genre 
 		global $connection;
 		$output = "<table> ";
@@ -285,9 +311,9 @@
 			$output .= "<td width=\"110px\"><img src='".$movie['picture']."' width=\"120px\" height=\"160px\"/></td>";
 			$output .= "<td width=\"500px\">";
 			$output .= "<ul>";
-			$safe_movie_id = urlencode($movie["id"]);
+			$safe_movie_id = urlencode($movie['id']);
 			$output .=  "<h3><a href=\"movie.php?movieId={$safe_movie_id}\">";
-			$output .=  htmlentities($movie["name"]);
+			$output .=  htmlentities($movie['name']);
 			$output .=  "</a></h3>";
 			$output .= "<li><strong>Average Star:&nbsp</strong> ".$movie['ave_star']."</li></br>";
 			$output .= "<li><strong>Year:&nbsp</strong> ".$movie['year']."</li></br>";

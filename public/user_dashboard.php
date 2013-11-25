@@ -29,9 +29,9 @@
 			echo movie_navigation($current_genre); ?>
 	
 			<li><a href="user_search_movie.php">Search Movie</a></li>
-			<li><a href="interest_movie.php">Movie in you Interest List</a></li>
-			<li><a href="watched_movie.php">Movie you have watched</a></li>
-			<li><a href="recently_released.php">Movie recently released</a></li>
+			<li><a href="user_interested_movie.php">Movie in you Interest List</a></li>
+			<li><a href="user_watched_movie.php">Movie you have watched</a></li>
+			<li><a href="user_recently_released_movie.php">Movie recently released</a></li>
 			
 
 
@@ -58,7 +58,7 @@
 
 	<?php } //genre selected
 		elseif ($current_genre) { ?>
-	<h3>Movies in this genre:</h3>
+	<h3>Movies in the genre: <?php echo htmlentities($current_genre["type"]) ?> </h3>
 	<ul>
 
 	<?php 
@@ -75,7 +75,7 @@
 		<h3>Movies recently released:</h3>	
 		<ul>
 		<?php	
-			$recently_released_movie_set = find_recently_released_movie(); 
+			$recently_released_movie_set = find_recently_released_movie(5); 
 			echo movie_name_with_pic($recently_released_movie_set);
 			?>
 
@@ -84,10 +84,19 @@
 		<h3>Movies you are interested:</h3>	
 		<ul>
 		<?php	
-			$interested_movie_set = find_interested_movies_by_user($_SESSION["user_id"]); 
+			$interested_movie_set = find_recent_interested_movies_by_user($_SESSION["user_id"],5); 
 			echo movie_name_with_pic($interested_movie_set);
 	    ?>
         </ul>
+
+		<h3>Movies you have watched:</h3>	
+		<ul>
+		<?php	
+			$watched_movie_set = find_recent_watched_movies_by_user($_SESSION["user_id"],5); 
+			echo movie_name_with_pic($watched_movie_set);
+			?>
+		</ul>
+
 <br></br>
 
  </div>   
