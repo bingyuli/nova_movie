@@ -23,6 +23,7 @@
 <?php include("../includes/layouts/header.php"); ?>
 <div class="hlinks">
    <a href="edit_movie.php?id=<?php echo urlencode($movie["id"]); ?>"><span class="text">Back</span></a>
+   <a href="admin_dashboard.php"><span class="text">Admin Dashboard</span></a>
 </div>
 </div>
 

@@ -2,6 +2,8 @@
 <?php require_once("../includes/db_connection.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
 <?php require_once("../includes/validation_functions.php"); ?>
+<?php // Set autocommit to off
+//mysqli_autocommit($connection,FALSE);?>
 <?php confirm_admin_logged_in(); ?>
 <?php
   $movie = find_movie_by_id($_GET["id"]);  
@@ -36,7 +38,7 @@
   while($genre = mysqli_fetch_assoc($genre_set)) { 
 	
 	$genres .= $genre["type"];
-	$genres .= ",";	
+	$genres .= " ";	
 	}   
 ?>
 <?php
@@ -112,6 +114,7 @@ if (isset($_POST['submit'])) {
 	$result4 = mysqli_query($connection, $query4);
 	
 	for ($i=0; $i<$max; $i++) {
+		
 	$actor= find_actor_by_name($actorlist[$i]);
 	$actor_id = $actor["id"];
 	if($actor_id){			
@@ -148,6 +151,7 @@ if (isset($_POST['submit'])) {
 </div>
 
 <div id="main">
+<div class="wrapper">	
   <div id="navigation">
     &nbsp;
   </div>
@@ -235,5 +239,8 @@ if (isset($_POST['submit'])) {
     </form>
     <br />
   </div>
+  </div>
 </div>
+<?php // Commit transaction
+mysqli_commit($connection);?>
 <?php include("../includes/layouts/footer.php"); ?>

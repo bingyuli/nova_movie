@@ -39,7 +39,7 @@
 
 	// load and show actors
     $.get("fetchActor.php", {movieId:movieId}, function(data) {
-	  var html = "<h3>Acotr: ";
+	  var html = "<h3>Actor: ";
 	  for (var i = 0; i < data.length; i++) {
 	    html += data[i].name +", ";
 	  }

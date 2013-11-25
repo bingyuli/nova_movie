@@ -659,11 +659,8 @@
 	$query .= " WHERE user_id = '{$user_id}' ";
 	$query .= " AND movie.id = movie_id ";
 	$interested_set = mysqli_query($connection, $query);
-
     confirm_query($interested_set);
 	return $interested_set;
 	}
-			
-			
-			
+						
 ?>
