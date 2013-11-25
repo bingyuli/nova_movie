@@ -274,6 +274,7 @@ insert into watched (user_id, movie_id) values('4', '6');\
 insert into watched (user_id, movie_id) values('4', '7');\
 insert into watched (user_id, movie_id) values('4', '2');\
 insert into watched (user_id, movie_id) values('5', '3');\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf4 insert into watched (user_id, movie_id) values('5', '1'),('5', '2'), ('5','6'),('5','4'),('5','7'),('5', '5');\cf0 \
 \
 --\
@@ -305,6 +306,12 @@ insert into comment(user_id, movie_id, comment) values('3', '5', 'This is the co
 insert into comment(user_id, movie_id, comment) values('4', '4', 'This is the comment');\
 insert into comment(user_id, movie_id, comment) values('5', '3', 'This is the comment');\
 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\b \cf4 insert into comment(user_id, movie_id, comment) values('5', '1', 'This is the comment'),('4', '1', 'This is the comment'),('3', '1', 'This is the comment'),('2', '1', 'This is the comment'),('1', '1', 'This is the comment');
+\b0 \cf0 \
+\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf2 -- insertion for review table\cf0 \
 insert into review(user_id, movie_id, star) values ('1', '2', '3');\
 insert into review(user_id, movie_id, star) values ('2', '3', '4');\
@@ -451,8 +458,9 @@ where genre.type like '%%');\
 \pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 
 \f0 \cf0 \CocoaLigature1 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 
-\f1 \CocoaLigature0 \
+\f1 \cf0 \CocoaLigature0 \
 \pard\tx560\pardeftab560\ql\qnatural\pardirnatural
 
 \f0 \cf0 \CocoaLigature1 \

@@ -267,7 +267,8 @@
 	}
 
 
-	function basic_movieinfo_in_table($movie_set){  //$movie_set is a virtual table returned by SQL query
+	function basic_movieinfo_in_table($movie_set){  //view function
+		//$movie_set is a virtual table returned by SQL query
 		$output = "<table border=\"1\"> ";
 		$output .= "<tr>";
 		$output .= "<th>Title</th>";
@@ -280,7 +281,7 @@
 			$output .= "<tr>";
 			$output .=  "<td>";
 			$safe_movie_id = urlencode($movie["id"]);
-			$output .=  "<a href=\"movie.php?movieId={$safe_movie_id}\">";
+			$output .=  "<a href=\"user_movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie["name"]);
 			$output .=  "</a>";
 			$output .=  "</td>";
@@ -300,19 +301,20 @@
 	}
 		
 	
-	function basic_movieinfo_with_pic($movie_set){  
+	function basic_movieinfo_with_pic($movie_set,$pic_width=120,$pic_height=160,$detailed='false'){  //view function
 		//$movie_set is a virtual table just contain movie info returned by SQL query, contain movie id, name.....
 		//this function will show all basic info of movie and actors, genre 
+		//$pic_width,$pic_height to set the size of picture
 		global $connection;
 		$output = "<table> ";
 		
 		while($movie= mysqli_fetch_assoc($movie_set)) {
 			$output .= "<tr>";
-			$output .= "<td width=\"110px\"><img src='".$movie['picture']."' width=\"120px\" height=\"160px\"/></td>";
+			$output .= "<td width=\"{$pic_width}px\"><img src='".$movie['picture']."' width=\"{$pic_width}px\" height=\"{$pic_height}px\"/></td>";
 			$output .= "<td width=\"500px\">";
 			$output .= "<ul>";
 			$safe_movie_id = urlencode($movie['id']);
-			$output .=  "<h3><a href=\"movie.php?movieId={$safe_movie_id}\">";
+			$output .=  "<h3><a href=\"user_movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie['name']);
 			$output .=  "</a></h3>";
 			$output .= "<li><strong>Average Star:&nbsp</strong> ".$movie['ave_star']."</li></br>";
@@ -351,16 +353,23 @@
 				}
 			}
 			$output .= "</li></br>";
+			
+			if($detailed=='true'){//if the movie need to be showed in detailed,  show introduction 
+				$output .="<li><strong>Introduction:&nbsp</strong></br> ".$movie['introduction']."</li></br>";
+				$output .="<li><strong>Movie Watched Times:&nbsp</strong> ".$movie['count']."</li></br>";
+			}
 	
 			$output .=  "</ul>";
 			$output .=  "</td>";
 			$output .=  "</tr>";
 		}
 		$output .=   "</table>"; 
+		
+			
 		return $output;
 	}
 	
-	function movie_name_with_pic($movie_set){
+	function movie_name_with_pic($movie_set){//view function
 		//just show movie name (as a link) and movie picture
 		global $connection;
 		$output = "<table> ";
@@ -370,20 +379,41 @@
 			$output .= "<td width=\"150px\ height=\"200px\" > <img src='".$movie['picture']."' width=\"120px\" height=\"160px\" /> ";
 			//$output .= "<ul>";
 			$safe_movie_id = urlencode($movie["id"]);
-			$output .=  "<a href=\"movie.php?movieId={$safe_movie_id}\">";
+			$output .=  "<a href=\"user_movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie['name']);
 			//$output .= " \"/> ";
 			$output .=  "</a></td>";
 		}
 		$output .=   "</tr></table>"; 
 		
-		//while($movie= mysqli_fetch_assoc($movie_set)) {
+		
 			
 		return $output;
 	}
-		
 	
-	function user_dashboard_default_pics() {
+	function comment_of_movie_in_table($comment_set){//view function
+		$output = "<table> ";
+		$output .= "<tr>";
+		$output .= "<th style=\"text-align: left; width: 160px;\">User Name</th> ";
+		$output .= "<th style=\"text-align: left; width: 360px;\">Comment</th> ";
+		$output .= "</tr>";
+		while($comment= mysqli_fetch_assoc($comment_set)) {
+			$output .= "<tr>";
+			$output .= "<td> ";	
+		    $output .=  htmlentities($comment['name']);
+			$output .=  "</td>";
+			$output .= "<td> ";	
+		    $output .=  htmlentities($comment['comment']);
+			$output .=  "</td>";
+			$output .=  "</tr>";
+		}
+		$output .=   "</table>"; 
+		
+		return $output;
+		
+	}
+	
+	function user_dashboard_default_pics() {//view function
 		
 	    $output ="<img src=\"http://pic1a.nipic.com/2008-09-11/2008911114038528_2.jpg\" 
 		alt=\"Family\" width=\"150\" height=\"150\"> ";

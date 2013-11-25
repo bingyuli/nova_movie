@@ -4,7 +4,7 @@
 <?php require_once("../includes/validation_functions.php"); ?>
 <?php confirm_user_logged_in(); ?>
 <?php
-  $user = find_user_by_id($_GET["id"]);  
+  $user = find_user_by_id($_SESSION["user_id"]);  
 ?>
 <?php
 if (isset($_POST['submit'])) {
