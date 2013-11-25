@@ -1,4 +1,5 @@
 <?php
+	session_start();
     define("DB_SERVER", "localhost");
 	define("DB_USER", "nova_team");
 	define("DB_PASS", "sjsuteam3");
