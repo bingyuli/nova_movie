@@ -25,8 +25,8 @@
     );
   }
   //$userId = 1;
-  $query = "select movie_id, name, year from movie,interested where movie_id = movie.id and user_id=" .$userId;
-  $query .= " ORDER BY interested.id DESC";  
+  $query = "select movie_id, name, year from movie,watched where movie_id = movie.id and user_id=" .$userId;
+  $query .= " ORDER BY watched.id DESC";  
 		
   $result = mysqli_query($connection, $query);	
   $arr = array();
