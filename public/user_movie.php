@@ -6,38 +6,82 @@
 <?php
    //find movie by movieId
 	$movie_set=null;
-	$user_interested=false; //the varialbe determine whether this movie is already in user's interested list
+	$user_interested=false;//the varialbe determine whether this movie is already in user's interested list
+	$user_watched=false; //the varialbe determine whether this movie is already in user's watched list
 	global $connection;		
 	$safe_movie_id = urlencode($_GET["movieId"]);
 	
-	//if (isset(_POST['watchMovie'])){
+
+
+	
+	
+	if (isset($_POST['watchMovie'])){
+
+	// insert to table watched,  with user_id and movie_id 
+		$query="insert into watched (user_id,movie_id) values ({$_SESSION['user_id']}, {$safe_movie_id}); ";
+		$insertresult = mysqli_query($connection, $query);
+		confirm_query($insertresult);
+	    $_SESSION["message"]="Thank you for watching this movie";
+		
 	//  add operation to update watched times of movie;
-	    // insert to table watched,  with user_id and movie_id  
-	// set $_SESSION["message"]="Thank you for watching this movie"
+		$query ="update movie set movie.count= ";
+		$query .="(select count(*) from watched where movie_id= {$safe_movie_id}); " ;
+		$updateresult = mysqli_query($connection, $query);
+		confirm_query($updateresult);
 	//----will bring an issue, if user watched movie repeatly, dupicated record will be show in watched list!!!!!
-	//}
+	//--need to fix in userdashbord and user_watched_movie.php!!!!!!
+	}
 	
-	//if (isset(_POST['addToInterest'])){
+	if (isset($_POST['addToInterest'])){
 	
-	// insert to table interested,  with user_id and movie_id  
-	// $_SESSION["message"]="You have add this movie into your interested list"
-	//
-	//}
+	// insert to table interested,  with user_id and movie_id 
+		$query="insert into interested (user_id,movie_id) values ({$_SESSION['user_id']}, {$safe_movie_id}); ";
+		$insertresult = mysqli_query($connection, $query);
+		confirm_query($insertresult);
+	    $_SESSION["message"]="You have add this movie into your interested list";
 	
-	//if (isset(_POST['removeFromInterest'])){
+	}
 	
-	// Delete to table interested,  with user_id and movie_id  
-	// $_SESSION["message"]="You have remove this movie from your interested list"
-	//
-	//}
+	if (isset($_POST['removeFromInterest'])){
 	
-	//if (isset(_POST['addReviewComment'])){
-	//  add operation to update ave_star of movie;
-	// insert to table review,  with user_id, movie_id, star
-	// insert to table comment,  with user_id, movie_id, comment
-	// $_SESSION["message"]="You have reviewed or commented on this movie"
-	//
-	//}
+	// Delete to table interested,  with user_id and movie_id 
+		$query="delete from interested where user_id={$_SESSION['user_id']} AND movie_id= {$safe_movie_id}; ";
+		$deleteresult = mysqli_query($connection, $query);
+		confirm_query($deleteresult);
+	    $_SESSION["message"]="You have remove this movie from your interested list";
+	
+	}
+	
+	if (isset($_POST['addReview'])){
+		$safe_added_review_value = mysql_prep($_POST["added_review_value"]);
+	
+		// insert to table review,  with user_id, movie_id, star		
+			$query="insert into review (user_id,movie_id,star) values ({$_SESSION['user_id']}, {$safe_movie_id},{$safe_added_review_value}); ";
+			$insertresult = mysqli_query($connection, $query);
+			confirm_query($insertresult);
+			$_SESSION["message"]="Thank you for reviewing this movie ";
+			
+		//  add operation to update ave_star of movie;	
+			$query ="update movie set ave_star = ";
+			$query .= "(select AVG(star) from review where movie_id={$safe_movie_id} AND user_id={$_SESSION['user_id']}); ";
+			$updateresult = mysqli_query($connection, $query);
+			confirm_query($updateresult);
+		
+	}
+	if (isset($_POST['addComment'])){
+		$value = trim($_POST["added_comment"]);
+		$safe_added_comment = mysql_prep($value);
+		if ($_POST["added_comment"]!=""){	
+		// insert to table comment,  with user_id, movie_id, comment
+			$query="insert into comment (user_id,movie_id,comment) values ({$_SESSION['user_id']}, {$safe_movie_id}, {$safe_added_comment}); ";
+			$insertresult = mysqli_query($connection, $query);
+			$_SESSION["message"].="Thank your for your comment.";
+		}
+		else {
+			$_SESSION["message"] = "It seems you have not add comment?";
+		}
+			
+	}
 	
 	$query  = "SELECT * ";
 	$query .= "FROM movie ";
@@ -55,6 +99,17 @@
 	confirm_query($result2);
 	if (mysqli_num_rows($result2)>0) {
 		$user_interested=true;
+	}
+	
+	$query3  = "SELECT * ";
+	$query3 .= "FROM watched ";
+	$query3 .= "WHERE movie_id = {$safe_movie_id} ";
+	$query3 .= "AND user_id = {$_SESSION['user_id']} ";
+	$query3 .= "LIMIT 1";
+	$result3 = mysqli_query($connection, $query3);
+	confirm_query($result3);
+	if (mysqli_num_rows($result3)>0) {
+		$user_watched=true;
 	}
 
 
@@ -77,6 +132,7 @@
   <div id="page">
     
    <?php echo message(); ?>
+  <?php echo form_errors($errors); ?>
 	
      <h3>Detailed information about this movie:  </h3>
 	<?php 
@@ -93,7 +149,7 @@
 			<td><ul><input type="submit" name="addToInterest" value="Add to interested list" class="blue"/></ul></td>
 		<?php }?>
 		<?php if ($user_interested) { ?>
-			<td><ul><input type="submit" name="removeFromInterest" value="Remove interested " class="blue"/></ul></td>
+			<td><ul><input type="submit" name="removeFromInterest" value="Already interested. Remove?" /></ul></td>
 		<?php }?>
 
 		</tr>
@@ -101,28 +157,32 @@
 		</br>
 
 
-		<h3>Add Comments and review: </h3>
-		<table>
-		<tr><td style ="width: 500px;">
-		<textarea name="added_comment" value ="You can add your comment here" ?>
-		</textarea>
-		</td></tr>
-		</table>
-
+		<h3>Add Comments or review: </h3>
+		<?php if ($user_watched) { ?>
 		<table>
 		<tr>
 		<td><input type="radio" name="added_review_value" value="1" class="small"/> </td>
 		<td><input type="radio" name="added_review_value" value="2" class="small"/> </td>
 		<td><input type="radio" name="added_review_value" value="3" class="small"/> </td>
 		<td><input type="radio" name="added_review_value" value="4" class="small"/> </td>
-		<td><input type="radio" name="added_review_value" value="5" class="small"/> </td>
+		<td><input type="radio" name="added_review_value" value="5" class="small"<?php  echo "checked"; ?>/> </td>
 		</tr>
 		<tr>
 		<td><ul>1</ul></td>  <td><ul>2</ul></td> <td><ul>3</ul></td> <td><ul>4</ul></td> <td><ul>5</ul></td>
 		</tr>
 		</table>
+		<ul><input type="submit" name="addReview" value="addReview" class="blue"/></ul>
+		<?php }?>
 
-		<ul><input type="submit" name="addReviewComment" value="submit" class="blue"/></ul>
+       
+		<table>
+		<tr><td style ="width: 500px;">
+		<textarea name="added_comment">
+		</textarea>
+		</td></tr>
+		</table>
+		<ul><input type="submit" name="addComment" value="addComment" class="blue"/></ul>
+		
 
 	</form>
 

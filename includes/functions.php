@@ -281,7 +281,7 @@
 			$output .= "<tr>";
 			$output .=  "<td>";
 			$safe_movie_id = urlencode($movie["id"]);
-			$output .=  "<a href=\"user_movie.php?movieId={$safe_movie_id}\">";
+			$output .=  "<a href=\"movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie["name"]);
 			$output .=  "</a>";
 			$output .=  "</td>";
@@ -314,7 +314,7 @@
 			$output .= "<td width=\"500px\">";
 			$output .= "<ul>";
 			$safe_movie_id = urlencode($movie['id']);
-			$output .=  "<h3><a href=\"user_movie.php?movieId={$safe_movie_id}\">";
+			$output .=  "<h3><a href=\"movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie['name']);
 			$output .=  "</a></h3>";
 			$output .= "<li><strong>Average Star:&nbsp</strong> ".$movie['ave_star']."</li></br>";
@@ -379,7 +379,7 @@
 			$output .= "<td width=\"150px\ height=\"200px\" > <img src='".$movie['picture']."' width=\"120px\" height=\"160px\" /> ";
 			//$output .= "<ul>";
 			$safe_movie_id = urlencode($movie["id"]);
-			$output .=  "<a href=\"user_movie.php?movieId={$safe_movie_id}\">";
+			$output .=  "<a href=\"movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie['name']);
 			//$output .= " \"/> ";
 			$output .=  "</a></td>";

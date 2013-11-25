@@ -101,7 +101,7 @@
 		<?php	
 			$watched_movie_set = find_recent_watched_movies_by_user($_SESSION["user_id"],5); 
 			if(mysqli_num_rows($watched_movie_set)>0) { ?>
-		<h3>Movies you are interested:</h3>	
+		<h3>Movies you have watched:</h3>	
 		<ul>
 		<?php 
 			echo movie_name_with_pic($watched_movie_set);
