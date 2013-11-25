@@ -115,7 +115,7 @@
 </div>
 </div>
 
-<div id="main">
+<div id="main" class="wrapper">
   <div id="navigation">
 	  &nbsp;
   </div>

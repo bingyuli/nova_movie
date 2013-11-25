@@ -48,7 +48,7 @@ a:hover { color: #1A446C; }
 
 
 #main { 
-	height: 560px; width: 100%; 
+	height: 590px; width: 100%; 
 	margin: 0; padding: 0; 
 
 }
@@ -100,17 +100,7 @@ div.message {
 	margin: 1em 0 ; padding: 1em; 
 }
 
-/* test Content */
-#test { 
-	float: left; height: 100%;
-	padding-left: 15em; vertical-align: top; 
-	font-size: 16px; line-height: 15px;
 
-}
-
-#test h1 { color: #8D0D19;}
-#test h2 { color: #8D0D19; margin-top: 1em;}
-#test h3 { color: #8D0D19; }
 
 /* errors */
 .error {
@@ -121,13 +111,29 @@ div.message {
 
 
 input    {
-width:260px;
+width:220px;
 display:block;
 border: 1px solid #999;
 height: 30px;
 font-size: 15px;
 }
 
+input.wide    {
+width:320px;
+display:block;
+border: 1px solid #999;
+height: 30px;
+font-size: 15px;
+}
+
+
+input.small    {
+width:80px;
+display:block;
+border: 1px solid #999;
+height: 30px;
+font-size: 15px;
+}
 
 input.blue {
    background-color: #135aac;  
@@ -145,10 +151,10 @@ input.blue {
 }
 
 textarea {
-  	width:560px;
+  	width:480px;
 	display:block;
 	border: 1px solid #999;
-	height: 100px;
+	height: 80px;
 	font-size: 15px;
 }
 
@@ -164,6 +170,8 @@ button.blue {
 	min-width: 160px;
 }
 
+
+
 td
 {
    height:14px;
@@ -172,4 +180,16 @@ td
 th
 {
    height:22px;
+}
+
+
+.wrapper{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -2em;
+}
+
+.footer, .push{
+	height: 2em;
 }

@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
     <?php echo message(); ?>
     <?php echo form_errors($errors); ?>
     
-    <h2><br></br>Add New Acotr</h2>
+    <h2><br></br>Add New Actor</h2>
     <form action="new_actor.php" method="post">	     
       <p>Actor name<br></br>
         <input type="text" name="actor_name" value="" />
