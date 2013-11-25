@@ -75,6 +75,7 @@ if (isset($_POST['submit'])) {
 </div>
 
 <div id="main">
+<div class="wrapper">
   <div id="navigation">
     &nbsp;
   </div>
@@ -107,12 +108,13 @@ if (isset($_POST['submit'])) {
       </p>
      <input type="submit" name="submit" value="Edit User" class="blue" /><br></br>
 
-	<a href="watched_movie.php?id=<?php echo urlencode($user["id"]); ?>">Watched Movies </a>   <br > <br />
+	<a href="watched_movie_for_admin.php?id=<?php echo urlencode($user["id"]); ?>">Watched Movies </a>   <br > <br />
 	<a href="interested_movie.php?id=<?php echo urlencode($user["id"]); ?>">Interested Movies </a>   <br > <br />
 
  
     </form>
     <br />
+  </div>
   </div>
 </div>
 <?php include("../includes/layouts/footer.php"); ?>

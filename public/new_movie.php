@@ -101,6 +101,7 @@ if (isset($_POST['submit'])) {
 </div>
 
 <div id="main">
+<div class="wrapper">
   <div id="navigation">
     &nbsp;
   </div>
@@ -174,6 +175,7 @@ if (isset($_POST['submit'])) {
       <input type="submit" name="submit" value="Add movie" class= "blue"/>
     </form>
     <br />
+ </div>
   </div>
 </div>
 <?php include("../includes/layouts/footer.php"); ?>
