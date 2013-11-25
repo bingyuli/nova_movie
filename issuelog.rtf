@@ -1,9 +1,10 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
-{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-\vieww12240\viewh14820\viewkind1
+{\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\fswiss\fcharset0 Helvetica;\f2\fnil\fcharset0 Menlo-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red0\green116\blue0;\red0\green0\blue0;}
+\vieww17360\viewh13940\viewkind1
 \deftab720
-\pard\pardeftab720\ri0\sl276\slmult1
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 
 \f0\fs22 \cf0 11/5/ 2013\
 \
@@ -48,4 +49,52 @@ then add:\
 to the .php file\
 \
 Best Regards,\
-Yan Zhu}
+Yan Zhu\
+\
+\
+\
+11/23/2013 Ling\
+1 potential issue\
+user_dashboard.php\
+show user interested movie and watched movie\
+did not limit the number, could be overflow when there are too much records!!!!\
+\
+2 user_dashboard.php\
+when show pictures, could not align horizontal\
+\
+3 user_search_movie.php   ---solved by ling\
+could not show erro when no movie has been found\
+\
+\
+4. admin side\
+edit_movie.php  page content will show at the bottom not from the beginning\
+// if the brower window is too narrow\
+\
+manage_admins.php could not show edit and delete option at the same time.\
+\
+new_movie.php  could we add picture to the server? maybe too complicated?\
+//optional\
+\
+edit_actor.php    gender options are not well aligned.\
+\
+\
+11/24/2013 ling\
+\
+1 \
+user_movie.php\
+\pard\tx560\pardeftab560\ql\qnatural\pardirnatural
+
+\f2\fs22 \cf2 \CocoaLigature0 ---will bring an issue, if user watched movie repeatly, dupicated record will be show in watched list!!!!!\
+\
+\cf3 -will bring an issue, if user add movie repeatly, dupicated record will be show in interested list!!!!!\
+--solved by Ling  // seperate the mode if already in interested list  (base on idea of Shibai)\cf2 \
+\
+2 add an movie through admin side then delete it\
+will create an empty genre name in genre table.\
+\
+3 add movie if actor not added before, will still create a record in movie table!\
+\
+\cf3 4. user_dashboard.php if no intersted movie or watched movie, the text should not be showed----solved by Ling 11/24/2013\
+\
+5 user_dashboard.php clik user's name at right top should just show user's profile then user can choose to edit or not---solved by ling 11/24/2013\cf2 \
+}

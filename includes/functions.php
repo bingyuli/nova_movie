@@ -183,33 +183,59 @@
 	 return $movie_set;
 	 }
 	 
-	function find_interested_movies_by_user($user_id){
-		//use nested query,just return movie info
+
+	
+	function find_recent_interested_movies_by_user($user_id,$limit_num=50){
+		//use nested query,
+		//return part of movie info and interested.id, just return recently interested movies in the list
+		//$limit_num is the limit number of the top rows in the result
 		global $connection;
 		$safe_user_id = mysqli_real_escape_string($connection, $user_id);
 		
-		$query  = "SELECT * ";
-		$query .= "FROM movie ";
-		$query .= "where id in (select movie_id ";
+		$query  = "SELECT M.id,M.name,M.year,M.picture,M.ave_star,M.director, M.rating, I.id AS interested_id ";
+		$query .= "FROM movie M, interested I ";
+		$query .= "where M.id in (select I.movie_id ";
 		$query .= "FROM interested ";
-		$query .= "WHERE user_id = {$safe_user_id}) ";
-		$query .= "ORDER BY movie.name ASC ";
+		$query .= "WHERE I.user_id = {$safe_user_id}) ";
+		$query .= "ORDER BY interested_id DESC ";
+		$query .= "Limit {$limit_num}; ";
 		$movie_set = mysqli_query($connection, $query);
 		confirm_query($movie_set);
 		return $movie_set;
 	}
 	
-	function find_recently_released_movie(){
-		//return movie info of recently released movies
+	
+
+	
+	function find_recent_watched_movies_by_user($user_id, $limit_num=50){
+		//use nested query,
+		//return part of movie info and watched.id, just return recently watched movies in the list
+		//$limit_num is the limit number of the top rows in the result
 		global $connection;
-		$query1 ="select MAX(id) as max from movie";
-		$result1 = mysqli_query($connection, $query1); 
-		$row = mysqli_fetch_assoc($result1);
+		$safe_user_id = mysqli_real_escape_string($connection, $user_id);
 		
-		$query2 ="select id, name, year, picture, ave_star, introduction from movie where id>".$row['max']."-5 and year>'2012'";
-		$result2 = mysqli_query($connection, $query2);
-		confirm_query($result2);
-		return $result2;
+		$query  = "SELECT M.id,M.name,M.year,M.picture,M.ave_star,M.director, M.rating, W.id AS watched_id ";
+		$query .= "FROM movie M, watched W ";
+		$query .= "where M.id in (select W.movie_id ";
+		$query .= "FROM watched ";
+		$query .= "WHERE W.user_id = {$safe_user_id}) ";
+		$query .= "ORDER BY watched_id DESC ";
+		$query .= "Limit {$limit_num}; ";
+		$movie_set = mysqli_query($connection, $query);
+		confirm_query($movie_set);
+		return $movie_set;
+	}
+	
+	function find_recently_released_movie($limit_num=50){
+		//return movie info of recently released movies
+		//$limit_num is the limit number of the top rows in the result
+		global $connection;
+		$query ="select id, name, year, picture, ave_star, director,rating from movie ";
+		$query .="Order by id desc ";
+		$query .= "Limit {$limit_num}; ";
+		$result = mysqli_query($connection, $query);
+		confirm_query($result);
+		return $result;
 	}
 		
 	
@@ -241,7 +267,8 @@
 	}
 
 
-	function basic_movieinfo_in_table($movie_set){  //$movie_set is a virtual table returned by SQL query
+	function basic_movieinfo_in_table($movie_set){  //view function
+		//$movie_set is a virtual table returned by SQL query
 		$output = "<table border=\"1\"> ";
 		$output .= "<tr>";
 		$output .= "<th>Title</th>";
@@ -274,20 +301,21 @@
 	}
 		
 	
-	function basic_movieinfo_with_pic($movie_set){  
-		//$movie_set is a virtual table just contain movie info returned by SQL query 
+	function basic_movieinfo_with_pic($movie_set,$pic_width=120,$pic_height=160,$detailed='false'){  //view function
+		//$movie_set is a virtual table just contain movie info returned by SQL query, contain movie id, name.....
 		//this function will show all basic info of movie and actors, genre 
+		//$pic_width,$pic_height to set the size of picture
 		global $connection;
 		$output = "<table> ";
 		
 		while($movie= mysqli_fetch_assoc($movie_set)) {
 			$output .= "<tr>";
-			$output .= "<td width=\"110px\"><img src='".$movie['picture']."' width=\"120px\" height=\"160px\"/></td>";
+			$output .= "<td width=\"{$pic_width}px\"><img src='".$movie['picture']."' width=\"{$pic_width}px\" height=\"{$pic_height}px\"/></td>";
 			$output .= "<td width=\"500px\">";
 			$output .= "<ul>";
-			$safe_movie_id = urlencode($movie["id"]);
+			$safe_movie_id = urlencode($movie['id']);
 			$output .=  "<h3><a href=\"movie.php?movieId={$safe_movie_id}\">";
-			$output .=  htmlentities($movie["name"]);
+			$output .=  htmlentities($movie['name']);
 			$output .=  "</a></h3>";
 			$output .= "<li><strong>Average Star:&nbsp</strong> ".$movie['ave_star']."</li></br>";
 			$output .= "<li><strong>Year:&nbsp</strong> ".$movie['year']."</li></br>";
@@ -325,16 +353,23 @@
 				}
 			}
 			$output .= "</li></br>";
+			
+			if($detailed=='true'){//if the movie need to be showed in detailed,  show introduction 
+				$output .="<li><strong>Introduction:&nbsp</strong></br> ".$movie['introduction']."</li></br>";
+				$output .="<li><strong>Movie Watched Times:&nbsp</strong> ".$movie['count']."</li></br>";
+			}
 	
 			$output .=  "</ul>";
 			$output .=  "</td>";
 			$output .=  "</tr>";
 		}
 		$output .=   "</table>"; 
+		
+			
 		return $output;
 	}
 	
-	function movie_name_with_pic($movie_set){
+	function movie_name_with_pic($movie_set){//view function
 		//just show movie name (as a link) and movie picture
 		global $connection;
 		$output = "<table> ";
@@ -351,13 +386,34 @@
 		}
 		$output .=   "</tr></table>"; 
 		
-		//while($movie= mysqli_fetch_assoc($movie_set)) {
+		
 			
 		return $output;
 	}
-		
 	
-	function user_dashboard_default_pics() {
+	function comment_of_movie_in_table($comment_set){//view function
+		$output = "<table> ";
+		$output .= "<tr>";
+		$output .= "<th style=\"text-align: left; width: 160px;\">User Name</th> ";
+		$output .= "<th style=\"text-align: left; width: 360px;\">Comment</th> ";
+		$output .= "</tr>";
+		while($comment= mysqli_fetch_assoc($comment_set)) {
+			$output .= "<tr>";
+			$output .= "<td> ";	
+		    $output .=  htmlentities($comment['name']);
+			$output .=  "</td>";
+			$output .= "<td> ";	
+		    $output .=  htmlentities($comment['comment']);
+			$output .=  "</td>";
+			$output .=  "</tr>";
+		}
+		$output .=   "</table>"; 
+		
+		return $output;
+		
+	}
+	
+	function user_dashboard_default_pics() {//view function
 		
 	    $output ="<img src=\"http://pic1a.nipic.com/2008-09-11/2008911114038528_2.jpg\" 
 		alt=\"Family\" width=\"150\" height=\"150\"> ";

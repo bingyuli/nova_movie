@@ -2,7 +2,7 @@
 {\fonttbl\f0\fswiss\fcharset0 ArialMT;\f1\fnil\fcharset128 HiraKakuProN-W3;\f2\fnil\fcharset0 Menlo-Regular;
 \f3\fnil\fcharset0 Menlo-Bold;}
 {\colortbl;\red255\green255\blue255;\red255\green0\blue0;\red67\green67\blue67;\red196\green26\blue22;
-\red170\green13\blue145;\red0\green116\blue0;}
+\red170\green13\blue145;\red0\green116\blue0;\red28\green0\blue207;}
 \vieww12240\viewh14820\viewkind1
 \deftab720
 \pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
@@ -46,7 +46,9 @@ Created folder of\cf3
 \i0\b0 \cf2  \cf0 and 
 \i\b footer.php
 \i0\b0 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf2 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf0 <?php include("../includes/layouts/header.php"); ?>\
 (-- when use it, if has nothing to add in body, div id= header, need add </div> first)\
 \
@@ -57,7 +59,9 @@ created one file
 \i\b db_connection.php
 \i0\b0  in includes, \
 <?php require_once("../includes/db_connection.php"); ?>\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf2 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf0 Edit some code of 
 \i\b new_user.php
 \i0\b0   and 
@@ -88,16 +92,20 @@ Edited some code of
 Changed some code of 
 \i\b public.css
 \i0\b0 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf2 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf0 Put all updated files in new folder 
 \i\b nova_movie_1107_Qi
 \i0\b0 \
 ===============================================================\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 
-\i\b \
+\i\b \cf0 \
 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 
-\i0\b0 11/11/2013-Ling\
+\i0\b0 \cf0 11/11/2013-Ling\
 \
 modified 
 \i\b user_login.php
@@ -126,8 +134,9 @@ user_logout.php
 
 \i \cf0 user_dashboard.php\
 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 
-\i0\b0 2. add functions in 
+\i0\b0 \cf0 2. add functions in 
 \b functions.php  :
 \b0 \
 \pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
@@ -165,7 +174,9 @@ add a class
 \b0 \cf0 Put all updated files in new folder 
 \i\b nova_movie_1113_Ling
 \i0\b0 \
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf2 now we can login with email and password to go to user_dashboard.php\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf0 ===============================================================\
 \
 \
@@ -388,4 +399,65 @@ push to github \
 \pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 
 \b0 \cf0 push to github \
- ===============================================================}
+ ===============================================================\
+\
+11/23/2013 -Ling\
+\
+1\
+modify user_search_movie.php to show message when no movie found\
+\
+2.\
+modify recently_released.php \
+solve the multiple comma issue.\
+\pard\tx560\pardeftab560\ql\qnatural\pardirnatural
+
+\f2 \cf5 \CocoaLigature0 while\cf0  ( $num-\cf7 1\cf0  >\cf7 0\cf0  )\
+						\{\
+							\cf5 echo\cf0  \cf4 ",&nbsp"\cf0 ;\
+							$num--;\
+						\}\
+change "while" to "if"\
+\
+\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\f0 \cf0 \CocoaLigature1 11/24/2013 -Ling
+\f2 \CocoaLigature0 \
+1 \
+modified 
+\f3\b \CocoaLigature1 user_dashboard.php
+\f2\b0 \CocoaLigature0 \
+ //could show top 5 insterested movie/ recently released movie, watched movie\
+add \
+public/
+\f3\b \CocoaLigature1 user_interested_movie.php
+\f2\b0 \CocoaLigature0 \
+public/
+\f3\b \CocoaLigature1 user_recently_released_movie.php
+\f2\b0 \CocoaLigature0 \
+public/
+\f3\b \CocoaLigature1 user_watched_movie.php
+\f2\b0 \CocoaLigature0 \
+\
+2 functions in 
+\f0\b \CocoaLigature1 functions.php  :
+\f2\b0 \CocoaLigature0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+\cf0 \CocoaLigature1 change \
+find_interested_movies_by_user($user_id)\
+to\
+
+\f3\b find_recent_interested_movies_by_user($user_id,$limit_num=50)
+\f2\b0 \
+\
+find_recently_released_movie()\
+to\
+
+\f3\b find_recently_released_movie($limit_num=50)
+\f2\b0 \
+\
+add 
+\f3\b find_recent_watched_movies_by_user($user_id, $limit_num=50)
+\f2\b0 \
+\
+}
