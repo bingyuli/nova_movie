@@ -48,4 +48,22 @@ function has_inclusion_in($value, $set) {
 	return in_array($value, $set);
 }
 
+	/**
+	 Validate password
+	 */
+	function validPassword($password)
+	{
+		$pattern = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+		return preg_match($pattern, $password);
+	}
+	
+	/**
+	 Validate an email address.
+	 */
+	function validEmail($email)
+	{
+		$pattern = "/^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$/";
+		return preg_match($pattern, $email);
+	}
+	
 ?>

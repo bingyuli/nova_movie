@@ -10,6 +10,19 @@ if (isset($_POST['submit'])) {
 	$required_fields = array("username","useremail", "password");
 	validate_presences($required_fields);
 	
+	if(!validEmail($_POST['useremail']))
+	{
+		
+		$errors[$required_fields[1]] = "User Email is not vaild";		
+	} 
+	
+ 	if(!validPassword($_POST['password']))
+	{
+		$errors[$required_fields[2]] = "Password is not safe!";		
+	} 
+	
+	
+	
 	if (empty($errors)) {
 		// Perform Create
 		$user_name = mysql_prep($_POST["username"]);
