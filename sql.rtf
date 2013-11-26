@@ -450,27 +450,54 @@ from genre\
 where genre.type like '%%');\
 \
 \
-\pard\tx560\pardeftab560\ql\qnatural\pardirnatural
-
-\f1 \cf0 \CocoaLigature0 \
-\
-\
-\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
-
-\f0 \cf0 \CocoaLigature1 \
 \pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 
 \f1 \cf0 \CocoaLigature0 \
 \pard\tx560\pardeftab560\ql\qnatural\pardirnatural
 
 \f0 \cf0 \CocoaLigature1 \
-select M.id, M.name, M.year, W.id AS watched_id from movie M, watched W\
+select M.id, M.name, M.year, W.id AS watched_id \
+from movie M, watched W\
 where M.id in (select W.movie_id\
 from watched \
 where W.user_id = 5)\
 order by watched_id asc\
 Limit 5;\
 \
+select distinct M.id, M.name, M.year, W.id AS watched_id \
+from movie M, watched W\
+where M.id in (select W.movie_id\
+from watched \
+where W.user_id = 5)\
+order by watched_id asc;\
+//not work\
+\
+select distinct M.id, M.name, M.year\
+from movie M, watched W\
+where M.id in (select W.movie_id\
+from watched \
+where W.user_id = 5);\
+//not work\
 \pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
 \cf0 \
+select M.id As movie_id, W.id As wateched_id\
+from movie M join watched W\
+on M.id = W.movie_id \
+where W.user_id = 5;\
+\
+select distinct M.id As movie_id\
+from movie M join watched W\
+on M.id = W.movie_id \
+where W.user_id = 5;\
+//not work\
+\
+select Distinct Movie_id, user_id, id\
+from  watched \
+group by user_id;\
+\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+\cf2 create view aaa AS select M.id As movie_id, W.id As wateched_id\
+from movie M join watched W\
+on M.id = W.movie_id \
+where W.user_id = 5;\
 }

@@ -216,7 +216,7 @@
 		
 		$query  = "SELECT M.id,M.name,M.year,M.picture,M.ave_star,M.director, M.rating, W.id AS watched_id ";
 		$query .= "FROM movie M, watched W ";
-		$query .= "where M.id in (select W.movie_id ";
+		$query .= "where M.id in (select Distinct W.movie_id ";
 		$query .= "FROM watched ";
 		$query .= "WHERE W.user_id = {$safe_user_id}) ";
 		$query .= "ORDER BY watched_id DESC ";
