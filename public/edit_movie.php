@@ -71,6 +71,9 @@ if (isset($_POST['submit'])) {
 	if( isset($_POST['genre']) && is_array($_POST['genre']) ) {
 	    $genrelist = $_POST['genre'];
 	}
+	else {
+		$genrelist =null;
+	}
 
     //Post of actors
     $actor = mysql_prep($_POST["actors"]);
@@ -91,7 +94,14 @@ if (isset($_POST['submit'])) {
     $query .= "LIMIT 1";
     $result = mysqli_query($connection, $query);
 
+    if (!$result ) {
+      // not Success
+      $_SESSION["message"] = "Movie addition failed.";
+      redirect_to("manage_movies.php");
+    }
+
     //insert to table of genre
+    $result2 ="";
 	$max = sizeof($genrelist);
 	$query5  = "DELETE FROM genre ";
 	$query5 .= "Where movie_id = {$id}";				
@@ -106,6 +116,12 @@ if (isset($_POST['submit'])) {
 		$query2 .= ")";			
 	    $result2 = mysqli_query($connection, $query2);		   
 	}
+	
+	if (!$result2 ) {
+      // not Success
+      $_SESSION["message"] = "Movie addition failed.";
+      redirect_to("manage_movies.php");
+    }
 
     //insert to table of cast
     //first check if the actor is new actor or not? (if new, must add to actor table first)
@@ -129,7 +145,7 @@ if (isset($_POST['submit'])) {
 	}
 	
 	else {		
-	$actor_id = $actor["id"];
+	$actor_id = $actor["id"];	}
 	if($actor_id){			
 	    $query3  = "INSERT INTO cast (";
 	    $query3 .= " movie_id, actor_id ";
@@ -138,7 +154,7 @@ if (isset($_POST['submit'])) {
 		$query3 .= ")";				
 	    $result3 = mysqli_query($connection, $query3);			
 		} 		
-	}
+
  } //end of for loop
 	
     if ($result) {
@@ -156,7 +172,6 @@ if (isset($_POST['submit'])) {
   
 } // end: if (isset($_POST['submit']))
 ?>
-
 <?php $layout_context = "admin"; ?>
 <?php include("../includes/layouts/header.php"); ?>
 <div class="hlinks">

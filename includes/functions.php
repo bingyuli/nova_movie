@@ -215,36 +215,25 @@
 		global $connection;
 		$safe_user_id = mysqli_real_escape_string($connection, $user_id);
 		
-//<<<<<<< HEAD
-	/*	$query  = "SELECT distinct name, id,year,picture,ave_star,director, rating ";
-		$query .= "FROM  watched, movie ";
-		$query .= "where movie.id = watched.movie_id ";
-		$query .= "AND watched.user_id = {$safe_user_id}) ";
-		$query .= "ORDER BY watched.id DESC ";
-		$query .= "Limit {$limit_num}; ";
-	*/	
+
+/*
 		$query  = "SELECT M.id,M.name,M.year,M.picture,M.ave_star,M.director, M.rating, W.id AS watched_id ";
 		$query .= "FROM movie M, watched W ";
 		$query .= "where M.id in (select W.movie_id ";
 		$query .= "FROM watched ";
 		$query .= "WHERE W.user_id = {$safe_user_id}) ";
 		$query .= "ORDER BY watched_id DESC ";
-//=======
-//		$query  = "SELECT M.id,M.name,M.year,M.picture,M.ave_star,M.director, M.rating, W.id AS watched_id ";
-//		$query .= "FROM movie M, watched W ";
-//		$query .= "where M.id in (select Distinct W.movie_id ";
-//		$query .= "FROM watched ";
-//		$query .= "WHERE W.user_id = {$safe_user_id}) ";
+*/
 		
 		
 		//The following is Qi added
-//		$query  = "SELECT DISTINCT M.id,M.name,M.year,M.picture,M.ave_star, M.director, M.rating ";
-//		$query .= "FROM movie M, watched W ";
-//		$query .= "WHERE M.id = movie_id AND  W.user_id = {$safe_user_id}  ORDER BY W.id DESC ";
+	$query  = "SELECT DISTINCT M.id,M.name,M.year,M.picture,M.ave_star, M.director, M.rating ";
+	$query .= "FROM movie M, watched W ";
+	$query .= "WHERE M.id = movie_id AND  W.user_id = {$safe_user_id}  ORDER BY W.id DESC ";
 
 				
 //    	$query .= "ORDER BY watched_id DESC ";
-//>>>>>>> 7e1d1d57ce901dcb69031bd9b0b33ed781d402f3
+
 		$query .= "Limit {$limit_num}; ";
 		
 		$movie_set = mysqli_query($connection, $query);

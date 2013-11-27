@@ -13,4 +13,6 @@
          " (" . mysqli_connect_errno() . ")"
     );
   }
+// Set autocommit to off
+//mysqli_autocommit($connection,FALSE);
 ?>
