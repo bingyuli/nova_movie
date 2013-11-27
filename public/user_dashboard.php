@@ -84,6 +84,15 @@
 
 		</ul>	
 
+		<h3>Most Popular Movies:</h3>	
+		<ul>
+		<?php	
+			$most_popular_movie_set = find_most_popular_movie(5); 
+			echo movie_name_with_pic($most_popular_movie_set);
+			?>
+
+		</ul>
+
 		
 		<?php	
 			$interested_movie_set = find_recent_interested_movies_by_user($_SESSION["user_id"],5);
@@ -108,6 +117,8 @@
 			}
 			?>
 		</ul>
+
+
 
 <br></br>
 

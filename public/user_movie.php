@@ -11,26 +11,41 @@
 	global $connection;		
 	$safe_movie_id = urlencode($_GET["movieId"]);
 	
-
-
+	$query  = "SELECT * ";
+	$query .= "FROM watched ";
+	$query .= "WHERE movie_id = {$safe_movie_id} ";
+	$query .= "AND user_id = {$_SESSION['user_id']} ";
+	$query .= "LIMIT 1";
+	$watchedresult = mysqli_query($connection, $query);
+	confirm_query($watchedresult);
+	if (mysqli_num_rows($watchedresult)>0) {
+		$user_watched=true;
+	}
 	
 	
-	if (isset($_POST['watchMovie'])){
-
-	// insert to table watched,  with user_id and movie_id 
+	if (isset($_POST['watchMovie'])){	
+	 //if user alread watched this movie, delete the previous record;
+		if ($user_watched){
+			$query="delete from watched where user_id={$_SESSION['user_id']} AND movie_id= {$safe_movie_id}; ";
+			$deleteresult = mysqli_query($connection, $query);
+			confirm_query($deleteresult);
+		}
+		// insert to table watched,  with user_id and movie_id 
 		$query="insert into watched (user_id,movie_id) values ({$_SESSION['user_id']}, {$safe_movie_id}); ";
 		$insertresult = mysqli_query($connection, $query);
 		confirm_query($insertresult);
-	    $_SESSION["message"]="Thank you for watching this movie";
-		
-	//  add operation to update watched times of movie;
-		$query ="update movie set movie.count= ";
-		$query .="(select count(*) from watched where movie_id= {$safe_movie_id}); " ;
+		$_SESSION["message"]="Thank you for watching this movie";
+
+		//  update watched times of movie;
+		$query ="update movie set movie.count = movie.count+1 ";
+		$query .="where id = {$safe_movie_id}); " ;
 		$updateresult = mysqli_query($connection, $query);
-		confirm_query($updateresult);
-	//----will bring an issue, if user watched movie repeatly, dupicated record will be show in watched list!!!!!
-	//--need to fix in userdashbord and user_watched_movie.php!!!!!!
+		//confirm_query($updateresult);
+		//----will bring an issue, if user watched movie repeatly, dupicated record will be show in watched list!!!!!
+		//--need to fix in userdashbord and user_watched_movie.php!!!!!!
+
 	}
+	 	 
 	
 	if (isset($_POST['addToInterest'])){
 	
@@ -101,16 +116,7 @@
 		$user_interested=true;
 	}
 	
-	$query3  = "SELECT * ";
-	$query3 .= "FROM watched ";
-	$query3 .= "WHERE movie_id = {$safe_movie_id} ";
-	$query3 .= "AND user_id = {$_SESSION['user_id']} ";
-	$query3 .= "LIMIT 1";
-	$result3 = mysqli_query($connection, $query3);
-	confirm_query($result3);
-	if (mysqli_num_rows($result3)>0) {
-		$user_watched=true;
-	}
+
 
 
 ?>
@@ -177,7 +183,7 @@
        
 		<table>
 		<tr><td style ="width: 500px;">
-		<textarea name="added_comment">
+		<textarea name="added_comment" placeholder="You can add your comments here">
 		</textarea>
 		</td></tr>
 		</table>

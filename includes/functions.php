@@ -214,13 +214,21 @@
 		global $connection;
 		$safe_user_id = mysqli_real_escape_string($connection, $user_id);
 		
+	/*	$query  = "SELECT distinct name, id,year,picture,ave_star,director, rating ";
+		$query .= "FROM  watched, movie ";
+		$query .= "where movie.id = watched.movie_id ";
+		$query .= "AND watched.user_id = {$safe_user_id}) ";
+		$query .= "ORDER BY watched.id DESC ";
+		$query .= "Limit {$limit_num}; ";
+	*/	
 		$query  = "SELECT M.id,M.name,M.year,M.picture,M.ave_star,M.director, M.rating, W.id AS watched_id ";
 		$query .= "FROM movie M, watched W ";
-		$query .= "where M.id in (select Distinct W.movie_id ";
+		$query .= "where M.id in (select W.movie_id ";
 		$query .= "FROM watched ";
 		$query .= "WHERE W.user_id = {$safe_user_id}) ";
 		$query .= "ORDER BY watched_id DESC ";
 		$query .= "Limit {$limit_num}; ";
+		
 		$movie_set = mysqli_query($connection, $query);
 		confirm_query($movie_set);
 		return $movie_set;
@@ -238,6 +246,17 @@
 		return $result;
 	}
 		
+	function find_most_popular_movie($limit_num=50){
+		//return movie info of most popular movies
+		//$limit_num is the limit number of the top rows in the result
+		global $connection;
+		$query ="select id, name, year, picture, ave_star, director,rating from movie ";
+		$query .="Order by count desc ";
+		$query .= "Limit {$limit_num}; ";
+		$result = mysqli_query($connection, $query);
+		confirm_query($result);
+		return $result;
+	}
 	
 	function movie_navigation($genre_array) {
 		
@@ -281,7 +300,7 @@
 			$output .= "<tr>";
 			$output .=  "<td>";
 			$safe_movie_id = urlencode($movie["id"]);
-			$output .=  "<a href=\"movie.php?movieId={$safe_movie_id}\">";
+			$output .=  "<a href=\"user_movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie["name"]);
 			$output .=  "</a>";
 			$output .=  "</td>";
@@ -314,7 +333,7 @@
 			$output .= "<td width=\"500px\">";
 			$output .= "<ul>";
 			$safe_movie_id = urlencode($movie['id']);
-			$output .=  "<h3><a href=\"movie.php?movieId={$safe_movie_id}\">";
+			$output .=  "<h3><a href=\"user_movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie['name']);
 			$output .=  "</a></h3>";
 			$output .= "<li><strong>Average Star:&nbsp</strong> ".$movie['ave_star']."</li></br>";
@@ -379,7 +398,7 @@
 			$output .= "<td width=\"150px\ height=\"200px\" > <img src='".$movie['picture']."' width=\"120px\" height=\"160px\" /> ";
 			//$output .= "<ul>";
 			$safe_movie_id = urlencode($movie["id"]);
-			$output .=  "<a href=\"movie.php?movieId={$safe_movie_id}\">";
+			$output .=  "<a href=\"user_movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie['name']);
 			//$output .= " \"/> ";
 			$output .=  "</a></td>";

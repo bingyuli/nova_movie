@@ -90,15 +90,15 @@ if (isset($_POST['submit'])) {
     <form action="new_user.php" method="post">
 
 		<p><br></br>Your First Name and Last Name <br></br>
-		<input type="text" name="username" value= "<?php echo htmlentities($_POST["username"]); ?> " placeholder="Fisrt Name Last Name" />
+		<input type="text" name="username" value= "" placeholder="Fisrt Name Last Name" />
 		</p>
 
 		<p>Email Address <br></br>
-		<input type="text" name="useremail" value="<?php echo htmlentities($_POST["useremail"]); ?>" placeholder="mymail@mail.com"/>
+		<input type="text" name="useremail" value="" placeholder="mymail@mail.com"/>
 		</p>
 
 		<p>Choose a password (4-20 characters) <br></br>
-		<input type="password" name="password" value="<?php echo htmlentities($_POST["password"]); ?>" placeholder="eg. X8df!90EO"/>
+		<input type="password" name="password" value="" placeholder="eg. X8df!90EO"/>
 		</p>
 
 
