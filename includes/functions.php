@@ -231,10 +231,7 @@
 	$query .= "FROM movie M, watched W ";
 	$query .= "WHERE M.id = movie_id AND  W.user_id = {$safe_user_id}  ORDER BY W.id DESC ";
 
-				
-//    	$query .= "ORDER BY watched_id DESC ";
-
-		$query .= "Limit {$limit_num}; ";
+	$query .= "Limit {$limit_num}; ";
 		
 		$movie_set = mysqli_query($connection, $query);
 		confirm_query($movie_set);
