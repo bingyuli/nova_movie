@@ -37,10 +37,12 @@
 		$_SESSION["message"]="Thank you for watching this movie";
 
 		//  update watched times of movie;
-		$query ="update movie set movie.count = movie.count+1 ";
-		$query .="where id = {$safe_movie_id}); " ;
+        $movie = find_movie_by_id ($safe_movie_id);
+		$query ="update movie set count = {$movie['count']} + 1 ";
+		$query .="where id = {$safe_movie_id}; " ;
 		$updateresult = mysqli_query($connection, $query);
-		//confirm_query($updateresult);
+		confirm_query($updateresult);
+		//$_SESSION["message"].="movie counts was added";
 		//----will bring an issue, if user watched movie repeatly, dupicated record will be show in watched list!!!!!
 		//--need to fix in userdashbord and user_watched_movie.php!!!!!!
 
@@ -77,7 +79,7 @@
 			$_SESSION["message"]="Thank you for reviewing this movie ";
 			
 		//  add operation to update ave_star of movie;	
-			$query ="update movie set ave_star = ";
+		    $query ="update movie set ave_star = ";
 			$query .= "(select AVG(star) from review where movie_id={$safe_movie_id} AND user_id={$_SESSION['user_id']}); ";
 			$updateresult = mysqli_query($connection, $query);
 			confirm_query($updateresult);
@@ -86,9 +88,9 @@
 	if (isset($_POST['addComment'])){
 		$value = trim($_POST["added_comment"]);
 		$safe_added_comment = mysql_prep($value);
-		if ($_POST["added_comment"]!=""){	
+		if ($safe_added_comment!==""){	
 		// insert to table comment,  with user_id, movie_id, comment
-			$query="insert into comment (user_id,movie_id,comment) values ({$_SESSION['user_id']}, {$safe_movie_id}, {$safe_added_comment}); ";
+			$query="insert into comment (user_id,movie_id,comment) values ({$_SESSION['user_id']}, {$safe_movie_id}, '{$safe_added_comment}'); ";
 			$insertresult = mysqli_query($connection, $query);
 			$_SESSION["message"].="Thank your for your comment.";
 		}
@@ -142,7 +144,7 @@
 	
      <h3>Detailed information about this movie:  </h3>
 	<?php 
-		echo basic_movieinfo_with_pic($movie_set,200,350,true);
+		echo basic_movieinfo_with_pic($movie_set,250,350,true);
 		?>
 
 	
@@ -181,12 +183,11 @@
 		<?php }?>
 
        
-		<table>
-		<tr><td style ="width: 500px;">
-		<textarea name="added_comment" placeholder="You can add your comments here">
-		</textarea>
-		</td></tr>
-		</table>
+	
+		<ul>
+		<textarea name="added_comment" rows="4" cols="50" placeholder="You can add comment here."></textarea>
+		</ul>
+		
 		<ul><input type="submit" name="addComment" value="addComment" class="blue"/></ul>
 		
 
