@@ -59,10 +59,17 @@ if (isset($_POST['submit'])) {
     <h2><br></br>Add New Actor</h2>
     <form action="new_actor.php" method="post">	     
       <p>Actor name<br></br>
-        <input type="text" name="actor_name" value="" />
+        <input type="text" name="actor_name" value=""  />
       </p>
       <p>Gender <br></br>
-	      <input type="text" name="gender" value="" />
+		<input type="radio" name="gender"
+		<?php if (isset($gender) && $gender=="male") echo "checked";?>
+		value="male" class ="narrow">Male
+		<input type="radio" name="gender"
+		<?php if (isset($gender) && $gender=="female") echo "checked";?>
+		value="female" class ="narrow">Female
+
+
 	  </p>
       
       <input type="submit" name="submit" value="Add Actor" class= "blue"/>

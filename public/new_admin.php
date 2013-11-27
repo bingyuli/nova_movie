@@ -13,6 +13,10 @@ if (isset($_POST['submit'])) {
   
   $fields_with_max_lengths = array("admin_name" => 20);
   validate_max_lengths($fields_with_max_lengths);
+
+  if(!validEmail($_POST['admin_email'])){		
+	$errors[$required_fields[1]] = "Admin Email is not valid";		
+   }
   
   if (empty($errors)) {
     // Perform Create

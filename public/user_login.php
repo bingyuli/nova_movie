@@ -75,6 +75,7 @@
 
 			<h2><br></br>Member Sign In </h2>
 			<form action="user_login.php" method= "post">
+			<table>	<tr><td width ="360px">
 			<p><br></br>Email <br></br>
 			<input type="text" name="user_email" value="<?php echo htmlentities($user_email); ?>" />
 			</p>
@@ -84,13 +85,17 @@
 			</p>
 
 			<p>
-			<input type ="submit" name="submit" value="Continue" class="blue" >
+			<br></br><input type ="submit" name="submit" value="Continue" class="blue" >
 			</p>
-				       
-			</form>   
-
+			
 			<br></br>
-			<a href="index.php">Cancel</a>
+			<a href="index.php">Cancel</a></td>
+			<td>
+			<img border="2" src="image/userbg.jpg" width="360" height="280"></td>	       
+			</form>   
+			</td>
+			</tr></table>
+
 		</div>
 	  
     </div>

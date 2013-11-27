@@ -26,15 +26,15 @@ if (isset($_POST['submit'])) {
     $studio =mysql_prep($_POST["studio"]);
     $duration =mysql_prep($_POST["duration"]);
 
-    //Post of genre
-    $genre = mysql_prep($_POST["genre"]);
-    $genrelist = explode(",", $genre);   //arrary of splitting string 
+  //Post of genre
+	if( isset($_POST['genre']) && is_array($_POST['genre']) ) {
+	    $genrelist = $_POST['genre'];
+	}
 
     //Post of actors
     $actor = mysql_prep($_POST["actors"]);
     $actorlist = explode(",", $actor);   //arrary of splitting string actors
-
-
+	
     //insert to table of movie
     $query  = "INSERT INTO movie (";
     $query .= " name, year, director,picture, rating, introduction, language, studio, duration ";
@@ -44,6 +44,8 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($connection, $query);
 
     $movie_id = mysqli_insert_id($connection); 
+
+
 	
     //insert to table of genre
 	$max = sizeof($genrelist);
@@ -71,7 +73,7 @@ if (isset($_POST['submit'])) {
 		    $result3 = mysqli_query($connection, $query3);			
 		} 		
 	}
-
+	
     if ($result && $result2 && $result3) {
       // Success
       $_SESSION["message"] = "Movie added.";
@@ -127,11 +129,6 @@ if (isset($_POST['submit'])) {
         <input type="text" name="actors" value="" class ="wide"/>
       </p></td>
 
-
-      <td style ="width: 100px;"><p>Year<br></br>
-        <input type="text" name="year" value="<?php echo date("Y"); ?>" class ="small"/>
-      </p></td>
-
       </tr>
  
       <tr>     
@@ -145,33 +142,53 @@ if (isset($_POST['submit'])) {
         <input type="text" name="studio" value="Studio" />
       </p></td>
   
-	  <td style ="width: 250px;"><p>Picture<br></br>
+	  <td ><p>Picture<br></br>
       <input type="text" name="picture" value="This is picture location." class ="wide" />
       </p></td>
+      </tr >
+  </table> 
 
-	  <td >
+  <table>        
+      <tr >
+	  <td style ="width:125px;"><p>Year<br></br>
+	  <input type="text" name="year" value="<?php echo date("Y"); ?>" class ="small"/>
+	  </p>
+	
+	  <td style ="width: 125px;">
       <p>Rating<br></br>
         <input type="text" name="rating" value="G" class ="small" />
       </p></td>
-
-      </tr >
-    
-      <tr >
-	  <td><p>Genre<br></br>
-	  <input type="text" name="genre" value="" />
-	  </p></td>
-
-      <td><p>Duration<br></br>
+      <td style ="width: 250px;"><p>Duration<br></br>
         <input type="text" name="duration" value="90" class ="small"/>
-      </p></td> </tr >
+      </p></td> 
+</tr>
+ </table>  
 
-      </table> 
-      <p>Introduction<br></br>
-	    <textarea name="introduction">introduction of new movie
-	    </textarea>
+ <table>  	
+	 
+	  <p>Genre<tr> 
+ 
+	<td><input type="checkbox" name="genre[]" value="Action" class = "narrow"> Action<br></td>
+
+	  <td><input type="checkbox" name="genre[]" value="Adventure" class = "narrow"> Adventure<br></td>
+	  <td><input type="checkbox" name="genre[]" value="Comedy" class = "narrow"> Comedy<br></td>
+	  <td><input type="checkbox" name="genre[]" value="Crime" class = "narrow"> Crime<br></td>
+	  <td><input type="checkbox" name="genre[]" value="Drama" class = "narrow"> Drama<br>	</td>
+
+	  <td><input type="checkbox" name="genre[]" value="Fantasy" class = "narrow"> Fantasy<br></td>
+	  <td><input type="checkbox" name="genre[]" value="Horror" class = "narrow"> Horror<br></td>
+	  <td><input type="checkbox" name="genre[]" value="Romance" class = "narrow"> Romance<br></td>
+	  <td><input type="checkbox" name="genre[]" value="Sci-Fi" class = "narrow"> Sci-Fi<br></td>
+	  <td ><input type="checkbox" name="genre[]" value="Thriller" class = "narrow"> Thriller<br></td>	
+	  </tr>
 	  </p>
-	
-	
+ </table>  
+
+
+<p>Introduction<br></br>
+  <textarea name="introduction">introduction of new movie
+  </textarea>
+</p>	
       <input type="submit" name="submit" value="Add movie" class= "blue"/>
     </form>
     <br />

@@ -48,7 +48,7 @@ a:hover { color: #1A446C; }
 
 
 #main { 
-	height: 590px; width: 100%; 
+	height: 580px; width: 100%; 
 	margin: 0; padding: 0; 
 
 }
@@ -65,7 +65,7 @@ a:hover { color: #1A446C; }
 /* Navigation */
 #navigation { 
 	float: left;
-	width: 100px; height: 100%; 
+	width: 120px; height: 100%; 
 	margin: 0; padding: 0 2em; 
 	color: #9D0D10;
 }
@@ -89,6 +89,8 @@ ul.pages { padding-left: 2em; list-style: square; font-weight: normal; }
 
 #page h1 { color: #8D0D19;}
 #page h2 { color: #8D0D19; margin-top: 1em;}
+
+#page h5 { color: white; margin-top: 1em; text-shadow: 4px 4px 4px black;}
 #page h3 { color: #8D0D19; }
 .view-content {
 	margin: 1em; padding: 2em; border: 2px solid #999;
@@ -112,7 +114,13 @@ div.message {
 
 input    {
 width:220px;
-display:block;
+border: 1px solid #999;
+height: 30px;
+font-size: 15px;
+}
+
+input.narrow    {
+width:20px;
 border: 1px solid #999;
 height: 30px;
 font-size: 15px;
@@ -152,7 +160,7 @@ input.blue {
 }
 
 textarea {
-  	width:480px;
+  	width:500px;
 	display:block;
 	border: 1px solid #999;
 	height: 80px;
@@ -170,6 +178,19 @@ button.blue {
 	padding: 10px 16px;
 	min-width: 160px;
 }
+
+button.small {
+    background-color: #135aac;  
+    box-shadow: inset 0 1px 0 0 #5e9de4;
+	color: #fff;
+	border:2px solid #265890;
+	text-shadow: 1px 1px 1px #000;
+	
+	font-size:16px;
+    height: 0.2em; 
+    width: 4em; 
+}
+
 
 
 td

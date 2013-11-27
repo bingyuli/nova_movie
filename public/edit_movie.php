@@ -68,8 +68,9 @@ if (isset($_POST['submit'])) {
     $duration =mysql_prep($_POST["duration"]);
 
     //Post of genre
-    $genre = mysql_prep($_POST["genre"]);
-    $genrelist = explode(",", $genre);   //arrary of splitting string
+	if( isset($_POST['genre']) && is_array($_POST['genre']) ) {
+	    $genrelist = $_POST['genre'];
+	}
 
     //Post of actors
     $actor = mysql_prep($_POST["actors"]);
@@ -113,9 +114,21 @@ if (isset($_POST['submit'])) {
 	$query4 .= "Where movie_id = {$id}";				
 	$result4 = mysqli_query($connection, $query4);
 	
-	for ($i=0; $i<$max; $i++) {
-		
-	$actor= find_actor_by_name($actorlist[$i]);
+	for ($i=0; $i<$max; $i++) {		
+	$actor= find_actor_by_name($actorlist[$i]);	
+    if($actor == null){      //check if the actor is new, if new, first add to talbe actor first
+	    $query8  = "INSERT INTO actor (";
+	    $query8 .= " name, gender ";
+		$query8 .= ") VALUES (";
+		$query8 .= "  '{$actorlist[$i]}', 'unknown' ";
+		$query8 .= ")";				
+	    $result8 = mysqli_query($connection, $query8);	
+		if($result8){
+			$actor_id = mysqli_insert_id($connection); 
+		}	
+	}
+	
+	else {		
 	$actor_id = $actor["id"];
 	if($actor_id){			
 	    $query3  = "INSERT INTO cast (";
@@ -126,6 +139,7 @@ if (isset($_POST['submit'])) {
 	    $result3 = mysqli_query($connection, $query3);			
 		} 		
 	}
+ } //end of for loop
 	
     if ($result) {
       // Success
@@ -136,7 +150,7 @@ if (isset($_POST['submit'])) {
       $_SESSION["message"] = "Movie update failed.";
     }
   
-  }
+ }
 } else {
   // This is probably a GET request
   
@@ -178,13 +192,8 @@ if (isset($_POST['submit'])) {
      <td style ="width: 350px;"><p>Actors<br></br>
         <input type="text" name="actors" value="<?php echo $actorname; ?>" class ="wide"/>
       </p></td>
-
-      <td style ="width: 100px;"><p>Year<br></br>
-        <input type="text" name="year" value="<?php echo htmlentities($movie["year"]); ?>" class ="small"/>
-      </p></td>   
       </tr>	
-
-      <tr>  
+     <tr>  	
 	  <td><p>Language<br></br>
 	  <input type="text" name="language" value="<?php echo htmlentities($movie["language"]); ?>" />
 	  </p></td>
@@ -193,38 +202,130 @@ if (isset($_POST['submit'])) {
       <p>Studio<br></br>
         <input type="text" name="studio" value="<?php echo htmlentities($movie["studio"]); ?>" />
       </p></td>
-    
-	  <td style ="width: 350px;"><p>Picture<br></br>
-      <input type="text" name="picture" value="<?php echo htmlentities($movie["picture"]); ?>" class ="wide"/>
-      </p></td>
+  
+	  <td ><p>Picture<br></br>
+    <input type="text" name="picture" value="<?php echo htmlentities($movie["picture"]); ?>" class ="wide"/>
+    </p></td>
+    </tr>
+    </table>  
 
-      <td style ="width: 100px;">
+    <table>
+	<tr >
+      <td style ="width: 125px;"><p>Year<br></br>
+        <input type="text" name="year" value="<?php echo htmlentities($movie["year"]); ?>" class ="small"/>
+      </p></td>   
+ 
+      <td style ="width: 125px;">
       <p>Rating<br></br>
         <input type="text" name="rating" value="<?php echo htmlentities($movie["rating"]); ?>" class ="small"/>
       </p></td>
-     </tr >
 
-     <tr >
-	  <td><p>Genre<br></br>
-	  <input type="text" name="genre" value="<?php echo $genres; ?>" />
-	  </p></td>
-	
-      <td><p>Duration<br></br>
+      <td style ="width: 250px;"><p>Duration<br></br>
         <input type="text" name="duration" value="<?php echo htmlentities($movie["duration"]); ?>" class ="small"/>
-      </p></td> 
-  
+      </p></td>
+
 	  <td style ="width: 150px;"><p>Watched Count<br></br>
 	  <input type="text" name="count" value="<?php echo htmlentities($movie["count"]); ?>"class ="small" />
 	  </p></td>
 	
 	  <td><p>Average Star<br></br>
 	  <input type="text" name="ave_star" value="<?php echo htmlentities($movie["ave_star"]); ?>" class ="small"/>
-	  </p></td>	
-	 </tr >
-	   </table> 
+	  </p></td>
+     </tr >
+     </table >
+
+<!-- How to echo the check box value -->
+<table>
+     <tr >
+	  <p>Genre
+		
+		<td><input type="checkbox" name="genre[]" value="Action" class = "narrow"
+		<?php
+		   if (strpos($genres,"Action")!== false) {
+	     ?>
+	     checked
+	     <?php } ?>			
+	     /> Action<br></td>
+
+		<td><input type="checkbox" name="genre[]" value="Adventure" class = "narrow"
+		<?php
+		    if (strpos($genres,"Adventure")!== false) {
+		 ?>
+		 checked
+		 <?php } ?>
+		/> Adventure<br></td>
+		
+        <td><input type="checkbox" name="genre[]" value="Comedy" class = "narrow"/
+			<?php
+			    if (strpos($genres,"Comedy")!== false) {
+			 ?>
+			 checked
+			 <?php } ?>
+     	/> Comedy<br></td>
+
+		<td><input type="checkbox" name="genre[]" value="Crime" class = "narrow"
+			<?php
+			    if (strpos($genres,"Crime")!== false) {
+			 ?>
+			 checked
+			 <?php } ?>	
+		/> Crime<br></td>
+		
+		<td><input type="checkbox" name="genre[]" value="Drama" class = "narrow"
+			<?php
+			    if (strpos($genres,"Drama")!== false) {
+			 ?>
+			 checked
+			 <?php } ?>	
+		/> Drama<br>	</td>
+		
+		<td><input type="checkbox" name="genre[]" value="Fantasy" class = "narrow"
+			<?php
+			    if (strpos($genres,"Fantasy")!== false) {
+			 ?>
+			 checked
+			 <?php } ?>	
+		/> Fantasy<br></td>
+		
+		<td><input type="checkbox" name="genre[]" value="Horror" class = "narrow"
+			<?php
+			    if (strpos($genres,"Horror")!== false) {
+			 ?>
+			 checked
+			 <?php } ?>	
+		/> Horror<br></td>
+		
+		<td><input type="checkbox" name="genre[]" value="Romance" class = "narrow"
+		<?php
+		    if (strpos($genres,"Romance")!== false) {
+		 ?>
+		 checked
+		 <?php } ?>
+		/> Romance<br></td>
+		
+		<td><input type="checkbox" name="genre[]" value="Sci-Fi" class = "narrow"
+			<?php
+			    if (strpos($genres,"Sci-Fi")!== false) {
+			 ?>
+			 checked
+			 <?php } ?>
+			/> Sci-Fi<br></td>
+			
+		<td ><input type="checkbox" name="genre[]" value="Thriller" class = "narrow"
+			<?php
+			    if (strpos($genres,"Thriller")!== false) {
+			 ?>
+			 checked
+			 <?php } ?>	
+			/> Thriller<br></td>
+	  </p>	
+	  </tr>
+	  </p>
+     </table>
+  
 	   <table> 		
      <tr>
-       <td style ="width: 500px;"><p>Introduction<br></br>
+       <td style ="width: 540px;"><p>Introduction<br></br>
 	    <textarea name="introduction"><?php echo htmlentities($movie["introduction"]); ?>
 	    </textarea>
 	  </p> </td>
