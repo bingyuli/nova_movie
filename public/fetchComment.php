@@ -18,7 +18,7 @@
   //$userId = 1; 
   $userId;
   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-    $userId =  $_SESSION['userID'];
+    $userId =  $_SESSION['user_id'];
   } 
   
   $id = $_GET['movieId'];

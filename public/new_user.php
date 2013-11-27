@@ -10,13 +10,13 @@ if (isset($_POST['submit'])) {
 	$required_fields = array("username","useremail", "password");
 	validate_presences($required_fields);
 	
-	if(!validEmail($_POST['useremail']))
+	if(!validEmail($_POST['useremail'])&& has_presence($_POST['useremail']))
 	{
 		
 		$errors[$required_fields[1]] = "User Email is not valid";		
 	} 
 	
- 	if(!validPassword($_POST['password']))
+ 	if(!validPassword($_POST['password'])&& has_presence($_POST['password']))
 	{
 		$errors[$required_fields[2]] = "Password is not safe!";		
 	} 
@@ -91,15 +91,15 @@ if (isset($_POST['submit'])) {
 	<table>	<tr><td width ="360px">
 
 		<p><br></br>Your First Name and Last Name <br></br>
-		<input type="text" name="username" value="" />
+		<input type="text" name="username" value= "<?php echo htmlentities($_POST["username"]); ?> " placeholder="Fisrt Name Last Name" />
 		</p>
 
 		<p>Email Address <br></br>
-		<input type="text" name="useremail" value="" />
+		<input type="text" name="useremail" value="<?php echo htmlentities($_POST["useremail"]); ?>" placeholder="mymail@mail.com"/>
 		</p>
 
 		<p>Choose a password (4-20 characters) <br></br>
-		<input type="password" name="password" value="" />
+		<input type="password" name="password" value="<?php echo htmlentities($_POST["password"]); ?>" placeholder="eg. X8df!90EO"/>
 		</p>
 
 

@@ -1,5 +1,5 @@
 <?php
-	session_start();
+    session_start();
     define("DB_SERVER", "localhost");
 	define("DB_USER", "nova_team");
 	define("DB_PASS", "sjsuteam3");
@@ -14,7 +14,7 @@
 			" (" . mysqli_connect_errno() . ")"
     );
   }
-  
+
   //$userId = 1; 
   $userId;
   if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
@@ -22,18 +22,9 @@
   } 
   
   $id = $_GET['movieId'];
-  $mode = $_GET['mode'];
-  if ($mode == 'fetch') {  
-    $query = "select star from review where movie_id=" .$id;
-    $result = mysqli_query($connection, $query);	
-    $arr = array();
-    while (($star = mysqli_fetch_assoc($result)) != null) {
-      array_push($arr, $star);
-    }
-	echo json_encode($arr);
-  }else if ($mode = 'rate') {
-    $star = $_GET['star'];
-    $query = "insert into review(user_id,movie_id,star) values(".$id.','.$userId.','.$star.")";
-    $result = mysqli_query($connection, $query);
-  }
+  $query = "insert into watched(user_id,movie_id) values(" .$userId.', '.$id. ")";
+  $result = mysqli_query($connection, $query);	
+  
+  $query = "update movie set count=count+1 where id=".$id;
+  $result = mysqli_query($connection, $query);
 ?>
