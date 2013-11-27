@@ -84,12 +84,13 @@ edit_actor.php    gender options are not well aligned.\
 user_movie.php\
 \pard\tx560\pardeftab560\ql\qnatural\pardirnatural
 
-\f2\fs22 \cf2 \CocoaLigature0 ---will bring an issue, if user watched movie repeatly, dupicated record will be show in watched list!!!!!\
+\f2\fs22 \cf2 \CocoaLigature0 1.1will bring an issue, if user watched movie repeatly, dupicated record will be show in watched list!!!!!\
 \cf3 // can just update the movie.count\
-delete the old record in watched table with same (movie_id and user_id), then insert a new record in watched table.\cf2 \
+delete the old record in watched table with same (movie_id and user_id), then insert a new record in watched table.\
+--solved by ling 11/26/2013\cf2 \
 \
 \pard\tx560\pardeftab560\ql\qnatural\pardirnatural
-\cf0 -will bring an issue, if user add movie repeatly, dupicated record will be show in interested list!!!!!\
+\cf0 1.2will bring an issue, if user add movie repeatly, dupicated record will be show in interested list!!!!!\
 --solved by Ling  // seperate the mode if already in interested list  (base on idea of Shibai)\cf2 \
 \
 2 add an movie through admin side then delete it\
@@ -97,7 +98,28 @@ will create an empty genre name in genre table.\
 \
 3 add movie if actor not added before, will still create a record in movie table!\
 \
-\cf0 4. user_dashboard.php if no intersted movie or watched movie, the text should not be showed----solved by Ling 11/24/2013\
+\cf0 4. user_dashboard.php if no intersted movie or watched movie, the text should not be showed\
+----solved by Ling 11/24/2013\
 \
-5 user_dashboard.php clik user's name at right top should just show user's profile then user can choose to edit or not---solved by ling 11/24/2013\cf2 \
+5 user_dashboard.php clik user's name at right top should just show user's profile then user can choose to edit or not\
+---solved by ling 11/24/2013\cf2 \
+\
+\
+11/26/2013\
+1.new_user.php  inputbox not show correctly\
+--solved by ling 11/26/2013\
+\
+2.user_movie.php \
+2.1 add comment could only be numbers\
+--solved by ling 11/27/2013\
+\
+2.2 textare will start input from middle\
+and add blank comment will still insert into comment table\
+--solved by ling 11/27/2013\
+solution: </textarea>should follow tightly with <textarea>;\
+trim the comment and then validate if it's empty.\
+\
+2.3 watched times could not be updated\
+--solved by ling 11/26/2013\
+\
 }
