@@ -500,4 +500,47 @@ group by user_id;\
 from movie M join watched W\
 on M.id = W.movie_id \
 where W.user_id = 5;\
-}
+\
+\
+--\
+-- for final report\
+--\
+\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+\cf0 insert into user(name,email,password,expr_date) values('LingZhang','Lingzhang@gmail.com','1234','2012-12-09 00:00:01');\
+\
+\
+update administrator set email = 'ad1@gmail.com' where id=1;\
+\
+\
+select M.id, M.name, M.year,  M.rating, M.director from movie M\
+where M.name like '%%'\
+AND M.year like '%2013%'\
+AND M.director like '%%'\
+AND M.id IN \
+(SELECT cast.movie_id \
+From cast JOIN actor\
+ON cast.actor_id = actor.id\
+WHERE actor.name like '%%')\
+AND M.id IN\
+(select genre.movie_id\
+from genre\
+where genre.type like '%drama%');\
+\
+select M.id, M.name, M.year,  M.rating, M.director from movie M\
+where M.name like '%%'\
+AND M.year like '%%'\
+AND M.director like '%%'\
+AND M.id IN \
+(SELECT cast.movie_id \
+From cast JOIN actor\
+ON cast.actor_id = actor.id\
+WHERE actor.name like '%Chris%')\
+AND M.id IN\
+(select genre.movie_id\
+from genre\
+where genre.type like '%%');\
+\
+\pard\pardeftab720\ri0\sl276\slmult1\ql\qnatural
+
+\b \cf4 insert into comment(user_id, movie_id, comment) values ('22', '1', 'This is the comment from LingZhang');}

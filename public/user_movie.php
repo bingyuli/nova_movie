@@ -167,18 +167,17 @@
 
 		<h3>Add Comments or review: </h3>
 		<?php if ($user_watched) { ?>
-		<table>
+		
+
+        <ul><table>
 		<tr>
-		<td><input type="radio" name="added_review_value" value="1" class="small"/> </td>
-		<td><input type="radio" name="added_review_value" value="2" class="small"/> </td>
-		<td><input type="radio" name="added_review_value" value="3" class="small"/> </td>
-		<td><input type="radio" name="added_review_value" value="4" class="small"/> </td>
-		<td><input type="radio" name="added_review_value" value="5" class="small"<?php  echo "checked"; ?>/> </td>
+		<td><input type="radio" name="added_review_value" value="1" class="narrow"/>1</td>
+		<td><input type="radio" name="added_review_value" value="2" class="narrow"/>2</td>
+		<td><input type="radio" name="added_review_value" value="3" class="narrow"/>3</td>
+		<td><input type="radio" name="added_review_value" value="4" class="narrow"/>4</td>
+		<td><input type="radio" name="added_review_value" value="5" class="narrow"<?php  echo "checked"; ?>/>5</td>
 		</tr>
-		<tr>
-		<td><ul>1</ul></td>  <td><ul>2</ul></td> <td><ul>3</ul></td> <td><ul>4</ul></td> <td><ul>5</ul></td>
-		</tr>
-		</table>
+		</table></ul>
 		<ul><input type="submit" name="addReview" value="addReview" class="blue"/></ul>
 		<?php }?>
 
@@ -194,10 +193,12 @@
 	</form>
 
 	 <h3>Comments about this movie:  </h3>
+     <ul>
 	<?php 
 		$comment_set=find_comment_by_movieid($safe_movie_id);
 		echo comment_of_movie_in_table($comment_set);
 	?>
+     </ul>
 	<br /><br />
 
   </div>
