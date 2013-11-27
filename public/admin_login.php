@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 
   <h2><br></br>Administrator Sign In </h2>
   <form action="admin_login.php" method= "post">
-	
+<table>	<tr><td width ="360px">
 	<p><br></br>Email <br></br>
       <input type="text" name="admin_email" value=" <?php echo htmlentities($admin_email); ?>" />
     </p>
@@ -71,8 +71,11 @@ if (isset($_POST['submit'])) {
        <input type="password" name="password" value="" />
     </p>
 		
-	<input type ="submit" name="submit" value="Continue" class="blue" />  	     
-  </form>   
+	<br></br><input type ="submit" name="submit" value="Continue" class="blue" />  	     
+  </form>   </td>
+<td>
+<img border="2" src="image/adminbg.jpg" width="360" height="280"></td>
+</tr></table>
 
   </div>
 </div>

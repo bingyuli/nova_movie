@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
 	if(!validEmail($_POST['useremail']))
 	{
 		
-		$errors[$required_fields[1]] = "User Email is not vaild";		
+		$errors[$required_fields[1]] = "User Email is not valid";		
 	} 
 	
  	if(!validPassword($_POST['password']))
@@ -88,6 +88,7 @@ if (isset($_POST['submit'])) {
     <h2>Ready to start your free month?<br></br> 
 	Create your account:</h2>
     <form action="new_user.php" method="post">
+	<table>	<tr><td width ="360px">
 
 		<p><br></br>Your First Name and Last Name <br></br>
 		<input type="text" name="username" value="" />
@@ -108,7 +109,13 @@ if (isset($_POST['submit'])) {
 
     </form>
     <br></br>
-    <a href="index.php">Cancel</a>
+    <a href="index.php">Cancel</a></td>
+
+	<td>
+	<img border="2" src="image/newuser.jpg" width="360" height="280"></td>	       
+	</form>   
+	</td>
+	</tr></table>
   </div>
 </div>
 

@@ -717,6 +717,5 @@
 	$interested_set = mysqli_query($connection, $query);
     confirm_query($interested_set);
 	return $interested_set;
-	}
-						
+	}						
 ?>

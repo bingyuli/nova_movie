@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
       </p>
 
       <p>Gender
-        <input type="radio" name="gender" value = "male" 
+        <input type="radio" name="gender" value = "male" class = "narrow"
 		 <?php
 	         if ($actor["gender"] =="male") {
 	     ?>
@@ -85,13 +85,21 @@ if (isset($_POST['submit'])) {
 	        <?php } ?>	
         /> Male 
 
-        <input type="radio" name="gender" value = "female"
+        <input type="radio" name="gender" value = "female" class = "narrow"
 		 <?php
 	         if ($actor["gender"] =="female") {
 	     ?>
 	        checked="checked"
 	        <?php } ?>
         /> Female 
+
+        <input type="radio" name="gender" value = "unknown" class = "narrow"
+		 <?php
+	         if ($actor["gender"] =="unknown") {
+	     ?>
+	        checked="checked"
+	        <?php } ?>
+        /> Unknown
      </p>
 
       <input type="submit" name="submit" value="Edit actor" class="blue" />
