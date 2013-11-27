@@ -1,5 +1,5 @@
-<?php require_once("../includes/session.php"); ?>
 <?php require_once("../includes/db_connection.php"); ?>
+<?php require_once("../includes/session.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
 <?php require_once("../includes/validation_functions.php"); ?>
 <?php confirm_admin_logged_in(); ?>
@@ -29,6 +29,8 @@ if (isset($_POST['submit'])) {
   //Post of genre
 	if( isset($_POST['genre']) && is_array($_POST['genre']) ) {
 	    $genrelist = $_POST['genre'];
+	}else{
+		$genrelist = null;
 	}
 
     //Post of actors
@@ -45,10 +47,15 @@ if (isset($_POST['submit'])) {
 
     $movie_id = mysqli_insert_id($connection); 
 
-
+    if (!$result ) {
+      // not Success
+      $_SESSION["message"] = "Movie addition failed.";
+      redirect_to("manage_movies.php");
+    } 
 	
     //insert to table of genre
 	$max = sizeof($genrelist);
+	$result2="";
 	for ($i=0; $i<$max; $i++) {
 		$query2  = "INSERT INTO genre (";
 		$query2 .= " movie_id, type ";
@@ -58,31 +65,55 @@ if (isset($_POST['submit'])) {
 	    $result2 = mysqli_query($connection, $query2);		   
 	}
 
+    if (!$result2 ) {
+      // not Success
+      $_SESSION["message"] = "Movie addition failed.";
+      redirect_to("manage_movies.php");
+    } 
+
     //insert to table of cast
-    //first check if the actor is new actor or not? (if new, must add to actor table first)
+    //first check if the actor is new actor or not? (if new,  add to actor table first)
 	$max = sizeof($actorlist);
 	for ($i=0; $i<$max; $i++) {
-		$actor= find_actor_by_name($actorlist[$i]);
-		$actor_id = $actor["id"];
+		$actor= find_actor_by_name($actorlist[$i]);	
+	    if($actor == null){      //check if the actor is new, if new, first add to talbe actor first
+		    $query8  = "INSERT INTO actor (";
+		    $query8 .= " name, gender ";
+			$query8 .= ") VALUES (";
+			$query8 .= "  '{$actorlist[$i]}', 'unknown' ";
+			$query8 .= ")";				
+		    $result8 = mysqli_query($connection, $query8);	
+			if($result8){
+				$actor_id = mysqli_insert_id($connection); 
+			}	
+		}
+
+		else {		
+		$actor_id = $actor["id"];	}
 		if($actor_id){			
-		 	$query3  = "INSERT INTO cast (";
+		    $query3  = "INSERT INTO cast (";
 		    $query3 .= " movie_id, actor_id ";
-		    $query3 .= ") VALUES (";
-		    $query3 .= "  '{$movie_id}', '{$actor_id}' ";
-		    $query3 .= ")";
+			$query3 .= ") VALUES (";
+			$query3 .= "  {$movie_id}, '{$actor_id}' ";
+			$query3 .= ")";				
 		    $result3 = mysqli_query($connection, $query3);			
-		} 		
-	}
+			} 		
 	
-    if ($result && $result2 && $result3) {
+	 } //end of for loop	
+	
+	if (!$result3 ) {
+      // not Success
+      $_SESSION["message"] = "Movie addition failed.";
+      redirect_to("manage_movies.php");
+    } 
+    
+	
+    if ($result ) {
       // Success
       $_SESSION["message"] = "Movie added.";
       redirect_to("manage_movies.php");
     } 
-	else if(!$result3){
-	      // Failure
-	      $_SESSION["message"] = "Please add actor first.";
-	    }
+
 
     else {
       // Failure
@@ -195,4 +226,7 @@ if (isset($_POST['submit'])) {
  </div>
   </div>
 </div>
+
+<!--- Commit transaction -->
+<?php mysqli_commit($connection); ?>
 <?php include("../includes/layouts/footer.php"); ?>
