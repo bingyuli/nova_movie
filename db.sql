@@ -136,6 +136,8 @@ insert into user(name,email,password,expr_date) values('apple','a@g','thisispass
 
 insert into user(name,email,password,expr_date) values('Rachel','r@g','thisispassword','2012-12-09 00:00:01');
 
+insert into user(name,email,password,expr_date) values('Ling','Ling','1234','2012-12-09 00:00:01');
+
 -- insertion for movie table
 insert into movie (name,year,director,picture,rating,introduction,language,studio,duration) values 
 ('Thor: The Dark World',2013,'Alan Taylor','this is pic location','PG-13','this is introduction','English','Walt Disney','90');
@@ -199,6 +201,16 @@ insert into watched (user_id, movie_id) values ('3', '1');
 insert into watched (user_id, movie_id) values ('2', '3');
 insert into watched (user_id, movie_id) values ('1', '4');
 
+-- update movie pictures
+update movie set picture='image/Moonrise.jpg' where id=7;
+update movie set picture='image/Blue.jpg' where id=6;
+update movie set picture='image/Prisoner.jpg' where id=5;
+update movie set picture='image/Jackass.jpg' where id=4;
+update movie set picture='image/Jackass.jpg' where id=4;
+update movie set picture='image/Carrie.jpg' where id=3;
+update movie set picture='image/Gravity.jpg' where id=2;
+update movie set picture='image/thor2.jpg' where id=1;
+
 -- insertion for interested table
 
 insert into interested (user_id, movie_id) values ('1', '7');
@@ -209,3 +221,56 @@ insert into interested (user_id, movie_id) values ('1', '3');
 insert into interested (user_id, movie_id) values ('2', '6');
 insert into interested (user_id, movie_id) values ('2', '5');
 
+-- insertion for review table
+insert into review(user_id, movie_id, star) values ('1', '2', '3');
+insert into review(user_id, movie_id, star) values ('2', '3', '4');
+insert into review(user_id, movie_id, star) values ('3', '4', '5');
+insert into review(user_id, movie_id, star) values ('4', '5', '1');
+insert into review(user_id, movie_id, star) values ('5', '6', '2');
+
+-- insertion for cast table
+insert into nova_movie.cast(movie_id, actor_id) values ('1', '1');
+insert into nova_movie.cast(movie_id, actor_id) values ('1', '2');
+insert into nova_movie.cast(movie_id, actor_id) values ('1', '3');
+
+insert into nova_movie.cast(movie_id, actor_id) values ('2', '4');
+insert into nova_movie.cast(movie_id, actor_id) values ('2', '5');
+insert into nova_movie.cast(movie_id, actor_id) values ('2', '6');
+
+insert into nova_movie.cast(movie_id, actor_id) values ('3', '14');
+
+insert into nova_movie.cast(movie_id, actor_id) values ('4', '13');
+
+insert into nova_movie.cast(movie_id, actor_id) values ('5', '11');
+insert into nova_movie.cast(movie_id, actor_id) values ('5', '12');
+
+insert into nova_movie.cast(movie_id, actor_id) values ('6', '9');
+insert into nova_movie.cast(movie_id, actor_id) values ('6', '10');
+
+insert into nova_movie.cast(movie_id, actor_id) values ('7', '7');
+insert into nova_movie.cast(movie_id, actor_id) values ('7', '8');
+
+-- insertion for genre table
+insert into genre(movie_id, type) values ('1' , 'Action');
+insert into genre(movie_id, type) values ('1' , 'Adventure');
+insert into genre(movie_id, type) values ('1' , 'Fantasy');
+
+insert into genre(movie_id, type) values ('2' , 'Drama');
+insert into genre(movie_id, type) values ('2' , 'Sci-Fi');
+insert into genre(movie_id, type) values ('2' , 'Thriller');
+
+insert into genre(movie_id, type) values ('3' , 'Horror');
+insert into genre(movie_id, type) values ('3' , 'Drama');
+
+insert into genre(movie_id, type) values ('4' , 'Comedy');
+
+insert into genre(movie_id, type) values ('5' , 'Crime');
+insert into genre(movie_id, type) values ('5' , 'Drama');
+insert into genre(movie_id, type) values ('5' , 'Thriller');
+
+insert into genre(movie_id, type) values ('6' , 'Drama');
+insert into genre(movie_id, type) values ('6' , 'Romance');
+
+insert into genre(movie_id, type) values ('7' , 'Drama');
+insert into genre(movie_id, type) values ('7' , 'Romance');
+insert into genre(movie_id, type) values ('7' , 'Comedy');
