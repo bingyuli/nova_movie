@@ -732,7 +732,7 @@
 	function find_watched_by_userid($user_id){
 	// will return the watched movie name  by user_id
 	global $connection;
-	$query  = "SELECT DISTINCT  watched.id, name ";
+	$query  = "SELECT DISTINCT  name ";
 	$query .= "FROM movie, watched ";
 	$query .= " WHERE user_id = '{$user_id}' ";
 	$query .= " AND movie.id = movie_id ";
@@ -745,7 +745,7 @@
 	function find_interested_by_userid($user_id){
 	// will return the interested movie name  by user_id
 	global $connection;
-	$query  = "SELECT DISTINCT  interested.id, name ";
+	$query  = "SELECT DISTINCT  name ";
 	$query .= "FROM movie, interested ";
 	$query .= " WHERE user_id = '{$user_id}' ";
 	$query .= " AND movie.id = movie_id ";
