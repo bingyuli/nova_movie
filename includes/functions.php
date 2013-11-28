@@ -394,22 +394,34 @@
 	
 	function movie_name_with_pic($movie_set){//view function
 		//just show movie name (as a link) and movie picture
+		//copy($movie_set, $movie_set_copy);
+		
 		global $connection;
 		$output = "<table> ";
-		$output .= "<tr>";
+		$output .= "<tr valign=\"top\"> ";
 		while($movie= mysqli_fetch_assoc($movie_set)) {
 			
-			$output .= "<td width=\"150px\ height=\"200px\" > <img src='".$movie['picture']."' width=\"120px\" height=\"160px\" /> ";
-			//$output .= "<ul>";
+			$output .= "<td  width=\"150px\ height=\"200px\" > <img src='".$movie['picture']."' width=\"120px\" height=\"160px\" /> ";
+			
 			$safe_movie_id = urlencode($movie["id"]);
 			$output .=  "<a href=\"user_movie.php?movieId={$safe_movie_id}\">";
 			$output .=  htmlentities($movie['name']);
-			//$output .= " \"/> ";
+			
 			$output .=  "</a></td>";
 		}
-		$output .=   "</tr></table>"; 
+		$output .=   "</tr>"; 
 		
-		
+		/*$output .= "<tr>";
+		while($movie= mysqli_fetch_assoc($movie_set_copy)) {
+			
+			$safe_movie_id = urlencode($movie["id"]);
+			$output .=  "<td><a href=\"user_movie.php?movieId={$safe_movie_id}\">";
+			$output .=  htmlentities($movie['name']);
+			$output .=  "</td>";
+		}
+		$output .=   "</tr>"; 
+		*/
+		$output .=   "</table>"; 
 			
 		return $output;
 	}

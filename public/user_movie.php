@@ -11,6 +11,8 @@
 	global $connection;		
 	$safe_movie_id = urlencode($_GET["movieId"]);
 	
+	
+	//check whether user has watched this movie or not
 	$query  = "SELECT * ";
 	$query .= "FROM watched ";
 	$query .= "WHERE movie_id = {$safe_movie_id} ";
@@ -118,7 +120,18 @@
 		$user_interested=true;
 	}
 	
-
+	
+	//check whether user has watched this movie or not again
+	$query  = "SELECT * ";
+	$query .= "FROM watched ";
+	$query .= "WHERE movie_id = {$safe_movie_id} ";
+	$query .= "AND user_id = {$_SESSION['user_id']} ";
+	$query .= "LIMIT 1";
+	$watchedresult = mysqli_query($connection, $query);
+	confirm_query($watchedresult);
+	if (mysqli_num_rows($watchedresult)>0) {
+		$user_watched=true;
+	}
 
 
 ?>
@@ -177,6 +190,8 @@
 		   <?php }?> <br></br></tr></table>
 		<table>
 		   <tr><td><textarea name="added_comment" rows="4" cols="50" placeholder="You can add comment here."></textarea></td></tr>
+		
+
 
 		   <tr> <td><input type="submit" name="addComment" value="Add Comment" class="blue"/></td></tr></table>
 		   </form>

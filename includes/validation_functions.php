@@ -53,7 +53,7 @@ function has_inclusion_in($value, $set) {
 	 */
 	function validPassword($password)
 	{
-		$pattern = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+		$pattern = "((?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 		return preg_match($pattern, $password);
 	}
 	
