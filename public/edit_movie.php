@@ -2,8 +2,6 @@
 <?php require_once("../includes/db_connection.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
 <?php require_once("../includes/validation_functions.php"); ?>
-<?php // Set autocommit to off
-//mysqli_autocommit($connection,FALSE);?>
 <?php confirm_admin_logged_in(); ?>
 <?php
   $movie = find_movie_by_id($_GET["id"]);  
@@ -42,6 +40,8 @@
 	}   
 ?>
 <?php
+// Set autocommit to off
+mysqli_autocommit($connection,FALSE);
 if (isset($_POST['submit'])) {
   // Process the form
   
@@ -96,18 +96,18 @@ if (isset($_POST['submit'])) {
 
     if (!$result ) {
       // not Success
-      $_SESSION["message"] = "Movie addition failed.";
+      $_SESSION["message"] = "Movie edit failed.";
       redirect_to("manage_movies.php");
     }
 
     //insert to table of genre
     $result2 ="";
+    $result5 ="";
 	$max = sizeof($genrelist);
 	$query5  = "DELETE FROM genre ";
 	$query5 .= "Where movie_id = {$id}";				
 	$result5 = mysqli_query($connection, $query5);
-	
-	
+		
 	for ($i=0; $i<$max; $i++) {
 		$query2  = "INSERT INTO genre (";
 		$query2 .= " movie_id, type ";
@@ -119,17 +119,19 @@ if (isset($_POST['submit'])) {
 	
 	if (!$result2 ) {
       // not Success
-      $_SESSION["message"] = "Movie addition failed.";
+      $_SESSION["message"] = "Movie eidt failed.";
       redirect_to("manage_movies.php");
     }
 
     //insert to table of cast
-    //first check if the actor is new actor or not? (if new, must add to actor table first)
+
+    $result4 ="";
 	$max = sizeof($actorlist);
 	$query4  = "DELETE FROM cast ";
 	$query4 .= "Where movie_id = {$id}";				
 	$result4 = mysqli_query($connection, $query4);
 	
+	$result8 = "";
 	for ($i=0; $i<$max; $i++) {		
 	$actor= find_actor_by_name($actorlist[$i]);	
     if($actor == null){      //check if the actor is new, if new, first add to talbe actor first
@@ -157,8 +159,9 @@ if (isset($_POST['submit'])) {
 
  } //end of for loop
 	
-    if ($result) {
+    if ($result && $result2 && $result5 &&$result4  && $result3) {
       // Success
+      mysqli_commit($connection);  //Commit transaction
       $_SESSION["message"] = "Movie updated.";
       redirect_to("manage_movies.php");
     } else {

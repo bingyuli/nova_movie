@@ -151,10 +151,10 @@
 	<form action="user_movie.php?movieId=<?php echo $safe_movie_id; ?>" method="post">
 		<table>
 		<tr>
-			<td><ul><input type="submit" name="watchMovie" value="Watch Movie" class="blue"/></ul></td>
+			<td><input type="submit" name="watchMovie" value="Watch Movie" class="blue"/></td>
 
 		<?php if (!$user_interested) { ?>
-			<td><ul><input type="submit" name="addToInterest" value="Add to interested list" class="blue"/></ul></td>
+			<td><ul><input type="submit" name="addToInterest" value="Add To Interested" class="blue"/></ul></td>
 		<?php }?>
 		<?php if ($user_interested) { ?>
 			<td><ul><input type="submit" name="removeFromInterest" value="Already interested. Remove?" /></ul></td>
@@ -167,31 +167,20 @@
 
 		<h3>Add Comments or review: </h3>
 		<?php if ($user_watched) { ?>
+		   <table><tr>
+		   <td ><input type="radio" name="added_review_value" value="1" class="narrow"/>1</td>
+		   <td><input type="radio" name="added_review_value" value="2" class="narrow"/>2</td>
+		   <td><input type="radio" name="added_review_value" value="3" class="narrow"/>3</td>
+		   <td><input type="radio" name="added_review_value" value="4" class="narrow"/>4</td>
+		   <td><input type="radio" name="added_review_value" value="5" class="narrow"<?php  echo "checked"; ?>/>5</td>
+		   <td ><ul><input type="submit" name="addReview" value="Add Review" class="blue"/></ul></td> </tr>			               
+		   <?php }?> <br></br></tr></table>
 		<table>
-		<tr>
-		<td><input type="radio" name="added_review_value" value="1" class="small"/> </td>
-		<td><input type="radio" name="added_review_value" value="2" class="small"/> </td>
-		<td><input type="radio" name="added_review_value" value="3" class="small"/> </td>
-		<td><input type="radio" name="added_review_value" value="4" class="small"/> </td>
-		<td><input type="radio" name="added_review_value" value="5" class="small"<?php  echo "checked"; ?>/> </td>
-		</tr>
-		<tr>
-		<td><ul>1</ul></td>  <td><ul>2</ul></td> <td><ul>3</ul></td> <td><ul>4</ul></td> <td><ul>5</ul></td>
-		</tr>
-		</table>
-		<ul><input type="submit" name="addReview" value="addReview" class="blue"/></ul>
-		<?php }?>
+		   <tr><td><textarea name="added_comment" rows="4" cols="50" placeholder="You can add comment here."></textarea></td></tr>
 
-       
-	
-		<ul>
-		<textarea name="added_comment" rows="4" cols="50" placeholder="You can add comment here."></textarea>
-		</ul>
-		
-		<ul><input type="submit" name="addComment" value="addComment" class="blue"/></ul>
-		
+		   <tr> <td><input type="submit" name="addComment" value="Add Comment" class="blue"/></td></tr></table>
+		   </form>
 
-	</form>
 
 	 <h3>Comments about this movie:  </h3>
 	<?php 

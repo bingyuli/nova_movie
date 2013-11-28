@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
 
   if(!validEmail($_POST['admin_email'])){		
 	$errors[$required_fields[1]] = "Admin Email is not valid";		
-   }
+  }
   
   if (empty($errors)) {
     // Perform Create
