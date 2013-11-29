@@ -4,6 +4,9 @@
 <?php require_once("../includes/validation_functions.php"); ?>
 <?php confirm_admin_logged_in(); ?>
 <?php
+// Set autocommit to off
+mysqli_autocommit($connection,FALSE);
+
 if (isset($_POST['submit'])) {
   // Process the form
   
@@ -37,6 +40,7 @@ if (isset($_POST['submit'])) {
     $actor = mysql_prep($_POST["actors"]);
     $actorlist = explode(",", $actor);   //arrary of splitting string actors
 	
+	$result ="";
     //insert to table of movie
     $query  = "INSERT INTO movie (";
     $query .= " name, year, director,picture, rating, introduction, language, studio, duration ";
@@ -44,7 +48,6 @@ if (isset($_POST['submit'])) {
     $query .= "  '{$movie_name}', '{$year}', '{$director}','{$picture}', '{$rating}', '{$introduction}',  '{$language}', '{$studio}', '{$duration}' ";
     $query .= ")";
     $result = mysqli_query($connection, $query);
-
     $movie_id = mysqli_insert_id($connection); 
 
     if (!$result ) {
@@ -64,7 +67,6 @@ if (isset($_POST['submit'])) {
 		$query2 .= ")";			
 	    $result2 = mysqli_query($connection, $query2);		   
 	}
-
     if (!$result2 ) {
       // not Success
       $_SESSION["message"] = "Movie addition failed.";
@@ -74,6 +76,7 @@ if (isset($_POST['submit'])) {
     //insert to table of cast
     //first check if the actor is new actor or not? (if new,  add to actor table first)
 	$max = sizeof($actorlist);
+	$result3="";
 	for ($i=0; $i<$max; $i++) {
 		$actor= find_actor_by_name($actorlist[$i]);	
 	    if($actor == null){      //check if the actor is new, if new, first add to talbe actor first
@@ -87,9 +90,9 @@ if (isset($_POST['submit'])) {
 				$actor_id = mysqli_insert_id($connection); 
 			}	
 		}
-
 		else {		
 		$actor_id = $actor["id"];	}
+		
 		if($actor_id){			
 		    $query3  = "INSERT INTO cast (";
 		    $query3 .= " movie_id, actor_id ";
@@ -108,8 +111,9 @@ if (isset($_POST['submit'])) {
     } 
     
 	
-    if ($result ) {
-      // Success
+    if ($result && $result2 && $result3) {
+      // Success 
+      mysqli_commit($connection);  //Commit transaction 
       $_SESSION["message"] = "Movie added.";
       redirect_to("manage_movies.php");
     } 
@@ -227,6 +231,4 @@ if (isset($_POST['submit'])) {
   </div>
 </div>
 
-<!--- Commit transaction -->
-<?php mysqli_commit($connection); ?>
 <?php include("../includes/layouts/footer.php"); ?>
