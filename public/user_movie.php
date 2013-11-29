@@ -139,7 +139,7 @@
 <?php include("../includes/layouts/header.php"); ?>
 <div class="hlinks">
 <a href="user_profile.php?id=<?php echo urlencode($_SESSION["user_id"]); ?>"><span class="text">
-<?php echo urlencode($_SESSION["user_name"]); ?> </a></li>
+<?php echo $_SESSION["user_name"]; ?> </a></li>
 <a href="user_dashboard.php"><span class="text">Back</span></a>
 </div>
 </div>
