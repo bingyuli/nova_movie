@@ -54,7 +54,6 @@ if (isset($_POST['submit'])) {
   
 } // end: if (isset($_POST['submit']))
 ?>
-
 <?php $layout_context = "admin"; ?>
 <?php include("../includes/layouts/header.php"); ?>
 <div class="hlinks">
@@ -71,7 +70,7 @@ if (isset($_POST['submit'])) {
     <?php echo message(); ?>
     <?php echo form_errors($errors); ?>
     
-    <h2>Edit Admin<?php echo htmlentities($admin["name"]); ?></h2>
+    <h2>Edit Admin  <?php echo htmlentities($admin["name"]); ?></h2>
     <form action="edit_admin.php?id=<?php echo urlencode($admin["id"]); ?>" method="post">
 
       <p>Admin Name<br></br>
