@@ -6,7 +6,7 @@
 
 <div class="hlinks">
    <a href="user_profile.php?id=<?php echo urlencode($_SESSION["user_id"]); ?>"><span class="text">
-	<?php echo urlencode($_SESSION["user_name"]); ?> </a></li>
+	<?php echo $_SESSION["user_name"]; ?> </a></li>
    <a href="user_logout.php"><span class="text">Log Out</span></a>
 </div>
 
