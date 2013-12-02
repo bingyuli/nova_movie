@@ -82,7 +82,7 @@
 			
 		//  add operation to update ave_star of movie;	
 		    $query ="update movie set ave_star = ";
-			$query .= "(select AVG(star) from review where movie_id={$safe_movie_id} AND user_id={$_SESSION['user_id']}); ";
+			$query .= "(select AVG(star) from review where movie_id={$safe_movie_id}); ";
 			$updateresult = mysqli_query($connection, $query);
 			confirm_query($updateresult);
 		
